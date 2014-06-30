@@ -195,16 +195,19 @@ public class FileServiceImpl implements FileService {
 		//check permissions
 		UserDetails ud = SecurityUtil.getCurrentUserDetials();
 		
+		//check if admin
 		Collection<? extends GrantedAuthority> authorities = ud.getAuthorities();
 		boolean isAdmin = false;
 		if(authorities != null && authorities.size() >0){
 			for(GrantedAuthority ga : authorities){
 				if("ROLE_ADMIN".equals(ga.getAuthority())){
 					isAdmin = true;
+					break;
 				}
 			}
 		}
 		
+		//check if author
 		TUser u = uDao.getUserByLoginName(ud.getUsername());
 		boolean isAuthor = false;
 		if(u != null && tfile.getAuthorId() != null){
@@ -212,13 +215,17 @@ public class FileServiceImpl implements FileService {
 				isAuthor = true;
 			}
 		}
+		
+		//判断是否有权操作
 		if(!isAdmin && !isAuthor){
 			throw new AccessDeniedException("你无权删除此文件。");
 		}
 		
 		File file = new File(savePath + tfile.getFilePath());
-		if(!file.delete()){
-			throw new RuntimeException("删除文件失败。");
+		if(file.exists()){
+			if(!file.delete()){
+				throw new RuntimeException("删除文件失败。");
+			}
 		}
 		fileDao.delete(fileId);
 	}
@@ -231,6 +238,7 @@ public class FileServiceImpl implements FileService {
 		if(fdDao.getPersmissionCount(username, fileId)==0){
 			throw new AccessDeniedException("你无权访问此文件。");
 		}
+		
 		return fileDao.findOne(fileId);
 	}
 

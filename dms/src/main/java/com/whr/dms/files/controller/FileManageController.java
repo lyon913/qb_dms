@@ -3,6 +3,7 @@ package com.whr.dms.files.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -155,22 +156,40 @@ public class FileManageController {
 	
 	@RequestMapping("/files/{fileId}")
 	public void download(@PathVariable long fileId,HttpServletRequest request,HttpServletResponse response){
-		
+		FileInputStream in = null;
+		OutputStream out = null;
 		try {
 			TFile file = fs.downLoadFile(fileId);
 		    response.reset();  
 		    response.setHeader("Content-Disposition", "attachment; filename=\"" + URLEncoder.encode(file.getName(), "UTF-8") + "\"");  
 		    response.addHeader("Content-Length", "" + file.getSize());  
 		    response.setContentType("application/octet-stream;charset=UTF-8");  
-		    OutputStream out = new BufferedOutputStream(response.getOutputStream());
+
 		    String uploadDir = request.getSession().getServletContext().getRealPath("/") + "upload\\files\\";
-		    FileInputStream in = new FileInputStream(new File(uploadDir + file.getFilePath()));
+		    File f = new File(uploadDir + file.getFilePath());
+		    if(!f.exists()){
+		    	throw new RuntimeException("待下载的文件未找到。");
+		    }
+		    in = new FileInputStream(new File(uploadDir + file.getFilePath()));
+		    out = new BufferedOutputStream(response.getOutputStream());
+		    
 		    IOUtils.copy(in, out);
 		    out.flush();
-		    out.close();
-		    in.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		} finally {
+			//关闭文件流
+			try{
+				if(out != null){
+					out.close();
+				}
+				if(in != null){
+					in.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		}
 	}
 	

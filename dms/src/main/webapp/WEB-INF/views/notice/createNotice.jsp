@@ -244,7 +244,7 @@
 						<c:forEach items="${departList}" var="d" varStatus="status">
 							<c:set var="checked" value="false" scope="request"/>
 							<c:forEach items="${checkedDepartment}" var="id">
-								<c:if test="${id == d.id}">
+								<c:if test="${id == d.id}"> 
 									<c:set var="checked" value="true" scope="request"/>
 								</c:if>
 							</c:forEach>

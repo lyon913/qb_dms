@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.whr.dms.config.Config;
 import com.whr.dms.dao.TFileDao;
 import com.whr.dms.dao.TFile_TDepartmentDao;
 import com.whr.dms.dao.TFolderDao;
@@ -54,8 +53,8 @@ public class FileServiceImpl implements FileService {
 	@Resource
 	private TFile_TDepartmentDao fdDao;
 	
-	@Resource
-	private Config cfg;
+	//@Resource
+	//private Config cfg;
 
 	@Override
 	@Transactional(readOnly = true)

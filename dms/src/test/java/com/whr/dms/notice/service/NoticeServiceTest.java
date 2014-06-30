@@ -13,6 +13,6 @@ public class NoticeServiceTest extends BaseTest{
 	
 	@Test
 	public void getLatestNoticeTest(){
-		//ns.getPublishedNotices(new PageRequest(0, 10));
+		ns.getNoticeAttachments(1);
 	}
 }

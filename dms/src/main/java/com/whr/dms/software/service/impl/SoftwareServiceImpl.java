@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.whr.dms.config.Config;
 import com.whr.dms.dao.TFolderDao;
 import com.whr.dms.dao.TSoftwareDao;
 import com.whr.dms.exceptions.ParameterCheckException;
@@ -31,8 +30,10 @@ public class SoftwareServiceImpl implements SoftwareService{
 	TSoftwareDao sdao;
 	@Resource
 	private TFolderDao folderDao;
-	@Resource
-	private Config cfg;
+	
+	//@Resource
+	//private Config cfg;
+	
 	@Override
 	public TSoftware getById(long id) {
 		return sdao.findOne(id);

@@ -53,7 +53,7 @@
 							${notice.title}
 						</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; 
-						<fmt:formatDate	value="${notice.publishDate }" />
+						<fmt:formatDate	value="${notice.publishDate }"/>
 					</li>
 				</c:forEach>
 			</ul>

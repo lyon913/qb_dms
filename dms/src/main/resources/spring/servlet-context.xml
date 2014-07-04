@@ -7,6 +7,22 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
+	<!-- 自动扫描路径 -->
+	<context:component-scan base-package="com.whr">
+		<!-- 包含controller -->
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+
+		<!-- 去除service|repository|component 防止重复加载导致事务失效 -->
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Component" />
+
+	</context:component-scan>
+	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven>
 		<message-converters>
@@ -15,8 +31,6 @@
 				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
 		</message-converters>
 	</annotation-driven>
-	<context:component-scan base-package="com.whr" />
-
 
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 

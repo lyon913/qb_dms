@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TFolder;
+import com.whr.dms.service.FileService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:spring/root-context.xml")

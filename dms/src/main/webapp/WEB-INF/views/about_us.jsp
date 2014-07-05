@@ -1,4 +1,4 @@
-<%@page import="com.whr.dms.files.service.FileService"%>
+<%@page import="com.whr.dms.service.FileService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <style>

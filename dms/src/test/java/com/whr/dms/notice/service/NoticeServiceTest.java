@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
+import com.whr.dms.service.NoticeService;
 import com.whr.dms.test.BaseTest;
 
 public class NoticeServiceTest extends BaseTest{

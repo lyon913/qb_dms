@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.whr.dms.admin.service.UserManager;
 import com.whr.dms.models.TRole;
 import com.whr.dms.models.TUser;
+import com.whr.dms.service.UserManager;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 	@Resource

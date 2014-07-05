@@ -2,10 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript">
-	dojo.require("dijit.TitlePane");
-	dojo.require("dijit.form.Form");
-	dojo.require("dijit.form.Button");
-	dojo.require("dojox.form.PasswordValidator");
+	require(["dijit/TitlePane","dijit/form/Form","dijit/form/Button","dojox/form/PasswordValidator"]);
+	//dojo.require("dijit.TitlePane");
+	//dojo.require("dijit.form.Form");
+	//dojo.require("dijit.form.Button");
+	//dojo.require("dojox.form.PasswordValidator");
 </script>
 <div data-dojo-type="dijit.TitlePane" title="修改密码">
 	<form id="pwForm" 

@@ -73,7 +73,7 @@ public class FileManageController {
 		TUser u = um.getTUserByLoginName(username);
 		m.addAttribute("departList", dm.getAllDepartments());
 		m.addAttribute("user", u);
-		return "files";
+		return "files/files";
 	}
 
 	@RequestMapping("/folder/list/{id}")

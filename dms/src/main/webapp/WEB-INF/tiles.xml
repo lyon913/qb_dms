@@ -6,9 +6,9 @@
 	<definition name="base.definition" template="/WEB-INF/templates/common-layout.jsp">
 		<put-attribute name="content" value="" />
 	</definition>
-
-	<definition name="*" extends="base.definition">
-		<put-attribute name="content" value="/WEB-INF/views/{1}.jsp" />
+	
+	<definition name="main" template="/WEB-INF/views/main.jsp">
+	
 	</definition>
 	
 	<definition name="*/*" extends="base.definition">

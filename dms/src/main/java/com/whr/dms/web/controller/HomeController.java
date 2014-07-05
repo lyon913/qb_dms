@@ -25,6 +25,11 @@ public class HomeController {
 		return u;
 	}
 	
+	@RequestMapping("/main")
+	public String mainPage(){
+		return "main";
+	}
+	
 	@RequestMapping("/home")
 	public ModelAndView homePage(ModelAndView mv){
 		TUser u = getUser();
@@ -34,12 +39,12 @@ public class HomeController {
 		mv.addObject("latestSuggestions", ps.getLatestSuggestion(10));
 		mv.addObject("latestPubNews",ps.getLatestPubNews(10));
 		mv.addObject("latestSoftwares",ps.getLatestSoftware(10));
-		mv.setViewName("home");
+		mv.setViewName("home/home");
 		return mv;
 	}
 	
 	@RequestMapping("/about")
 	public String about(){
-		return "about_us";
+		return "home/about_us";
 	}
 }

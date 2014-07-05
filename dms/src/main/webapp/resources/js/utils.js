@@ -1,5 +1,3 @@
-dojo.require( "dojo.date.locale" );
-
 function showMessage(title,message){
 	var dialog = new dijit.Dialog({
 		title:title,

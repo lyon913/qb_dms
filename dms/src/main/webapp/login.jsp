@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>登录-丘北县人民医院内网信息共享平台</title>
+<title>登录::丘北县人民医院内网信息共享平台</title>
 <style type="text/css">
 
 html,body{

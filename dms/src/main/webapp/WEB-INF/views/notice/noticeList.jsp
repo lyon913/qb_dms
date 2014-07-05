@@ -65,9 +65,18 @@ dojo.ready(function(){
 });
 
 function optionFormatter(id){
-	return "<a href='<%=request.getContextPath()%>/notice/" + id
-				+ "'>阅读</button>";
-	}
+	//return "<button onClick='readNotice(" + id + ")'>阅读</button>";
+	return new dijit.form.Button({label:"阅读",  onClick: function() { 
+		readNotice(id);
+    } });
+}
+
+function readNotice(id){
+	var scrWidth = screen.width * 0.9;
+	var scrHeight = screen.height * 0.7;
+	var url = "<%=request.getContextPath()%>/notice/" + id;
+	window.showModalDialog(url,null,"dialogWidth=" + scrWidth + ";dialogHeight="+ scrHeight+";center=yes;");
+}
 
 	function search(key) {
 		//var form = dijit.byId("search_form");

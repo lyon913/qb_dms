@@ -6,17 +6,7 @@
 <link rel="stylesheet"
 	href="<c:url value='/resources/js/dojo-release-1.7.3/dojox/editor/plugins/resources/css/PasteFromWord.css'/>">
 <script type="text/javascript">
-	dojo.require("dijit.Editor");
-	dojo.require("dijit._editor.plugins.FontChoice");
-	dojo.require("dijit._editor.plugins.TextColor");
-	dojo.require("dojox.editor.plugins.Preview");
-	dojo.require("dojox.editor.plugins.ToolbarLineBreak");
-	dojo.require("dojox.editor.plugins.PasteFromWord");
-	dojo.require("dijit._editor.plugins.Print");
-	dojo.require("dijit.form.ValidationTextBox");
-	dojo.require("dijit.form.CheckBox");
 	dojo.require("dijit.form.Button");
-	dojo.require("dijit.form.Form");
 	dojo.require("dijit.TitlePane");
 	
 	dojo.ready(function(){
@@ -24,7 +14,8 @@
 	}
 	);
 	function goToNoticeList(){
-		window.location.href = "<c:url value='/notice/noticeMana'/>";
+		//window.location.href = "<c:url value='/notice/noticeMana'/>";
+		window.close();
 	}
 	
 	function loadAttachmentList(){
@@ -55,9 +46,6 @@
 		dojo.xhrPost(xhrArgs);
 	}
 </script>
-<form id="notice_form" data-dojo-type="dijit.form.Form" action="">
-<input id="notice_id" name="id" type="hidden" value="${notice.id }">
-</form>
 <div data-dojo-type="dijit.TitlePane" title="查看通知<font color=red>『${notice.title}』</font>" style="width:100%; height:100%; overflow: auto">
 		<table border="0" width="95%">
 			<tr>

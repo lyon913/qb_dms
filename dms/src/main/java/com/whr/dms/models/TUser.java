@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,7 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @Description 用户实体
  */
 @Entity
-public class TUser extends BaseEntity implements UserDetails{
+public class TUser extends BaseAuditEntity implements UserDetails{
 
 	/**
 	 * 
@@ -57,6 +58,13 @@ public class TUser extends BaseEntity implements UserDetails{
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns(@JoinColumn(name="departmentId"))
 	private TDepartment department;
+	
+	/**
+	 * 用于记录用户登录系统时的ip，
+	 * 不保存到用户表中
+	 */
+	@Transient
+	private String loginIpAddress;
 
 	public String getLoginName() {
 		return loginName;
@@ -119,6 +127,14 @@ public class TUser extends BaseEntity implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public String getLoginIpAddress() {
+		return loginIpAddress;
+	}
+
+	public void setLoginIpAddress(String loginIpAddress) {
+		this.loginIpAddress = loginIpAddress;
 	}
 
 }

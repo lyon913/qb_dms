@@ -49,5 +49,6 @@
 	<logger name="org.springframework" level="WARN" />
 	<logger name="org.apache" level="WARN" />
 	<logger name="org.hibernate" level="WARN" />
-
+	<!-- spring jdbc sql log -->
+	<logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG"/>
 </configuration>

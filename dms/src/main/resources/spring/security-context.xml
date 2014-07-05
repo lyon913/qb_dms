@@ -22,13 +22,17 @@
 		<intercept-url pattern="/suggestion/*Reply*/**" access="ROLE_SUGGESTION_REPLY" />
 		<intercept-url pattern="/**" access="ROLE_USER" />
 
-		<form-login login-page='/login.jsp' default-target-url='/main'
-			always-use-default-target='true' />
+		<form-login login-page='/login.jsp' authentication-success-handler-ref="loginSuccessHandler" />
 		<logout />
 	</http>
 	<beans:bean id="userDetailsService" class="com.whr.dms.security.UserDetailsServiceImpl" />
 	<authentication-manager>
 		<authentication-provider user-service-ref='userDetailsService' />
 	</authentication-manager>
+	
+	<beans:bean id="loginSuccessHandler" class="com.whr.dms.security.LoginSuccessHandler" >
+		<beans:property name="defaultTargetUrl" value="/main"/>
+		<beans:property name="alwaysUseDefaultTargetUrl" value="true"/>
+	</beans:bean>
 
 </beans:beans>   

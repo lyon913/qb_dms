@@ -5,9 +5,9 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2013-12-23T20:40:08.616+0800")
+@Generated(value="Dali", date="2014-07-05T18:16:19.605+0800")
 @StaticMetamodel(TReply.class)
-public class TReply_ extends BaseEntity_ {
+public class TReply_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TReply, Long> suggestionId;
 	public static volatile SingularAttribute<TReply, Long> authorId;
 	public static volatile SingularAttribute<TReply, Date> replyDate;

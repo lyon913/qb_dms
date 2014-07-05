@@ -1,3 +1,8 @@
+version 1.3.0
+1.更新依赖库（spring,spring-data-jpa,hibernate）版本
+2.调整系统布局，使用iframe显示内容而不是整个页面全部刷新
+3.登陆页面调整
+
 version 1.2.2 2013-12-25
 1.意见簿不显示作者
 

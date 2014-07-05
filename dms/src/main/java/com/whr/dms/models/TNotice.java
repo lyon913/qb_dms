@@ -15,28 +15,25 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-public class TNotice extends BaseEntity{
+public class TNotice extends BaseAuditEntity {
 
 	private static final long serialVersionUID = -1971019525569776456L;
-	
+
 	@NotNull
 	@NotBlank
 	@Size(max = 250)
 	private String title;
-	
+
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Size(max = 10000000)
 	private String content;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date createTime;
-	
+
 	@Size(max = 50)
 	private String author;
-	
+
 	private Long noticetypeId;
-	
+
 	public Long getNoticetypeId() {
 		return noticetypeId;
 	}
@@ -46,26 +43,28 @@ public class TNotice extends BaseEntity{
 	}
 
 	private boolean published;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date publishDate;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date noticeDate;
 	private Long parentNoticeTypeId;
-	@PrePersist
-	public void setUpdateTime() {
 
-		// 创建时间
+	@Override
+	@PrePersist
+	public void updateAuditInfo() {
+
 		if (this.getId() == null) {
-			this.createTime = new Date();
-			
+			audit(true);
+		} else {
+			audit(false);
 		}
-		
-		//发布时间
+
+		// 发布时间
 		this.publishDate = new Date();
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -80,14 +79,6 @@ public class TNotice extends BaseEntity{
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 
 	public String getAuthor() {

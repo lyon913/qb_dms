@@ -3,7 +3,7 @@ package com.whr.dms.models;
 import javax.persistence.Entity;
 
 @Entity
-public class TNoticeAttachment extends BaseEntity {
+public class TNoticeAttachment extends BaseAuditEntity {
 
 	/**
 	 * 

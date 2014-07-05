@@ -1,16 +1,11 @@
 package com.whr.dms.models;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
-import javax.persistence.PrePersist;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class TSoftware extends BaseEntity {
+public class TSoftware extends BaseAuditEntity {
 
 	/**
 	 * 
@@ -26,10 +21,6 @@ public class TSoftware extends BaseEntity {
 	@Size(max = 50)
 	private String author;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	private Date createTime;
-
 	@NotNull
 	private Long parentId;
 
@@ -40,15 +31,6 @@ public class TSoftware extends BaseEntity {
 	@NotNull
 	private Long size;
 	
-	@PrePersist
-	public void setUpdateTime() {
-
-		// 创建时间
-		if (this.getId() == null) {
-			this.createTime = new Date();
-		}
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -71,14 +53,6 @@ public class TSoftware extends BaseEntity {
 
 	public void setAuthor(String author) {
 		this.author = author;
-	}
-
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 
 	public Long getParentId() {

@@ -1,11 +1,6 @@
 package com.whr.dms.models;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
-import javax.persistence.PrePersist;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,7 +14,7 @@ import javax.validation.constraints.Size;
  * 文件夹
  */
 @Entity
-public class TFolder extends BaseEntity {
+public class TFolder extends BaseAuditEntity {
 
 	/**
 	 * 
@@ -39,13 +34,6 @@ public class TFolder extends BaseEntity {
 	@Size(max = 500)
 	private String description;
 
-	/**
-	 * 创建时间
-	 */
-	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
-	private Date createTime;
-	
 
 	/**
 	 * 作者
@@ -60,14 +48,6 @@ public class TFolder extends BaseEntity {
 	private Long parentId;
 
 
-	@PrePersist
-	public void setUpdateTime() {
-
-		// 创建时间
-		if (this.id == null) {
-			this.createTime = new Date();
-		}
-	}
 
 	public String getName() {
 		return name;
@@ -85,13 +65,6 @@ public class TFolder extends BaseEntity {
 		this.description = description;
 	}
 
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
 
 	public String getAuthor() {
 		return author;

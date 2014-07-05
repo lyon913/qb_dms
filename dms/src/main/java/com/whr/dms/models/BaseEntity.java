@@ -13,8 +13,7 @@ import javax.persistence.MappedSuperclass;
  *
  * @since 2012-7-15
  *
- * @Description
- * 所有实体的父类，抽象出ID属性
+ * @Description 所有实体的父类，抽象出ID属性
  */
 @MappedSuperclass
 public class BaseEntity implements Serializable {
@@ -22,10 +21,12 @@ public class BaseEntity implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2155888797200227882L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
+
+
 
 	public Long getId() {
 		return id;
@@ -34,4 +35,5 @@ public class BaseEntity implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 }

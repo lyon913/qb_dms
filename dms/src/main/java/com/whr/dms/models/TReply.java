@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class TReply extends BaseEntity{
+public class TReply extends BaseAuditEntity{
 	/**
 	 * 
 	 */

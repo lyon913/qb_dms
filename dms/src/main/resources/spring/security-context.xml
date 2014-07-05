@@ -6,25 +6,29 @@
            http://www.springframework.org/schema/security
            http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<http pattern="/resources/**" security="none"/>
-	<http pattern="/login.jsp*" security="none"/>
-	<http pattern="/index.jsp*" security="none"/>
-	
+	<http pattern="/resources/**" security="none" />
+	<http pattern="/login.jsp*" security="none" />
+	<http pattern="/index.jsp*" security="none" />
+
 	<http auto-config='true' access-denied-page="/403.jsp">
 		<!-- 配置此处应注意先后顺序，从最严格到宽松匹配 -->
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
-		<intercept-url pattern="/notice/manage/**" access="ROLE_NOTICE_MANAGER,ROLE_ADMIN"/>
-		<intercept-url pattern="/publicnews/manage/**" access="ROLE_PUBLICNEWS_MANAGER,ROLE_ADMIN"/>
-		<intercept-url pattern="/software/softwareMana" access="ROLE_SOFTWARE_MANAGER,ROLE_ADMIN"/>
-		<intercept-url pattern="/suggestion/del/**" access="ROLE_SUGGESTION_MANAGER"/>
-		<intercept-url pattern="/suggestion/*Reply*/**" access="ROLE_SUGGESTION_REPLY"/>
+		<intercept-url pattern="/notice/manage/**" access="ROLE_NOTICE_MANAGER,ROLE_ADMIN" />
+		<intercept-url pattern="/publicnews/manage/**"
+			access="ROLE_PUBLICNEWS_MANAGER,ROLE_ADMIN" />
+		<intercept-url pattern="/software/softwareMana"
+			access="ROLE_SOFTWARE_MANAGER,ROLE_ADMIN" />
+		<intercept-url pattern="/suggestion/del/**" access="ROLE_SUGGESTION_MANAGER" />
+		<intercept-url pattern="/suggestion/*Reply*/**" access="ROLE_SUGGESTION_REPLY" />
 		<intercept-url pattern="/**" access="ROLE_USER" />
 
-		<form-login login-page='/login.jsp' default-target-url='/home' always-use-default-target='true' />
+		<form-login login-page='/login.jsp' default-target-url='/home'
+			always-use-default-target='true' />
 		<logout />
 	</http>
 	<beans:bean id="userDetailsService" class="com.whr.dms.security.UserDetailsServiceImpl" />
 	<authentication-manager>
 		<authentication-provider user-service-ref='userDetailsService' />
 	</authentication-manager>
+
 </beans:beans>   

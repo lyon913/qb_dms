@@ -8,20 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
 	<!-- 自动扫描路径 -->
-	<context:component-scan base-package="com.whr">
-		<!-- 包含controller -->
-		<context:include-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-
-		<!-- 去除service|repository|component 防止重复加载导致事务失效 -->
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Service" />
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Repository" />
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Component" />
-
-	</context:component-scan>
+	<context:component-scan base-package="com.whr.dms.web"/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven>
@@ -64,10 +51,4 @@
 		</beans:property>
 	</beans:bean>
 
-
-	<!-- json <beans:bean id="annotationMethodHandlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
-		<beans:property name="messageConverters"> <beans:list> <beans:ref bean="mappingJacksonHttpMessageConverter" 
-		/> </beans:list> </beans:property> </beans:bean> <beans:bean id="mappingJacksonHttpMessageConverter" 
-		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" 
-		/> -->
 </beans:beans>

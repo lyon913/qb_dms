@@ -7,14 +7,21 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="com.whr">
-		<!-- 排除controller -->
+	<!-- 扫描@Service @Component -->
+	<context:component-scan base-package="com.whr.dms">
+		<!-- 排除@Controller -->
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
+
 	<!-- 注解方式注入 -->
 	<context:annotation-config />
+
+	<!-- 扫描 spring data jpa 仓库 -->
+	<jpa:repositories base-package="com.whr.dms.dao"
+		entity-manager-factory-ref="entityManagerFactory"
+		transaction-manager-ref="transactionManager" />
 
 	<!-- 注解方式事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
@@ -49,9 +56,13 @@
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
 
-	<!-- spring data jpa 仓库 -->
-	<jpa:repositories base-package="com.whr.dms.dao"
-		entity-manager-factory-ref="entityManagerFactory"
-		transaction-manager-ref="transactionManager" />
-
+	<!-- 自定义文本 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>myMessages</value>
+			</list>
+		</property>
+	</bean>
 </beans>

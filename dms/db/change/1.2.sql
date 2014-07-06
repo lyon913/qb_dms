@@ -1,4 +1,7 @@
-create table TLoginAudit (
+	-- 关闭安全更新模式（safe update mode）
+	set sql_safe_updates=0;
+
+	create table TLoginAudit (
         id bigint not null auto_increment,
         userId bigint not null,
         loginName varchar(32) not null,
@@ -102,5 +105,8 @@ create table TLoginAudit (
     alter table TUser add lastUpdaterIp varchar(20);
     
     update TUser set createTime='1900-01-01 01:01:01',creatorLoginName='sys_upgrade',creatorName='系统升级',creatorIp='0.0.0.0',lastUpdate='1900-01-01 01:01:01',lastUpdaterLoginName='sys_upgrade',lastUpdaterName='系统升级',lastUpdaterIp='0.0.0.0';
+
+    insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName) values(1,2,0,'1.2.sql');
     
-insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName) values(1,2,0,'1.2.sql');
+    -- 恢复安全更新
+    set sql_safe_updates=1;

@@ -39,6 +39,7 @@ public class TReply extends BaseAuditEntity{
 	/**
 	 * 回复者
 	 */
+	@Size(max = 100)
 	private String author;
 	
 	public void setAuthor(String author) {

@@ -1,3 +1,6 @@
+@IMPORT url("icons/commonIcons.css");
+@IMPORT url("icons/editorIcons.css");
+
 .warp_table thead th{
 	height:24px!important;
 	padding:0 10px;
@@ -49,3 +52,5 @@
 	font:16px;
 	color:#0265AC;
 }
+
+

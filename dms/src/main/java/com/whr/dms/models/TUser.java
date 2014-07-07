@@ -1,12 +1,15 @@
 package com.whr.dms.models;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -59,6 +62,16 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	@JoinColumns(@JoinColumn(name="departmentId"))
 	private TDepartment department;
 	
+	
+	/**
+	 * 用户角色
+	 */
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name="TUser_TRole",
+				joinColumns = @JoinColumn(name = "userId"),
+				inverseJoinColumns = @JoinColumn(name="roleId"))
+	private List<TRole> roles;
+	
 	/**
 	 * 用于记录用户登录系统时的ip，
 	 * 不保存到用户表中
@@ -98,10 +111,18 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	public void setDepartment(TDepartment department) {
 		this.department = department;
 	}
+	
+	public List<TRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<TRole> roles) {
+		this.roles = roles;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return department.getRoles();
+		return this.roles;
 	}
 
 	@Override
@@ -128,6 +149,7 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
+	
 
 	public String getLoginIpAddress() {
 		return loginIpAddress;

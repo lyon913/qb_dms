@@ -1,12 +1,6 @@
 package com.whr.dms.models;
 
-import java.util.List;
-
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -46,19 +40,7 @@ public class TDepartment extends BaseEntity {
 	@Size(max = 50)
 	private String telephone;
 	
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="TDepartment_TRole",
-				joinColumns = @JoinColumn(name = "departmentId"),
-				inverseJoinColumns = @JoinColumn(name="roleId"))
-	private List<TRole> roles;
 
-	public List<TRole> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<TRole> roles) {
-		this.roles = roles;
-	}
 
 	public String getName() {
 		return name;

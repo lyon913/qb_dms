@@ -46,27 +46,6 @@
 					data-dojo-type="dijit.form.TextBox"></td>
 			</tr>
 			<tr>
-				<td>权限：</td>
-				<td>
-
-					<div>
-						<c:forEach items="${roles }" var="r">
-							<c:set var="checked" value="false" scope="request" />
-							<c:forEach items="${d.roles}" var="dr">
-								<c:if test="${r.id == dr.id}">
-									<c:set var="checked" value="true" scope="request" />
-								</c:if>
-							</c:forEach>
-							<input type="checkbox" id="role_${r.id}" name="roleIds"
-								value="${r.id}" ${checked?" checked='checked' ":""} data-dojo-type="dijit.form.CheckBox">
-							<label for="role_${r.id}">${r.displayName}</label>
-							<br>
-
-						</c:forEach>
-					</div>
-				</td>
-			</tr>
-			<tr>
 				<td colspan="2" align="center"><input type="submit" label="保存"
 					data-dojo-type="dijit.form.Button"> <input type="reset"
 					label="重置" data-dojo-type="dijit.form.Button"></td>

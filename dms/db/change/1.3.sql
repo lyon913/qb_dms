@@ -28,7 +28,8 @@ update TSuggestion set type='Public';
 update TSuggestion set state='Published';
 
 
-insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName) values(1,3,0,'1.3.sql');
+alter table TDatabaseChange add opDate datetime;
+insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName,opdate) values(1,3,0,'1.3.sql',now());
 
 -- 恢复安全更新
 set sql_safe_updates=1;

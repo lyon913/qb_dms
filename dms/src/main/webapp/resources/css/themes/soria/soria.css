@@ -1,0 +1,56 @@
+@CHARSET "UTF-8";
+
+.btn-normal {
+	display: inline-block;
+	border: 1px solid #8ba0bd;
+	border-bottom: 1px solid #657c9c;
+	padding: 0.4em;
+	margin: 0.5em;
+	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
+	color: black;
+	text-decoration: none;
+	font-size: 1em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.btn-normal button {
+	display: inline-block;
+	border: 1px solid #8ba0bd;
+	border-bottom: 1px solid #657c9c;
+	padding: 0.2em;
+	margin: 0.5em;
+	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
+	color: black;
+	text-decoration: none;
+	font-size: 1em;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.btn-normal:HOVER {
+	color: #243C5F;
+	background: #acc5e2 url(images/buttonHover.png) repeat-x top left;
+}
+
+.panel {
+	border: 1px solid #bfbfbf;
+}
+
+.panel .panel-title {
+	border: 1px solid #8ba0bd;
+	border-bottom: 1px solid #657c9c;
+	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
+	font-size: 1em;
+	padding: 0.4em;
+	color: #243C5F;
+	font-weight: bold;
+}
+
+.checkbox {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0.4em 0 0.4em 0.4em
+}

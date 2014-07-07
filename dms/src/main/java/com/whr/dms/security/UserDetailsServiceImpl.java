@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		
 		TRole role = new TRole();
 		role.setName("ROLE_USER");
-		tuser.getDepartment().getRoles().add(role);
+		tuser.getRoles().add(role);
 		
 		//获取客户端ip地址
 		String ip = request.getRemoteAddr();

@@ -5,14 +5,21 @@
 
 <script type="text/javascript">
 	dojo.require("dijit.TitlePane");
-	
-	function goEdit(){
+
+	function goEdit() {
 		window.location.href = "<c:url value='/admin/user/edit'/>";
 	}
 </script>
-<div data-dojo-type="dijit.TitlePane" title="用户管理" style="width:100%;height:100%;overflow:auto;">
+<div data-dojo-type="dijit.TitlePane" title="用户管理"
+	style="width: 100%; height: 100%; overflow: auto;">
 	<div>
-		<button onclick="goEdit()" data-dojo-type="dijit.form.Button">添加用户</button>
+		<c:url var="addUserUrl" value="/admin/user/new" />
+		<a href="${addUserUrl }" class="btn-normal"> <span
+			class="dijitIconKey"></span>新增用户
+		</a>
+		<button class="btn-normal">
+			<span class="dijitIconKey"></span>新增用户
+		</button>
 	</div>
 	<table border="0" width="100%">
 		<tr>
@@ -27,12 +34,13 @@
 				<td width="10%">${u.id }</td>
 				<td width="20%">${u.loginName }</td>
 				<td width="30%">${u.name }</td>
-				<%TUser u = (TUser)pageContext.getAttribute("u");  %>
+				<%
+					TUser u = (TUser) pageContext.getAttribute("u");
+				%>
 				<td width="20%">${u.department.name }</td>
-				<td width="20%">
-					<a href="<c:url value='/admin/user/edit/'/>${u.id}">编辑</a>
-					<a href="<c:url value='/admin/user/del/'/>${u.id}">删除</a>
-				</td>
+				<td width="20%"><a
+					href="<c:url value='/admin/user/edit/'/>${u.id}">编辑</a> <a
+					href="<c:url value='/admin/user/del/'/>${u.id}">删除</a></td>
 			</tr>
 		</c:forEach>
 	</table>

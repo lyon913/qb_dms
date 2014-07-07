@@ -1,6 +1,5 @@
 package com.whr.dms.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.whr.dms.models.TDepartment;
-import com.whr.dms.models.TRole;
 import com.whr.dms.service.DepartmentManager;
 import com.whr.dms.service.RoleManager;
 import com.whr.dms.web.ajax.ContentRangeHeader;
@@ -40,7 +38,7 @@ public class DepartmentController {
 	}
 
 	/**
-	 * 已发布通知列表JSON
+	 * 科室列表JSON
 	 * @param sort
 	 * @param range
 	 * @return
@@ -57,14 +55,7 @@ public class DepartmentController {
 	}
 	
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(TDepartment d,Long[] roleIds){
-		if(roleIds != null && roleIds.length > 0){
-			List<TRole> roles = new ArrayList<TRole>();
-			for(long roleId : roleIds){
-				roles.add(rm.getById(roleId));
-			}
-			d.setRoles(roles);
-		}
+	public String save(TDepartment d){
 		dm.saveDepartment(d);
 		return "forward:/admin/department/departmentMana";
 	}

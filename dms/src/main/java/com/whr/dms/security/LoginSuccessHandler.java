@@ -31,7 +31,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler i
 			throws ServletException, IOException {
 		// 记录登陆成功的用户信息
 		TUser user = (TUser) authentication.getPrincipal();
-		as.UserLoginAudit(user);
+		as.logUserLogin(user);
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 

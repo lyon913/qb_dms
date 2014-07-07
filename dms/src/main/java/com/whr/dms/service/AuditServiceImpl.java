@@ -16,9 +16,8 @@ public class AuditServiceImpl implements AuditService {
 
 	@Override
 	@Transactional
-	public void UserLoginAudit(TUser user) {
+	public void logUserLogin(TUser user) {
 		laDao.save(new TLoginAudit(user));
-
 	}
 
 }

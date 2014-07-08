@@ -1,6 +1,11 @@
 @IMPORT url("icons/commonIcons.css");
 @IMPORT url("icons/editorIcons.css");
 
+html,body{
+	font-size: 16px;
+	font-family: 宋体;
+}
+
 .warp_table thead th{
 	height:24px!important;
 	padding:0 10px;

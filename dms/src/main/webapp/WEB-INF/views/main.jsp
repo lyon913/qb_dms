@@ -45,7 +45,6 @@ html,body {
 	height: 100%;
 	margin: 0px;
 	overflow: hidden;
-	font-size: 14px;
 }
 
 #layout_main {
@@ -94,10 +93,10 @@ html,body {
 		<!-- west -->
 		<div data-dojo-type="dijit.layout.AccordionContainer"
 			data-dojo-props="minSize:30, region:'leading', splitter:true,persist:true"
-			style="width: 200px;font-size:20px;" id="leftAccordion">
+			style="width: 200px;font-size:20px" id="leftAccordion">
 			<div data-dojo-type="dijit.layout.AccordionPane" title="功能导航"
 				 style="padding: 0px">
-				<div id="navMenu" data-dojo-type="dijit.Menu" style="width: 100%">
+				<div id="navMenu" data-dojo-type="dijit.Menu" style="width: 100%;font-family: 宋体">
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("/home"); }'>首页</div>

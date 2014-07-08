@@ -26,7 +26,7 @@ public class BaseAuditEntity extends BaseEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5059683780221568525L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 记录创建时间

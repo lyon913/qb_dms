@@ -20,13 +20,11 @@ public class BaseEntity implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2155888797200227882L;
+	private static final long serialVersionUID = -1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-
 
 	public Long getId() {
 		return id;
@@ -34,6 +32,17 @@ public class BaseEntity implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(this == obj) {
+			return true;
+		}
+		if (obj instanceof BaseEntity) {
+			return this.getId() == ((BaseEntity) obj).getId();
+		}
+		return false;
 	}
 
 }

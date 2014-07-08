@@ -16,10 +16,12 @@ import javax.validation.constraints.Size;
  */
 @Entity
 public class TDepartment extends BaseEntity {
+
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8580981563203591359L;
+	private static final long serialVersionUID = 8509909032998444960L;
 
 	/**
 	 * 科室名称

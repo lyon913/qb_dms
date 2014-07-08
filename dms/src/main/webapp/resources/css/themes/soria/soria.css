@@ -4,29 +4,17 @@
 	display: inline-block;
 	border: 1px solid #8ba0bd;
 	border-bottom: 1px solid #657c9c;
-	padding: 0.4em;
-	margin: 0.5em;
-	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
+	padding: 0.2em 0.4em 0.2em 0.4em;
+	margin: 0.2em; 
 	color: black;
 	text-decoration: none;
+	font:normal;
 	font-size: 1em;
 	text-align: center;
 	vertical-align: middle;
+	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
 }
 
-.btn-normal button {
-	display: inline-block;
-	border: 1px solid #8ba0bd;
-	border-bottom: 1px solid #657c9c;
-	padding: 0.2em;
-	margin: 0.5em;
-	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
-	color: black;
-	text-decoration: none;
-	font-size: 1em;
-	text-align: center;
-	vertical-align: middle;
-}
 
 .btn-normal:HOVER {
 	color: #243C5F;
@@ -37,7 +25,7 @@
 	border: 1px solid #bfbfbf;
 }
 
-.panel .panel-title {
+.panel .title {
 	border: 1px solid #8ba0bd;
 	border-bottom: 1px solid #657c9c;
 	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
@@ -53,4 +41,54 @@
 	display: inline-block;
 	vertical-align: middle;
 	margin: 0.4em 0 0.4em 0.4em
+}
+
+.input-text {
+	width: 14em;
+	height: 1.5em;
+	line-height: 1.5em;
+	border: 1px solid #8ba0bd;
+	margin: 0.2em;
+	color: black;
+	outline: none;
+	padding: 0 0 0 0.2em;
+}
+
+input.error{
+	border: 1px solid red;
+	background-color: #FFE7E7;
+}
+
+span.error{
+	border: 0;
+	color : red;
+	background-color: #FFE7E7;
+}
+
+
+.select {
+	width: 14em;
+	height: 2em;
+	line-height : 2em;
+	border: 1px solid #8ba0bd;
+	margin: 0.2em;
+}
+
+
+.table{
+	border: 1px dotted #D5CDB5;
+}
+
+.table th, .table td {
+	border: 1px dotted #D5CDB5;
+	border-left:none;
+	border-top:none;
+	border-spacing:0;
+	margin:0;
+	border-collapse: collapse;
+	height: 1.5em;
+}
+
+.table th {
+	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
 }

@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.whr.dms.dao.TDepartmentDao;
 import com.whr.dms.dao.TUserDao;
+import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TDepartment;
 import com.whr.dms.models.TUser;
 
@@ -22,7 +24,8 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public List<TUser> getUserList() {
-		return uDao.findAll();
+		Sort sort = new Sort("department.name","name");
+		return uDao.findAll(sort);
 	}
 
 	@Override
@@ -37,7 +40,13 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	@Transactional
-	public void saveUser(TUser u) {
+	public void saveUser(TUser u) throws ParameterCheckException {
+		if(u.getId() == null) {
+			TUser userExists = uDao.getUserByLoginName(u.getLoginName());
+			if(userExists != null) {
+				throw new ParameterCheckException("用户已存在");
+			}
+		}
 		uDao.save(u);
 	}
 

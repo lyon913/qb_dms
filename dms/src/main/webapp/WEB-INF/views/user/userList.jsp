@@ -3,32 +3,24 @@
 <%@ page import="com.whr.dms.models.TUser"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<script type="text/javascript">
-	dojo.require("dijit.TitlePane");
-
-	function goEdit() {
-		window.location.href = "<c:url value='/admin/user/edit'/>";
-	}
-</script>
-<div data-dojo-type="dijit.TitlePane" title="用户管理"
-	style="width: 100%; height: 100%; overflow: auto;">
+<div class="panel">
+	<div class="title">用户列表</div>
 	<div>
 		<c:url var="addUserUrl" value="/admin/user/new" />
 		<a href="${addUserUrl }" class="btn-normal"> <span
-			class="dijitIconKey"></span>新增用户
+			class="dijitIconNewTask"></span>新增用户
 		</a>
-		<button class="btn-normal">
-			<span class="dijitIconKey"></span>新增用户
-		</button>
 	</div>
-	<table border="0" width="100%">
-		<tr>
-			<td>ID</td>
-			<td>登录名</td>
-			<td>姓名</td>
-			<td>科室</td>
-			<td>操作</td>
-		</tr>
+	<table width="100%" class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>登录名</th>
+				<th>姓名</th>
+				<th>科室</th>
+				<th>操作</th>
+			</tr>
+		</thead>
 		<c:forEach items="${userList}" var="u">
 			<tr>
 				<td width="10%">${u.id }</td>
@@ -38,9 +30,13 @@
 					TUser u = (TUser) pageContext.getAttribute("u");
 				%>
 				<td width="20%">${u.department.name }</td>
-				<td width="20%"><a
-					href="<c:url value='/admin/user/edit/'/>${u.id}">编辑</a> <a
-					href="<c:url value='/admin/user/del/'/>${u.id}">删除</a></td>
+				<td width="20%"><c:url var="editUrl"
+						value="/admin/user/${u.id }/edit" /> <a href="${editUrl }"
+					class="btn-normal"> <span class="dijitIconEdit"></span>编辑
+				</a> <c:url var="delUrl" value="/admin/user/${u.id }/edit" /> <a
+					href="${delUrl }" class="btn-normal"> <span
+						class="dijitIconDelete"></span>删除
+				</a></td>
 			</tr>
 		</c:forEach>
 	</table>

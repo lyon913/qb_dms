@@ -16,6 +16,7 @@
 	function goToNoticeList(){
 		//window.location.href = "<c:url value='/notice/noticeMana'/>";
 		window.close();
+		history.back();
 	}
 	
 	function loadAttachmentList(){

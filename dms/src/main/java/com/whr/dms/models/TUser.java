@@ -13,8 +13,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -38,26 +40,28 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	 * 登录名
 	 */
 	@Column(unique = true)
-	@NotNull
+	@Pattern(regexp = "([A-Z]|[a-z]|[0-9]|_){1,32}",message = "登录名由1-32位英文、数字或下划线组成")
 	@Size(max = 32)
 	private String loginName;
 
 	/**
 	 * 密码
 	 */
-	@NotNull
-	@Size(min = 4, max = 16)
+	@Size(min = 4, max = 16,message = "密码为4-16位任意字符")
 	private String password;
 
 	/**
 	 * 姓名
 	 */
+
+	@NotEmpty(message = "姓名不能为空")
 	@Size(max = 20)
 	private String name;
 
 	/**
 	 * 所属科室
 	 */
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumns(@JoinColumn(name="departmentId"))
 	private TDepartment department;

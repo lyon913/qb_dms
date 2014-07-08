@@ -2,6 +2,7 @@ package com.whr.dms.service;
 
 import java.util.List;
 
+import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TUser;
 
 public interface UserManager {
@@ -28,8 +29,9 @@ public interface UserManager {
 	/**
 	 * 保存、更改用户
 	 * @param u
+	 * @throws ParameterCheckException 
 	 */
-	public void saveUser(TUser u);
+	public void saveUser(TUser u) throws ParameterCheckException;
 	
 	/**
 	 * 删除用户

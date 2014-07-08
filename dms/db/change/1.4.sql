@@ -18,6 +18,30 @@ create table TUser_TRole (
         add constraint FK_TUSER_TROLE_ROLEID 
         foreign key (roleId)
         references TRole (id);
+        
+    -- 更改数据库及全部表的字符集
+    ALTER DATABASE dms DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
+    
+    ALTER TABLE tattachment CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tdatabasechange CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tdepartment CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tdepartment_trole CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tfile CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tfile_tdepartment CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tfolder CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tfunction CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tgroup CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tloginaudit CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tnotice CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tnotice_tdepartment CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tnoticeattachment CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tnoticetype CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE treply CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE trole CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tsoftware CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tsuggestion CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tuser CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
+	ALTER TABLE tuser_trole CONVERT TO CHARACTER SET gbk COLLATE gbk_chinese_ci;
 
 	-- 设置管理员的权限
 	insert into tuser_trole(userid,roleid)  select u.id,r.id from tuser u,trole r where u.loginName='admin' and r.name='ROLE_ADMIN';

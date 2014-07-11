@@ -213,9 +213,17 @@ public class NoticeController {
 			if(notice.getId()!=null){
 				n = ns.getById(notice.getId());
 			}
+			
 			n.setAuthor(notice.getAuthor());
 			n.setPublishDate(new Date());
 			n.setParentNoticeTypeId(new Long(1)); //通知
+			
+			String c = notice.getContent();
+			if(c != null) {
+				c = c.replace("\n", "");
+				c = c.replace("\r", "");
+				notice.setContent(c);
+			}
 			n.setContent(notice.getContent());
 			n.setNoticetypeId(notice.getNoticetypeId());
 			n.setNoticeDate(notice.getNoticeDate());

@@ -5,6 +5,9 @@
 	width: 18px;
 	height: 18px;
 	text-align: center;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 5px 0 0;
 }
 .dijitDisabled .dijitEditorIcon {
 	background-image: url('images/editorIconsDisabled.png'); 

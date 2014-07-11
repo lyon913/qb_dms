@@ -28,9 +28,8 @@
 			</tr>
 			<c:if test="${user.id == null }">
 				<tr>
-					<td>密码：</td>
 					<td>
-						<div class="input-text">新用户默认密码为：1234</div>
+						<div>新用户默认密码为：1234</div>
 					</td>
 				</tr>
 			</c:if>

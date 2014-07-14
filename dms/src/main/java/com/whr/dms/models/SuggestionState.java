@@ -9,7 +9,7 @@ public enum SuggestionState {
 	/**
 	 * 公开的
 	 */
-	Published("已公开"),
+	Public("已公开"),
 	
 	/**
 	 * 未公开的

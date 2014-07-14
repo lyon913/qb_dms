@@ -19,12 +19,14 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TDepartment;
-import com.whr.dms.models.TRole;
 import com.whr.dms.models.TUser;
+import com.whr.dms.models.TUserRole;
+import com.whr.dms.security.RoleType;
 import com.whr.dms.service.DepartmentManager;
 import com.whr.dms.service.RoleManager;
 import com.whr.dms.service.UserManager;
 import com.whr.dms.web.propertyEditor.EntityPropertyEditor;
+import com.whr.dms.web.propertyEditor.RolePropertyEditor;
 
 @Controller
 @SessionAttributes({ "user" })
@@ -45,7 +47,7 @@ public class UserController {
 	}
 
 	@ModelAttribute("roleList")
-	public List<TRole> roleList() {
+	public List<RoleType> roleList() {
 		return rm.findAllRoles();
 	}
 	
@@ -53,7 +55,7 @@ public class UserController {
 	public void initBinder(WebDataBinder binder) {
 		//注册转换器
 		binder.registerCustomEditor(TDepartment.class, new EntityPropertyEditor(TDepartment.class));
-		binder.registerCustomEditor(TRole.class, new EntityPropertyEditor(TRole.class));
+		binder.registerCustomEditor(TUserRole.class, new RolePropertyEditor());
 	}
 
 	/**
@@ -94,7 +96,6 @@ public class UserController {
 		if(bind.hasErrors()) {
 			return "user/userEdit";
 		}
-		
 		try {
 			um.saveUser(user);
 			status.setComplete();

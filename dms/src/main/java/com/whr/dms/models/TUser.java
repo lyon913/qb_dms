@@ -8,9 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -70,11 +69,8 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	/**
 	 * 用户角色
 	 */
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="TUser_TRole",
-				joinColumns = @JoinColumn(name = "userId"),
-				inverseJoinColumns = @JoinColumn(name="roleId"))
-	private List<TRole> roles;
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<TUserRole> roles;
 	
 	/**
 	 * 用于记录用户登录系统时的ip，
@@ -116,11 +112,11 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 		this.department = department;
 	}
 	
-	public List<TRole> getRoles() {
+	public List<TUserRole> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<TRole> roles) {
+	public void setRoles(List<TUserRole> roles) {
 		this.roles = roles;
 	}
 

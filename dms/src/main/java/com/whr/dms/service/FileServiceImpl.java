@@ -30,6 +30,7 @@ import com.whr.dms.models.TFile;
 import com.whr.dms.models.TFile_TDepartment;
 import com.whr.dms.models.TFolder;
 import com.whr.dms.models.TUser;
+import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 
 /**
@@ -192,28 +193,11 @@ public class FileServiceImpl implements FileService {
 	public void deleteFile(Long fileId,String savePath) {
 		TFile tfile = fileDao.findOne(fileId);
 		//check permissions
-		UserDetails ud = SecurityUtil.getCurrentUserDetials();
-		
+	
 		//check if admin
-		Collection<? extends GrantedAuthority> authorities = ud.getAuthorities();
-		boolean isAdmin = false;
-		if(authorities != null && authorities.size() >0){
-			for(GrantedAuthority ga : authorities){
-				if("ROLE_ADMIN".equals(ga.getAuthority())){
-					isAdmin = true;
-					break;
-				}
-			}
-		}
-		
+		boolean isAdmin = SecurityUtil.hasRole(RoleType.ROLE_ADMIN.getName());
 		//check if author
-		TUser u = uDao.getUserByLoginName(ud.getUsername());
-		boolean isAuthor = false;
-		if(u != null && tfile.getAuthorId() != null){
-			if(u.getId().equals(tfile.getAuthorId())){
-				isAuthor = true;
-			}
-		}
+		boolean isAuthor = SecurityUtil.isMe(tfile.getAuthorId());
 		
 		//判断是否有权操作
 		if(!isAdmin && !isAuthor){

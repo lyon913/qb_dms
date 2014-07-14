@@ -2,9 +2,9 @@ package com.whr.dms.models;
 
 public enum SuggestionType {
 	/**
-	 * 公开意见簿
+	 * 意见簿
 	 */
-	Public("公开意见簿"),
+	Suggestion("意见簿"),
 	
 	/**
 	 * 院长信箱

@@ -1,27 +1,27 @@
 package com.whr.dms.service;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.whr.dms.dao.TRoleDao;
-import com.whr.dms.models.TRole;
+import com.whr.dms.security.RoleType;
 
 @Service
 public class RoleManagerImpl implements RoleManager {
-	@Resource
-	private TRoleDao dao;
 
 	@Override
-	public List<TRole> findAllRoles() {
-		return dao.findAll();
+	public List<RoleType> findAllRoles() {
+		List<RoleType> rList = new ArrayList<RoleType>();
+		for(RoleType rt : RoleType.values()) {
+			rList.add(rt);
+		}
+		return rList;
 	}
 
 	@Override
-	public TRole getById(long id) {
-		return dao.findOne(id);
+	public RoleType getRoleType(String roleName) {
+		return RoleType.valueOf(roleName);
 	}
 
 }

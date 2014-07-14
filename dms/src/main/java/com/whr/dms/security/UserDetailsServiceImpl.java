@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.whr.dms.models.TRole;
 import com.whr.dms.models.TUser;
+import com.whr.dms.models.TUserRole;
 import com.whr.dms.service.UserManager;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -32,8 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //		authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 //		User u = new User(tuser.getLoginName(), tuser.getPassword(), authorities);
 		
-		TRole role = new TRole();
-		role.setName("ROLE_USER");
+		TUserRole role = new TUserRole();
+		role.setRole(RoleType.ROLE_USER);
 		tuser.getRoles().add(role);
 		
 		//获取客户端ip地址

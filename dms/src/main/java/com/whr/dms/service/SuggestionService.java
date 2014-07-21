@@ -44,7 +44,7 @@ public interface SuggestionService {
 	 * @param size
 	 * @return
 	 */
-	public Page<TSuggestion> getSuggestion(SuggestionType type,SuggestionState state, Pageable page);
+	public Page<TSuggestion> findSuggestion(SuggestionType type,SuggestionState state, Pageable page);
 
 	/**
 	 * 在意见中查找

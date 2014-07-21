@@ -3,6 +3,9 @@ package com.whr.dms.web.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,17 +26,18 @@ import com.whr.dms.service.SuggestionReplyService;
 import com.whr.dms.service.SuggestionService;
 
 @Controller
-@SessionAttributes({"s"})
+@SessionAttributes({ "s" })
 @RequestMapping("/suggestion")
 public class SuggestionController {
-	
+
 	@Autowired
 	SuggestionService suggServ;
 	@Autowired
 	SuggestionReplyService srservice;
-	
+
 	/**
 	 * 初始化创建意见表单
+	 * 
 	 * @param m
 	 * @return
 	 */
@@ -45,73 +49,98 @@ public class SuggestionController {
 		m.addAttribute("s", s);
 		return "suggestion/createSuggestion";
 	}
-	
+
 	/**
 	 * 处理创建意见表单
+	 * 
 	 * @param s
 	 * @param bind
 	 * @param status
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public String processCreateForm(@ModelAttribute @Valid TSuggestion s,BindingResult bind,SessionStatus status) {
-		if(bind.hasErrors()) {
-			return "suggestion/createSuggestion"; 
+	public String processCreateForm(@ModelAttribute @Valid TSuggestion s,
+			BindingResult bind, SessionStatus status) {
+		if (bind.hasErrors()) {
+			return "suggestion/createSuggestion";
 		}
-		
+
 		suggServ.saveSuggestion(s);
 		status.setComplete();
 		return "suggestion/list";
 	}
+
 	/**
 	 * 初始化修改意见表单
+	 * 
 	 * @param id
 	 * @param m
 	 * @return
 	 * @throws ParameterCheckException
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String initUpdateForm(@PathVariable long id,Model m) throws ParameterCheckException {
+	public String initUpdateForm(@PathVariable long id, Model m)
+			throws ParameterCheckException {
 		TSuggestion s = suggServ.getById(id);
-		if(s == null) {
+		if (s == null) {
 			throw new ParameterCheckException("未找到此记录");
 		}
-		
-		if(!SecurityUtil.isMe(s.getAuthorId())) {
+
+		if (!SecurityUtil.isMe(s.getAuthorId())) {
 			throw new AccessDeniedException("只有作者本人才能修改");
 		}
-		
-		if(SuggestionState.Public.equals(s.getState())) {
+
+		if (SuggestionState.Public.equals(s.getState())) {
 			throw new AccessDeniedException("意见已经过审核，不能修改。");
 		}
 		m.addAttribute("s", s);
 		return "suggestion/createSuggestion";
 	}
-	
+
 	/**
 	 * 处理意见簿修改表单
+	 * 
 	 * @param s
 	 * @param bind
 	 * @param status
 	 * @return
 	 */
-	public String processUpdateForm(TSuggestion s,BindingResult bind,SessionStatus status) {
-		if(bind.hasErrors()) {
+	public String processUpdateForm(TSuggestion s, BindingResult bind,
+			SessionStatus status) {
+		if (bind.hasErrors()) {
 			return "suggestion/createSuggestion";
 		}
-		
+
 		suggServ.saveSuggestion(s);
 		status.setComplete();
 		return "suggestion/createSuggestion";
 	}
-	
+
 	/**
-	 * 
+	 * 待审核列表
+	 * @param p
+	 * @param m
 	 * @return
 	 */
-	@RequestMapping("/assess/list")
-	public String privateList() {
-		
+	@RequestMapping("/mana/list")
+	public String privateList(@PageableDefault(page = 0, size = 20) Pageable p,
+			Model m) {
+		Page<TSuggestion> result = suggServ.findSuggestion(
+				SuggestionType.Suggestion, SuggestionState.Private, p);
+		m.addAttribute("result", result);
+		return "suggestion/assessList";
+	}
+	
+	/**
+	 * 初始化意见簿管理表单
+	 * 即：初始化意见簿审核、回复的页面
+	 * @param p
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/mana/{id}")
+	public String initAssessForm() {
+		return "suggestion/assessList";
 	}
 
 }

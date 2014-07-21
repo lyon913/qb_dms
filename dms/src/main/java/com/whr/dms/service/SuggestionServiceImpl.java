@@ -69,7 +69,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 	}
 
 	@Override
-	public Page<TSuggestion> getSuggestion(SuggestionType type,
+	public Page<TSuggestion> findSuggestion(SuggestionType type,
 			SuggestionState state, Pageable page) {
 		// TODO Auto-generated method stub
 		return null;

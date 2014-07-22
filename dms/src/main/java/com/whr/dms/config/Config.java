@@ -11,6 +11,5 @@ import org.springframework.stereotype.Component;
 public class Config extends PropertiesConfiguration implements Configuration {
 	public Config() throws ConfigurationException{
 		super("config.properties");
-		Object o;
 	}
 }

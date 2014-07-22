@@ -10,21 +10,21 @@ public interface UserManager {
 	 * 获取全部用户列表
 	 * @return
 	 */
-	public List<TUser> getUserList();
+	public List<TUser> findUserList();
 	
 	/**
 	 * 根据id获取用户
 	 * @param id
 	 * @return
 	 */
-	public TUser getUserById(long id);
+	public TUser findUserById(long id);
 	
 	/**
 	 * 根据登录名获取用户
 	 * @param loginName
 	 * @return
 	 */
-	public TUser getTUserByLoginName(String loginName);
+	public TUser findTUserByLoginName(String loginName);
 	
 	/**
 	 * 保存、更改用户

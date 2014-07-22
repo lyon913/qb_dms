@@ -1,5 +1,6 @@
 package com.whr.dms.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,13 +27,14 @@ public class SuggestionServiceImpl implements SuggestionService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public TSuggestion getById(long id) {
+	public TSuggestion findById(long id) {
 		return sdao.findOne(id);
 	}
 
 	@Override
 	@Transactional
 	public void saveSuggestion(TSuggestion suggestion) {
+		suggestion.setSuggestionDate(new Date());
 		sdao.save(suggestion);
 	}
 

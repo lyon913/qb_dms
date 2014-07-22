@@ -9,18 +9,18 @@
 	modelAttribute="user">
 	<div class="panel">
 		<div class="title">新增用户</div>
-		<table>
+		<table class="formTable">
 			<tr>
-				<td>登录名：</td>
+				<th>登录名：</th>
 				<td><dms:inputText name="loginName" /></td>
 			</tr>
 			<tr>
-				<td>姓名：</td>
+				<th>姓名：</th>
 				<td><dms:inputText name="name" /></td>
 			</tr>
 
 			<tr>
-				<td>科室：</td>
+				<th>科室：</th>
 				<td><form:select path="department" cssClass="select">
 						<form:options items="${departList }" itemLabel="name"
 							itemValue="id" />
@@ -28,7 +28,7 @@
 			</tr>
 			<c:if test="${user.id == null }">
 				<tr>
-					<td>
+					<td colspan="2">
 						<div>新用户默认密码为：1234</div>
 					</td>
 				</tr>
@@ -36,7 +36,7 @@
 			<tr>
 				<td>管理权限：</td>
 				<td><form:checkboxes path="roles" items="${roleList }"
-						itemLabel="displayName" itemValue="id" cssClass="checkbox" /></td>
+						itemLabel="displayName" itemValue="name" cssClass="checkbox" /></td>
 			</tr>
 
 			<tr>

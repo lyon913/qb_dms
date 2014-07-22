@@ -3,10 +3,10 @@ package com.whr.dms.models;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.whr.dms.security.RoleType;
@@ -28,13 +28,13 @@ public class TUserRole extends BaseEntity implements GrantedAuthority{
 	 * 用户
 	 */
 	@ManyToOne(optional = false)
+	@JoinColumn(name = "userId")
 	private TUser user;
 	
 	/**
 	 * 角色名
 	 */
-	@NotEmpty
-	@Size(max = 50)
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private RoleType role;
 
@@ -43,7 +43,7 @@ public class TUserRole extends BaseEntity implements GrantedAuthority{
 	 */
 	@Override
 	public String getAuthority() {
-		return role.name();
+		return role.getName();
 	}
 
 	public TUser getUser() {
@@ -60,6 +60,11 @@ public class TUserRole extends BaseEntity implements GrantedAuthority{
 
 	public void setRole(RoleType role) {
 		this.role = role;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getRole().getName();
 	}
 
 }

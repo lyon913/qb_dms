@@ -92,3 +92,13 @@ span.error{
 .table th {
 	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
 }
+
+.formTable {
+	border: 1px dotted #D5CDB5;
+	width: 100%;
+}
+
+
+.formTable th {
+	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
+}

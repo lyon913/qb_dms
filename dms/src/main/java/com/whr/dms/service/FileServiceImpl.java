@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +15,6 @@ import javax.annotation.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +26,6 @@ import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TFile;
 import com.whr.dms.models.TFile_TDepartment;
 import com.whr.dms.models.TFolder;
-import com.whr.dms.models.TUser;
 import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 

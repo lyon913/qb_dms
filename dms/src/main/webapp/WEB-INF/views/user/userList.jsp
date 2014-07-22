@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <div class="panel">
-	<div class="title">用户列表</div>
+	<div class="title">用户管理</div>
 	<div>
 		<c:url var="addUserUrl" value="/admin/user/new" />
 		<a href="${addUserUrl }" class="btn-normal"> <span
@@ -33,7 +33,7 @@
 				<td width="20%"><c:url var="editUrl"
 						value="/admin/user/${u.id }/edit" /> <a href="${editUrl }"
 					class="btn-normal"> <span class="dijitIconEdit"></span>编辑
-				</a> <c:url var="delUrl" value="/admin/user/${u.id }/edit" /> <a
+				</a> <c:url var="delUrl" value="/admin/user/${u.id }/delete" /> <a
 					href="${delUrl }" class="btn-normal"> <span
 						class="dijitIconDelete"></span>删除
 				</a></td>

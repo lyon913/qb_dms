@@ -10,6 +10,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 public class TSuggestion extends BaseAuditEntity {
 	/**
@@ -19,13 +21,14 @@ public class TSuggestion extends BaseAuditEntity {
 	/**
 	 * 意见簿标题
 	 */
-	@NotNull
-	@Size(min = 1, max = 255)
+	@NotBlank(message = "标题不能为空")
+	@Size(max = 255)
 	private String suggestionTitle;
 	/**
 	 * 作者编号
 	 */
 	private Long authorId;
+	
 	/**
 	 * 日期
 	 */
@@ -35,8 +38,8 @@ public class TSuggestion extends BaseAuditEntity {
 	/**
 	 * 意见簿内容
 	 */
-	@NotNull
-	@Size(min = 1, max = 5000)
+	@NotBlank(message = "内容不能为空")
+	@Size(max = 5000)
 	private String suggestionContent;
 
 	/**
@@ -49,7 +52,6 @@ public class TSuggestion extends BaseAuditEntity {
 	 * 意见类型
 	 */
 	@NotNull
-	@Size(max = 10)
 	@Enumerated(EnumType.STRING)
 	private SuggestionType type;
 
@@ -57,10 +59,8 @@ public class TSuggestion extends BaseAuditEntity {
 	 * 意见簿状态
 	 */
 	@NotNull
-	@Size(max = 10)
 	@Enumerated(EnumType.STRING)
 	private SuggestionState state;
-	
 
 	public String getAuthor() {
 		return author;

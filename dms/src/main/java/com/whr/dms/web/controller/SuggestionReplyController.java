@@ -27,7 +27,7 @@ public class SuggestionReplyController {
 	
 	public TUser getUser(){
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		return u;
 	}
 	
@@ -53,7 +53,7 @@ public class SuggestionReplyController {
 
 	@RequestMapping(value = "/suggestion/createSuggestionReply/{suggestionId}")
 	public String replyCreatePage(@PathVariable long suggestionId,Model model){
-		TSuggestion suggestion = sservice.getById(suggestionId);
+		TSuggestion suggestion = sservice.findById(suggestionId);
 		model.addAttribute("suggestion",suggestion);
 		model.addAttribute("suggestionId",suggestionId);
 		return "suggestion/createSuggestionReply";

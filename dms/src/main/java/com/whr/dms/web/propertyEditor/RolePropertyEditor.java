@@ -13,5 +13,11 @@ public class RolePropertyEditor extends PropertyEditorSupport{
 		ur.setRole(RoleType.valueOf(text));
 		setValue(ur);
 	}
+	
+	@Override
+	public String getAsText() {
+		TUserRole ur = (TUserRole) getValue();
+		return ur.getRole().getName();
+	}
 
 }

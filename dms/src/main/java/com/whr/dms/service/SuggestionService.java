@@ -16,7 +16,7 @@ import com.whr.dms.models.TReply;
 import com.whr.dms.models.TSuggestion;
 
 public interface SuggestionService {
-	public TSuggestion getById(long id);
+	public TSuggestion findById(long id);
 	/**
 	 * 保存意见
 	 * @param suggetion

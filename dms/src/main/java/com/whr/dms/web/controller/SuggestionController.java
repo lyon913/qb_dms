@@ -1,5 +1,7 @@
 package com.whr.dms.web.controller;
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.SuggestionState;
 import com.whr.dms.models.SuggestionType;
 import com.whr.dms.models.TSuggestion;
+import com.whr.dms.models.TUser;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.SuggestionReplyService;
 import com.whr.dms.service.SuggestionService;
@@ -46,6 +49,10 @@ public class SuggestionController {
 		TSuggestion s = new TSuggestion();
 		s.setType(SuggestionType.Suggestion);
 		s.setState(SuggestionState.Private);
+		TUser u = SecurityUtil.getCurrentUser();
+		s.setAuthor(u.getName());
+		s.setAuthorId(u.getId());
+		s.setSuggestionDate(new Date());
 		m.addAttribute("s", s);
 		return "suggestion/createSuggestion";
 	}
@@ -59,7 +66,7 @@ public class SuggestionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public String processCreateForm(@ModelAttribute @Valid TSuggestion s,
+	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s,
 			BindingResult bind, SessionStatus status) {
 		if (bind.hasErrors()) {
 			return "suggestion/createSuggestion";
@@ -81,7 +88,7 @@ public class SuggestionController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public String initUpdateForm(@PathVariable long id, Model m)
 			throws ParameterCheckException {
-		TSuggestion s = suggServ.getById(id);
+		TSuggestion s = suggServ.findById(id);
 		if (s == null) {
 			throw new ParameterCheckException("未找到此记录");
 		}
@@ -105,6 +112,7 @@ public class SuggestionController {
 	 * @param status
 	 * @return
 	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
 	public String processUpdateForm(TSuggestion s, BindingResult bind,
 			SessionStatus status) {
 		if (bind.hasErrors()) {
@@ -118,11 +126,12 @@ public class SuggestionController {
 
 	/**
 	 * 待审核列表
+	 * 
 	 * @param p
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping("/mana/list")
+	@RequestMapping("/assess/list")
 	public String privateList(@PageableDefault(page = 0, size = 20) Pageable p,
 			Model m) {
 		Page<TSuggestion> result = suggServ.findSuggestion(
@@ -130,16 +139,18 @@ public class SuggestionController {
 		m.addAttribute("result", result);
 		return "suggestion/assessList";
 	}
-	
+
 	/**
-	 * 初始化意见簿管理表单
-	 * 即：初始化意见簿审核、回复的页面
+	 * 初始化意见簿管理表单 即：初始化意见簿审核、回复的页面
+	 * 
 	 * @param p
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping("/mana/{id}")
-	public String initAssessForm() {
+	@RequestMapping("/assess/{id}")
+	public String initAssessForm(long id, Model m) {
+		TSuggestion s = suggServ.findById(id);
+		m.addAttribute("s", s);
 		return "suggestion/assessList";
 	}
 

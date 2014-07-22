@@ -102,7 +102,7 @@ public class NoticeController {
 
 	public TUser getUser(){
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		return u;
 	}
 	@Resource
@@ -259,7 +259,7 @@ public class NoticeController {
 		m.addAttribute("noticetypeList",noticetypelist);
 		
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		m.addAttribute("departList", dm.getAllDepartments());
 		m.addAttribute("user", u);
 		return "notice/createNotice";

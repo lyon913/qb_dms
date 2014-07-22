@@ -3,6 +3,7 @@ package com.whr.dms.models;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,7 +29,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @Description 用户实体
  */
 @Entity
-public class TUser extends BaseAuditEntity implements UserDetails{
+public class TUser extends BaseAuditEntity implements UserDetails {
 
 	/**
 	 * 
@@ -39,14 +40,14 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	 * 登录名
 	 */
 	@Column(unique = true)
-	@Pattern(regexp = "([A-Z]|[a-z]|[0-9]|_){1,32}",message = "登录名由1-32位英文、数字或下划线组成")
+	@Pattern(regexp = "([A-Z]|[a-z]|[0-9]|_){1,32}", message = "登录名由1-32位英文、数字或下划线组成")
 	@Size(max = 32)
 	private String loginName;
 
 	/**
 	 * 密码
 	 */
-	@Size(min = 4, max = 16,message = "密码为4-16位任意字符")
+	@Size(min = 4, max = 16, message = "密码为4-16位任意字符")
 	private String password;
 
 	/**
@@ -62,19 +63,17 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	 */
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumns(@JoinColumn(name="departmentId"))
+	@JoinColumns(@JoinColumn(name = "departmentId"))
 	private TDepartment department;
-	
-	
+
 	/**
 	 * 用户角色
 	 */
-	@OneToMany(fetch = FetchType.EAGER)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<TUserRole> roles;
-	
+
 	/**
-	 * 用于记录用户登录系统时的ip，
-	 * 不保存到用户表中
+	 * 用于记录用户登录系统时的ip， 不保存到用户表中
 	 */
 	@Transient
 	private String loginIpAddress;
@@ -111,7 +110,7 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	public void setDepartment(TDepartment department) {
 		this.department = department;
 	}
-	
+
 	public List<TUserRole> getRoles() {
 		return roles;
 	}
@@ -129,7 +128,7 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	public String getUsername() {
 		return loginName;
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -149,7 +148,6 @@ public class TUser extends BaseAuditEntity implements UserDetails{
 	public boolean isEnabled() {
 		return true;
 	}
-	
 
 	public String getLoginIpAddress() {
 		return loginIpAddress;

@@ -2,52 +2,73 @@ package com.whr.dms.service;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.whr.dms.dao.TDepartmentDao;
 import com.whr.dms.dao.TUserDao;
+import com.whr.dms.dao.TUserRoleDao;
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TDepartment;
 import com.whr.dms.models.TUser;
+import com.whr.dms.models.TUserRole;
 
 @Service
 public class UserManagerImpl implements UserManager {
-	@Resource
+	@Autowired
 	TUserDao uDao;
-	
-	@Resource
+
+	@Autowired
+	TUserRoleDao urDao;
+
+	@Autowired
 	TDepartmentDao dDao;
 
 	@Override
-	public List<TUser> getUserList() {
-		Sort sort = new Sort("department.name","name");
+	public List<TUser> findUserList() {
+		Sort sort = new Sort("department.name", "name");
 		return uDao.findAll(sort);
 	}
 
 	@Override
-	public TUser getUserById(long id) {
+	public TUser findUserById(long id) {
 		return uDao.findOne(id);
 	}
 
 	@Override
-	public TUser getTUserByLoginName(String loginName) {
+	public TUser findTUserByLoginName(String loginName) {
 		return uDao.getUserByLoginName(loginName);
 	}
 
 	@Override
 	@Transactional
 	public void saveUser(TUser u) throws ParameterCheckException {
-		if(u.getId() == null) {
-			TUser userExists = uDao.getUserByLoginName(u.getLoginName());
-			if(userExists != null) {
-				throw new ParameterCheckException("用户已存在");
+		if (u != null) {
+			//新建的用户
+			if (u.getId() == null) {
+				//判断用户名是否存在
+				TUser userExists = uDao.getUserByLoginName(u.getLoginName());
+				if (userExists != null) {
+					throw new ParameterCheckException("用户已存在");
+				}
+			}else {
+				//修改已存在的用户
+				//删除之前关联的角色
+				urDao.deleteByUserId(u.getId());
 			}
+
+			// 设置新保存的角色关联关系
+			if (u.getRoles() != null && u.getRoles().size() > 0) {
+				for (TUserRole ur : u.getRoles()) {
+					ur.setUser(u);
+				}
+			}
+			
+			//级联保存用户和角色
+			uDao.save(u);
 		}
-		uDao.save(u);
 	}
 
 	@Override

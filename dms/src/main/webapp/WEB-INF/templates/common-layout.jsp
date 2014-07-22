@@ -8,9 +8,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>丘北县人民医院内网信息共享平台</title>
+<link rel="stylesheet"
+	href="<c:url value='/resources/js/dojo-release-1.7.3/dojo/resources/dojo.css'/>" />
+<link rel="stylesheet"
+	href="<c:url value='/resources/js/dojo-release-1.7.3/dijit/themes/soria/soria.css'/>" />
+<link rel="stylesheet"
+	href="<c:url value='/resources/js/dojo-release-1.7.3/dojox/grid/enhanced/resources/EnhancedGrid.css'/>" />
+<link rel="stylesheet"
+	href="<c:url value='/resources/js/dojo-release-1.7.3/dojox/grid/resources/soriaGrid.css'/>" />
 <link rel="stylesheet" href="<c:url value='/resources/css/public.css'/>" />
 <link rel="stylesheet" href="<c:url value='/resources/css/themes/soria/soria.css'/>" />
 
+<script type="text/javascript"
+	src="<c:url value='/resources/js/dojo-release-1.7.3/dojo/dojo.js'/>"
+	data-dojo-config="parseOnLoad:true"></script>
 <script type="text/javascript"
 	src="<c:url value='/resources/js/utils.js'/>"></script>
 
@@ -25,13 +36,13 @@ html,body {
 </style>
 
 <script type="text/javascript">
-	//dojo.require("dijit/layout/ContentPane");
-	//dojo.require("dijit/layout/BorderContainer");
-	//dojo.require("dijit/layout/AccordionContainer");
-	//dojo.require("dijit/form/Button");
-	//dojo.require("dijit/Menu");
-	//dojo.require("dijit/Dialog");
-	//dojo.require("dojo/date/locale");
+	dojo.require("dijit/layout/ContentPane");
+	dojo.require("dijit/layout/BorderContainer");
+	dojo.require("dijit/layout/AccordionContainer");
+	dojo.require("dijit/form/Button");
+	dojo.require("dijit/Menu");
+	dojo.require("dijit/Dialog");
+	dojo.require("dojo/date/locale");
 </script>
 </head>
 <body class="soria">

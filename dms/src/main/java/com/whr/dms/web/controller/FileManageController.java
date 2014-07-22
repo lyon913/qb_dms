@@ -62,7 +62,7 @@ public class FileManageController {
 	
 	public TUser getUser(){
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		return u;
 	}
 
@@ -70,7 +70,7 @@ public class FileManageController {
 	public String filePage(Model m) {
 		//check permissions
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		m.addAttribute("departList", dm.getAllDepartments());
 		m.addAttribute("user", u);
 		return "files/files";

@@ -21,7 +21,7 @@ public class HomeController {
 	
 	public TUser getUser(){
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		return u;
 	}
 	

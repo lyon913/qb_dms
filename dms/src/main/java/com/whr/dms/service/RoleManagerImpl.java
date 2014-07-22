@@ -14,7 +14,8 @@ public class RoleManagerImpl implements RoleManager {
 	public List<RoleType> findAllRoles() {
 		List<RoleType> rList = new ArrayList<RoleType>();
 		for(RoleType rt : RoleType.values()) {
-			rList.add(rt);
+			if(!rt.equals(RoleType.ROLE_USER))
+				rList.add(rt);
 		}
 		return rList;
 	}

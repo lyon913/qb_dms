@@ -66,7 +66,7 @@ public class UserController {
 	 */
 	@RequestMapping("/list")
 	public String list(Model m) {
-		m.addAttribute("userList", um.getUserList());
+		m.addAttribute("userList", um.findUserList());
 		return "user/userList";
 	}
 
@@ -115,7 +115,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/{id}/edit" , method = RequestMethod.GET)
 	public String initEditUserForm(@PathVariable long id, Model m) {
-		TUser user = um.getUserById(id);
+		TUser user = um.findUserById(id);
 		m.addAttribute("user", user);
 		return "user/userEdit";
 	}
@@ -145,18 +145,10 @@ public class UserController {
 		return "forward:/admin/user/list";
 	}
 
-	@RequestMapping(value = "/del/{id}")
+	@RequestMapping(value = "/{id}/delete")
 	public String del(@PathVariable long id) {
 		um.deleteUser(id);
 		return "forward:/admin/user/list";
 	}
-
-	@RequestMapping(value = "/edit")
-	public String prePareEdit(Model m) {
-		m.addAttribute("departList", dm.getAllDepartments());
-		return "user/userEdit";
-	}
-
-
 
 }

@@ -95,7 +95,7 @@ public class PublicNewsController {
 
 	public TUser getUser(){
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		return u;
 	}
 	@Resource
@@ -220,7 +220,7 @@ public class PublicNewsController {
 		TNotice n = ns.getById(id);
 		m.addAttribute("publicnews", n);	
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
-		TUser u = um.getTUserByLoginName(username);
+		TUser u = um.findTUserByLoginName(username);
 		m.addAttribute("user", u);
 		List<TNoticeType> noticetypelist = nts.getAllList(new Long(2)) ;
 		m.addAttribute("publicnewstypeList",noticetypelist);

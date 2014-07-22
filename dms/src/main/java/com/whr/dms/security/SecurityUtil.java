@@ -70,4 +70,8 @@ public class SecurityUtil {
 		long myId = getCurrentUser().getId();
 		return myId == userId;
 	}
+	
+	public static long getUserId() {
+		return getCurrentUser().getId();
+	}
 }

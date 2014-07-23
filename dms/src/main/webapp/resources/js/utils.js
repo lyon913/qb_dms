@@ -19,3 +19,11 @@ function byteSizeFormatter(data){
 	var result = new Number(data/1024/1024);
 	return result.toFixed(2);
 }
+
+
+function onPageSelected(page,size,formId){
+	var form = document.getElementById(formId);
+	form["page"]=page;
+	form["size"]=size;
+	form.submit();
+}

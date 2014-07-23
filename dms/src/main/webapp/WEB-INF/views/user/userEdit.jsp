@@ -42,7 +42,8 @@
 			<tr>
 				<td colspan="2" align="center">
 					<button type="submit" class="btn-normal">
-						<span class="dijitIconSave"></span>保存
+						<span class="dijitIconSave"></span>
+						保存
 					</button>
 					
 					<c:url var="listUrl" value="/admin/user/list"/>

@@ -15,6 +15,8 @@
 	href="<c:url value='/resources/js/dojo-release-1.7.3/dijit/themes/soria/soria.css'/>" />
 <link rel="stylesheet"
 	href="<c:url value='/resources/css/public.css'/>" />
+<link rel="stylesheet" href="<c:url value='/resources/css/themes/soria/soria.css'/>" />
+
 
 <script type="text/javascript"
 	src="<c:url value='/resources/js/dojo-release-1.7.3/dojo/dojo.js'/>"
@@ -65,6 +67,10 @@ html,body {
 	background-repeat:repeat;
 }
 
+#leftAccordion div,td{
+	font-family:"宋体"!important;
+}
+
 
 </style>
 </head>
@@ -95,8 +101,8 @@ html,body {
 			data-dojo-props="minSize:30, region:'leading', splitter:true,persist:true"
 			style="width: 200px;font-size:20px" id="leftAccordion">
 			<div data-dojo-type="dijit.layout.AccordionPane" title="功能导航"
-				 style="padding: 0px">
-				<div id="navMenu" data-dojo-type="dijit.Menu" style="width: 100%;font-family: 宋体">
+				 style='padding: 0px;'>
+				<div id="navMenu" data-dojo-type="dijit.Menu" style='width: 100%;'>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("/home"); }'>首页</div>
@@ -111,7 +117,7 @@ html,body {
 						onClick:function(){ go("/publicnews/pubMana");  }'>院务政务公开</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){go("/files");}'>文件下载</div>
+						onClick:function(){go("/files");}'>文件共享</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){go("/software/list");}'>软件下载</div>
@@ -127,7 +133,7 @@ html,body {
 						onClick:function(){ go("/notice/manage/1");  }'>通知管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/publicnews/manage/2");  }'>院务政务公开信息管理</div>
+						onClick:function(){ go("/publicnews/manage/2");  }'>院务政务管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("/software/softwareMana"); }'>软件管理</div>

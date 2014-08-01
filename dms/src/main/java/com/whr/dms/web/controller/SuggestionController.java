@@ -153,5 +153,10 @@ public class SuggestionController {
 		m.addAttribute("s", s);
 		return "suggestion/assessList";
 	}
+	
+	@RequestMapping(value = "/public", method = RequestMethod.GET)
+	public String publicList() {
+		return "suggestion/public";
+	}
 
 }

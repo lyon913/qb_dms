@@ -17,6 +17,14 @@
 			<beans:bean
 				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
 		</message-converters>
+		
+				<!-- 分页参数 -->
+		<argument-resolvers>
+			<beans:bean
+				class="org.springframework.data.web.PageableHandlerMethodArgumentResolver">
+				<beans:property name="maxPageSize" value="100"/>
+			</beans:bean>
+		</argument-resolvers>
 	</annotation-driven>
 
 

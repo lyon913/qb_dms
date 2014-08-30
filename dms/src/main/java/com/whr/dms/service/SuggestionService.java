@@ -68,5 +68,12 @@ public interface SuggestionService {
 	 */
 	public void replyPrivate(long suggestionId, TReply reply);
 	
+	/**
+	 * 查找指定用户的意见
+	 * @param userId
+	 * @return
+	 */
+	public Page<TSuggestion> findUserSuggesions(Long userId, String title, SuggestionType type, Pageable p);
+	
 	
 }

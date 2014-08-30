@@ -17,6 +17,7 @@
 <link rel="stylesheet"
 	href="<c:url value='/resources/js/dojo-release-1.7.3/dojox/grid/resources/soriaGrid.css'/>" />
 <link rel="stylesheet" href="<c:url value='/resources/css/public.css'/>" />
+<link rel="stylesheet" href="<c:url value='/resources/css/pagination.css'/>" />
 <link rel="stylesheet" href="<c:url value='/resources/css/themes/soria/soria.css'/>" />
 
 <script type="text/javascript"

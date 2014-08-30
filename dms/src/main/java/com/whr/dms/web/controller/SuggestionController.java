@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -54,7 +56,7 @@ public class SuggestionController {
 		s.setAuthorId(u.getId());
 		s.setSuggestionDate(new Date());
 		m.addAttribute("s", s);
-		return "suggestion/createSuggestion";
+		return "suggestion/createOrUpdate";
 	}
 
 	/**
@@ -69,12 +71,12 @@ public class SuggestionController {
 	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s,
 			BindingResult bind, SessionStatus status) {
 		if (bind.hasErrors()) {
-			return "suggestion/createSuggestion";
+			return "suggestion/createOrUpdate";
 		}
 
 		suggServ.saveSuggestion(s);
 		status.setComplete();
-		return "suggestion/list";
+		return "redirect:/suggestion/list/my";
 	}
 
 	/**
@@ -125,6 +127,24 @@ public class SuggestionController {
 	}
 
 	/**
+	 * 用户本人的意见列表
+	 * 
+	 * @param p
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/list/my")
+	public String myList(
+			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
+			@RequestParam(required = false)String key, Model m) {
+		long userId = SecurityUtil.getUserId();
+		Page<TSuggestion> result = suggServ.findUserSuggesions(userId, key, SuggestionType.Suggestion, p);
+		m.addAttribute("result", result);
+		m.addAttribute("key", key);
+		return "suggestion/mySuggestionList";
+	}
+
+	/**
 	 * 待审核列表
 	 * 
 	 * @param p
@@ -153,7 +173,7 @@ public class SuggestionController {
 		m.addAttribute("s", s);
 		return "suggestion/assessList";
 	}
-	
+
 	@RequestMapping(value = "/public", method = RequestMethod.GET)
 	public String publicList() {
 		return "suggestion/public";

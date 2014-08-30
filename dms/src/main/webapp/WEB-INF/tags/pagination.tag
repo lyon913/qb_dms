@@ -15,28 +15,27 @@ function _onPageSelected(page,size,formId){
 </script>
 <div class="pagination" align="center">
 	<br>
-	<c:choose>
-		<c:when test="${page.number <= 0 || page.totalElements == null}">
-			<span class="current prev">第一页</span>
-			<span class="current prev">上一页</span>
-		</c:when>
-		<c:otherwise>
+	<c:if test="${page.totalElements <=0 || page.number <= 0}">
+			<a class="current prev">第一页</a>
+			<a class="current prev">上一页</a>
+	</c:if>
+	
+	<c:if test="${page.totalElements >0 && page.number > 0}">
 			<a href="###" onclick="_onPageSelected(0,${page.size},'${formId}')">第一页</a>
-			<a href="###"
-				onclick="_onPageSelected(${page.number - 1},${page.size},'${formId}')">上一页</a>
-		</c:otherwise>
-	</c:choose>
-	<span class="info">${page.size*page.number+1}-${page.size*page.number+page.numberOfElements}[共${page.totalElements }条记录]&nbsp;&nbsp;[第${page.number + 1}页/共${page.totalPages}页]</span>
-	<c:choose>
-		<c:when test="${page.totalElements == null || (page.number + 1 >= page.totalPages)} ">
-			<span class="current next">下一页</span>
-			<span class="current next">最末页</span>
-		</c:when>
-		<c:otherwise>
-			<a href="###"
-				onclick="_onPageSelected(${page.number + 1},${page.size},'${formId}')">下一页</a>
-			<a href="###"
-				onclick="_onPageSelected(${page.totalPages - 1},${page.size},'${formId}')">最末页</a>
-		</c:otherwise>
-	</c:choose>
+			<a href="###" onclick="_onPageSelected(${page.number - 1},${page.size},'${formId}')">上一页</a>
+	</c:if>
+		<span class="info">${page.size*page.number+1}-${page.size*page.number+page.numberOfElements}[共${page.totalElements }条记录]&nbsp;&nbsp;[第${page.number + 1}页/共${page.totalPages}页]</span>
+	<c:if
+		test="${page.totalElements == 0 || page.number + 1 >= page.totalPages}">
+		<a class="current next">下一页</a>
+		<a class="current next">最末页</a>
+	</c:if>
+
+	<c:if test="${page.number + 1 < page.totalPages}">
+		<a href="###"
+			onclick="_onPageSelected(${page.number + 1},${page.size},'${formId}')">下一页</a>
+		<a href="###"
+			onclick="_onPageSelected(${page.totalPages - 1},${page.size},'${formId}')">最末页</a>
+	</c:if>
+
 </div>

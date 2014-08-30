@@ -14,7 +14,7 @@ public enum SuggestionState {
 	/**
 	 * 未公开的
 	 */
-	Private("未公开");
+	Private("待审核");
 	
 	private String displayName;
 	

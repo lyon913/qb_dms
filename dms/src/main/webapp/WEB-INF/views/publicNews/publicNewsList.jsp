@@ -64,9 +64,22 @@ dojo.ready(function(){
 });
 
 function optionFormatter(id){
-	return "<a href='<%=request.getContextPath()%>/publicnews/" + id
-				+ "'>阅读</button>";
+	
+	return new dijit.form.Button({label:"阅读",  onClick: function() { 
+		readPublicNews(id);
+    } });
 	}
+	
+function readPublicNews(id){
+	var scrWidth = screen.width * 0.9;
+	var scrHeight = screen.height * 0.9;
+	
+	var scrWidth1 = scrWidth+"px";
+	var scrHeight1 = scrHeight+"px";
+	var url = "<%=request.getContextPath()%>/publicnews/" + id;
+	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
+}
+
 
 	function search(key) {
 		//var form = dijit.byId("search_form");

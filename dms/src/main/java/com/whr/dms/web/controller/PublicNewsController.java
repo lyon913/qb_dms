@@ -41,11 +41,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.whr.dms.models.ClickType;
 import com.whr.dms.models.TNotice;
 import com.whr.dms.models.TNoticeAttachment;
 import com.whr.dms.models.TNoticeType;
 import com.whr.dms.models.TUser;
 import com.whr.dms.security.SecurityUtil;
+import com.whr.dms.service.ClickCountService;
 import com.whr.dms.service.DepartmentManager;
 import com.whr.dms.service.NoticeService;
 import com.whr.dms.service.NoticeTypeService;
@@ -114,6 +116,9 @@ public class PublicNewsController {
 	
 	@Resource
 	NoticeTypeService nts;
+	
+	@Resource
+	ClickCountService ccs;
 
 	/**
 	 * 院务政务公开信息列表页面
@@ -279,6 +284,8 @@ public class PublicNewsController {
 	public String publicNewsRead(@PathVariable long id,Model m){
 		TNotice n = ns.getById(id);
 		m.addAttribute("publicnews", n);
+		Long counts = ccs.saveClickCount(ClickType.TNotice,id); //点击次数
+		m.addAttribute("counts", counts);
 		return "publicNews/readPublicNews";
 	}
 	

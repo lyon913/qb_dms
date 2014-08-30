@@ -6,7 +6,7 @@
         userId bigint not null,
         loginName varchar(32) not null,
         userName varchar(20),
-        longinTime datetime not null,
+        loginTime datetime not null,
         ipAddress varchar(20),
         primary key (id)
     );

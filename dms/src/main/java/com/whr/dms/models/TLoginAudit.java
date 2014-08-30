@@ -46,7 +46,7 @@ public class TLoginAudit extends BaseEntity implements Serializable {
 	 * 登陆时间
 	 */
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date longinTime;
+	private Date loginTime;
 
 	/**
 	 * 登陆ip地址
@@ -63,7 +63,7 @@ public class TLoginAudit extends BaseEntity implements Serializable {
 		this.userId = user.getId();
 		this.userName = user.getName();
 		this.loginName = user.getLoginName();
-		this.longinTime = new Date();
+		this.loginTime = new Date();
 		this.ipAddress = user.getLoginIpAddress();
 	}
 
@@ -92,12 +92,12 @@ public class TLoginAudit extends BaseEntity implements Serializable {
 		this.userName = userName;
 	}
 
-	public Date getLonginTime() {
-		return longinTime;
+	public Date getLoginTime() {
+		return loginTime;
 	}
 
-	public void setLonginTime(Date longinTime) {
-		this.longinTime = longinTime;
+	public void setLoginTime(Date longinTime) {
+		this.loginTime = longinTime;
 	}
 
 	public String getIpAddress() {

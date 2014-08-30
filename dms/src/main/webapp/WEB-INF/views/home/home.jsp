@@ -101,7 +101,15 @@
 
 	<div data-dojo-type="dojox.widget.Portlet" title="日历">
 		<div data-dojo-type="dojox.widget.Calendar"></div>
-
+		<ul>
+		<li>
+		网站总登录量（次）：${totalCounts }
+		</li>
+		<li>
+		当天登录用户量（次）：${curDayCounts }
+		</li>
+		</ul>
+		
 	</div>
 
 </div>

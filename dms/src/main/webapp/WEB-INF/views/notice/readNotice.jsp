@@ -47,7 +47,7 @@
 		dojo.xhrPost(xhrArgs);
 	}
 </script>
-<div data-dojo-type="dijit.TitlePane" title="查看通知<font color=red>『${notice.title}』</font>" style="width:100%; height:100%; overflow: auto">
+<div data-dojo-type="dijit.TitlePane" title="查看通知<font color=red>『${notice.title}』</font> 点击次数：${counts}" style="width:100%; height:100%; overflow: auto">
 		<table border="0" width="95%">
 			<tr>
 				<td>${notice.content}</td>
@@ -58,11 +58,10 @@
 						</ul>
 					</div></td>
 			</tr>
-		</table>
-		<table border="0" width="95%">
-		<tr>
+			<tr>
 				<td align="right">发布科室：${notice.author}&nbsp;&nbsp;&nbsp;&nbsp;最近一次更新时间：${notice.publishDate }</td>
 			</tr>
 		</table>
+		
 	<button type="button" data-dojo-type="dijit.form.Button" onclick="goToNoticeList();" data-dojo-props="iconClass:'dijitEditorIcon dijitEditorIconUndo'">返回列表</button>
 </div>

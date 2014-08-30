@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.whr.dms.models.TUser;
 import com.whr.dms.security.SecurityUtil;
+import com.whr.dms.service.AuditService;
 import com.whr.dms.service.PortletService;
 import com.whr.dms.service.UserManager;
 
@@ -15,6 +16,9 @@ import com.whr.dms.service.UserManager;
 public class HomeController {
 	@Resource
 	PortletService ps;
+	
+	@Resource
+	AuditService as;
 	
 	@Resource
 	UserManager um;
@@ -39,6 +43,8 @@ public class HomeController {
 		mv.addObject("latestSuggestions", ps.getLatestSuggestion(10));
 		mv.addObject("latestPubNews",ps.getLatestPubNews(10));
 		mv.addObject("latestSoftwares",ps.getLatestSoftware(10));
+		mv.addObject("totalCounts",as.getLoginCounts());
+		mv.addObject("curDayCounts", as.getLoginCountsCurDay());
 		mv.setViewName("home/home");
 		return mv;
 	}

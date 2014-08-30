@@ -1,5 +1,7 @@
 package com.whr.dms.service;
 
+import java.util.Date;
+
 import com.whr.dms.models.TUser;
 
 public interface AuditService {
@@ -9,4 +11,15 @@ public interface AuditService {
 	 */
 	public void logUserLogin(TUser user);
 
+	/**
+	 * 获取用户登录总数
+	 * @return
+	 */
+	public Long getLoginCounts();
+	
+	/**
+	 * 获取用户当天登录次数
+	 * @return
+	 */
+	public Long getLoginCountsCurDay();
 }

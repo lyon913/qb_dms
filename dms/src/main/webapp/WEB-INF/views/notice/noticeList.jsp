@@ -73,9 +73,12 @@ function optionFormatter(id){
 
 function readNotice(id){
 	var scrWidth = screen.width * 0.9;
-	var scrHeight = screen.height * 0.7;
+	var scrHeight = screen.height * 0.9;
+	
+	var scrWidth1 = scrWidth+"px";
+	var scrHeight1 = scrHeight+"px";
 	var url = "<%=request.getContextPath()%>/notice/" + id;
-	window.showModalDialog(url,null,"dialogWidth=" + scrWidth + ";dialogHeight="+ scrHeight+";center=yes;");
+	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
 }
 
 	function search(key) {

@@ -45,6 +45,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.whr.dms.config.Config;
+import com.whr.dms.models.ClickType;
 import com.whr.dms.models.TDepartment;
 import com.whr.dms.models.TNotice;
 import com.whr.dms.models.TNoticeAttachment;
@@ -52,6 +53,7 @@ import com.whr.dms.models.TNoticeType;
 import com.whr.dms.models.TNotice_TDepartment;
 import com.whr.dms.models.TUser;
 import com.whr.dms.security.SecurityUtil;
+import com.whr.dms.service.ClickCountService;
 import com.whr.dms.service.DepartmentManager;
 import com.whr.dms.service.NoticeService;
 import com.whr.dms.service.NoticeTypeService;
@@ -124,6 +126,9 @@ public class NoticeController {
 
 	@Resource
 	Config cfg;
+	
+	@Resource
+	ClickCountService ccs;
 	/**
 	 * 通知列表页面
 	 * @return
@@ -347,6 +352,8 @@ public class NoticeController {
 	public String noticeRead(@PathVariable long id,Model m){
 		TNotice n = ns.getById(id);
 		m.addAttribute("notice", n);
+		Long counts = ccs.saveClickCount(ClickType.TNotice,id);//增加点击次数
+		m.addAttribute("counts",counts);
 		return "notice/readNotice";
 	}
 	

@@ -58,7 +58,7 @@ dojo.require("dijit.TitlePane");
 <form id="publicnews_form" data-dojo-type="dijit.form.Form" action="">
 <input id="publicnews_id" name="id" type="hidden" value="${publicnews.id }">
 </form>
-<div data-dojo-type="dijit.TitlePane" title="查看院务政务公开信息<font color=red>『${publicnews.title}』</font>" style="width:100%; height:100%; overflow: auto">
+<div data-dojo-type="dijit.TitlePane" title="查看院务政务公开信息<font color=red>『${publicnews.title}』</font> 点击次数：${counts}" style="width:100%; height:100%; overflow: auto">
 		<table border="0" width="95%">
 			<tr>
 				<td>${publicnews.content}</td>

@@ -5,9 +5,9 @@
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
 <div class="panel">
 	<div class="title">
-		<span>意见簿</span>
+		<span>我的意见</span>
 		<span style="float: right;">
-			<a href="###">我的意见</a>
+			<a href="###">院长信箱</a>
 			<c:url var="newUrl" value="/suggestion/new"/>
 			<a href="${newUrl }">提出意见</a>
 		</span>
@@ -36,6 +36,8 @@
 					<td width="10%">${s.state.displayName }</td>
 					<td width="10%">
 						<a href="###" onclick="">查看</a>
+						<a href="###" onclick="">编辑</a>
+						<a href="###" onclick="">删除</a>
 					</td>
 				</tr>
 

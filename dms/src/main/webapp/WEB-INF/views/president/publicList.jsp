@@ -5,7 +5,7 @@
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
 <div class="panel">
 	<div class="title">
-		<span>意见簿</span>
+		<span>院长信箱</span>
 		<span style="float: right;">
 			<a href="###">我的意见</a>
 			<c:url var="newUrl" value="/suggestion/new"/>

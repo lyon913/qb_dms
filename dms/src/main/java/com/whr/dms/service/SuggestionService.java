@@ -44,7 +44,7 @@ public interface SuggestionService {
 	 * @param size
 	 * @return
 	 */
-	public Page<TSuggestion> findSuggestion(SuggestionType type,SuggestionState state, Pageable page);
+	public Page<TSuggestion> findSuggestion(String key,SuggestionType type,SuggestionState state, Pageable page);
 
 	/**
 	 * 在意见中查找
@@ -74,6 +74,7 @@ public interface SuggestionService {
 	 * @return
 	 */
 	public Page<TSuggestion> findUserSuggesions(Long userId, String title, SuggestionType type, Pageable p);
+	
 	
 	
 }

@@ -144,6 +144,25 @@ public class SuggestionController {
 		return "suggestion/mySuggestionList";
 	}
 
+
+	/**
+	 * 意见公共列表
+	 * 
+	 * @param p
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/list/public")
+	public String publicList(
+			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
+			@RequestParam(required = false)String key, Model m) {
+	
+		Page<TSuggestion> result = suggServ.findSuggestion(key,SuggestionType.Suggestion, SuggestionState.Public, p);
+		m.addAttribute("result", result);
+		m.addAttribute("key", key);
+		return "suggestion/publicList";
+	}
+	
 	/**
 	 * 待审核列表
 	 * 
@@ -152,9 +171,9 @@ public class SuggestionController {
 	 * @return
 	 */
 	@RequestMapping("/assess/list")
-	public String privateList(@PageableDefault(page = 0, size = 20) Pageable p,
+	public String privateList(@PageableDefault(page = 0, size = 20) Pageable p,@RequestParam(required = false)String key,
 			Model m) {
-		Page<TSuggestion> result = suggServ.findSuggestion(
+		Page<TSuggestion> result = suggServ.findSuggestion(key,
 				SuggestionType.Suggestion, SuggestionState.Private, p);
 		m.addAttribute("result", result);
 		return "suggestion/assessList";

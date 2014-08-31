@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -55,9 +57,9 @@ public class PresidentController {
 		m.addAttribute("s", s);
 		return "president/createOrUpdate";
 	}
-
+	
 	/**
-	 * 处理创建院长信箱意见表单
+	 * 处理创建院长信箱表单
 	 * 
 	 * @param s
 	 * @param bind
@@ -68,93 +70,47 @@ public class PresidentController {
 	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s,
 			BindingResult bind, SessionStatus status) {
 		if (bind.hasErrors()) {
-			return "president/createPresident";
+			return "president/createOrUpdate";
 		}
 
 		suggServ.saveSuggestion(s);
 		status.setComplete();
-		return "president/list";
-	}
-
-	/**
-	 * 初始化修改院长信箱意见表单
-	 * 
-	 * @param id
-	 * @param m
-	 * @return
-	 * @throws ParameterCheckException
-	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String initUpdateForm(@PathVariable long id, Model m)
-			throws ParameterCheckException {
-		TSuggestion s = suggServ.findById(id);
-		if (s == null) {
-			throw new ParameterCheckException("未找到此记录");
-		}
-
-		if (!SecurityUtil.isMe(s.getAuthorId())) {
-			throw new AccessDeniedException("只有作者本人才能修改");
-		}
-
-		if (SuggestionState.Public.equals(s.getState())) {
-			throw new AccessDeniedException("意见已经过审核，不能修改。");
-		}
-		m.addAttribute("s", s);
-		return "president/createPresident";
-	}
-
-	/**
-	 * 处理院长信箱修改表单
-	 * 
-	 * @param s
-	 * @param bind
-	 * @param status
-	 * @return
-	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public String processUpdateForm(TSuggestion s, BindingResult bind,
-			SessionStatus status) {
-		if (bind.hasErrors()) {
-			return "president/createPresident";
-		}
-
-		suggServ.saveSuggestion(s);
-		status.setComplete();
-		return "president/createPresident";
-	}
-
-	/**
-	 * 待审核列表
-	 * 
-	 * @param p
-	 * @param m
-	 * @return
-	 */
-	@RequestMapping("/assess/list")
-	public String privateList(@PageableDefault(page = 0, size = 20) Pageable p,
-			Model m) {
-		Page<TSuggestion> result = suggServ.findSuggestion(
-				SuggestionType.President, SuggestionState.Private, p);
-		m.addAttribute("result", result);
-		return "president/assessList";
-	}
-
-	/**
-	 * 初始化院长信箱管理表单 即：初始化院长信箱审核、回复的页面
-	 * 
-	 * @param p
-	 * @param m
-	 * @return
-	 */
-	@RequestMapping("/assess/{id}")
-	public String initAssessForm(long id, Model m) {
-		TSuggestion s = suggServ.findById(id);
-		m.addAttribute("s", s);
-		return "president/assessList";
+		return "redirect:/president/list/my";
 	}
 	
-	@RequestMapping(value = "/public", method = RequestMethod.GET)
-	public String publicList() {
-		return "president/public";
+	/**
+	 * 用户本人的意见列表
+	 * 
+	 * @param p
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/list/my")
+	public String myList(
+			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
+			@RequestParam(required = false)String key, Model m) {
+		long userId = SecurityUtil.getUserId();
+		Page<TSuggestion> result = suggServ.findUserSuggesions(userId, key, SuggestionType.President, p);
+		m.addAttribute("result", result);
+		m.addAttribute("key", key);
+		return "president/myPresidentList";
+	}
+
+	/**
+	 * 意见公共列表
+	 * 
+	 * @param p
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/list/public")
+	public String publicList(
+			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
+			@RequestParam(required = false)String key, Model m) {
+	
+		Page<TSuggestion> result = suggServ.findSuggestion(key,SuggestionType.President, SuggestionState.Public, p);
+		m.addAttribute("result", result);
+		m.addAttribute("key", key);
+		return "president/publicList";
 	}
 }

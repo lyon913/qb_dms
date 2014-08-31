@@ -100,7 +100,8 @@
 
 
 	<div data-dojo-type="dojox.widget.Portlet" title="日历">
-		<div data-dojo-type="dojox.widget.Calendar"></div>
+		<div data-dojo-type="dojox.widget.Calendar" style="display: inline-block;"></div>
+		<div style="display: inline-block;">
 		<ul>
 		<li>
 		网站总登录量（次）：${totalCounts }
@@ -109,7 +110,7 @@
 		当天登录用户量（次）：${curDayCounts }
 		</li>
 		</ul>
-		
+		</div>
 	</div>
 
 </div>

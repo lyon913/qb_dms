@@ -71,10 +71,14 @@ public class SuggestionServiceImpl implements SuggestionService {
 
 	}
 
+	/**
+	 * 查询某状态下的意见列表
+	 */
 	@Override
-	public Page<TSuggestion> findSuggestion(SuggestionType type,
+	public Page<TSuggestion> findSuggestion(String key,SuggestionType type,
 			SuggestionState state, Pageable page) {
-		return null;
+		Page<TSuggestion> sp = sdao.search(key, type, state, page);
+		return sp;
 	}
 
 	@Override

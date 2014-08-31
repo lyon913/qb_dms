@@ -50,7 +50,8 @@ function readSuggestion(id){
 						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
 						<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
 						<a href="${editUrl }">编辑</a>
-						<a href="###" onclick="">删除</a>
+						<c:url var="delUrl" value='/suggestion/${s.id }/del'/>
+						<a href="${delUrl }">删除</a>
 					</td>
 				</tr>
 

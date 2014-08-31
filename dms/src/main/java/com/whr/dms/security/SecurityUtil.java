@@ -42,7 +42,7 @@ public class SecurityUtil {
 	 * @param role
 	 * @return
 	 */
-	public static boolean hasRole(String role) {
+	public static boolean hasRole(RoleType role) {
 		//空值直接返回否
 		if(StringUtils.isEmpty(role)) {
 			return false;
@@ -51,7 +51,7 @@ public class SecurityUtil {
 		//遍历当前用户权限并判断
 		Collection<? extends GrantedAuthority> authorities = getCurrentUserDetials().getAuthorities();
 		for(GrantedAuthority a : authorities) {
-			if(role.equals(a.getAuthority())) {
+			if(role.getName().equals(a.getAuthority())) {
 				//权限判断肯定
 				return true;
 			}

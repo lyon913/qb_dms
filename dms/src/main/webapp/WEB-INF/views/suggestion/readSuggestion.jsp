@@ -11,12 +11,13 @@
 	dojo.require("dijit.TitlePane");
 
 	function goToSuggestionList() {
-		window.location.href = "<c:url value='/suggestion/suggestionMana'/>";
+		window.close();
+		history.back();
 	}
 
-	function addReply() {
-		window.location.href = "<c:url value='/suggestion/createSuggestionReply/${suggestion.id }'/>";
-	}
+	//function addReply() {
+//		window.location.href = "<c:url value='/suggestion/createSuggestionReply/${suggestion.id }'/>";
+//	}
 </script>
 <div data-dojo-type="dijit.TitlePane" Title="意见簿"
 	style="width: 100%; height: 100%; overflow: scroll">
@@ -38,10 +39,7 @@
 					style="line-height: 24px; padding-right: 1em; padding-left: 1em">
 					${suggestion.suggestionContent }</div> <br />
 			<div style="float: right; font-style: italic">
-					最后一次更新时间：${suggestion.suggestionDate}&nbsp;&nbsp;<a
-						href="<c:url value='/suggestion/edit/${suggestion.id }'/>">编辑意见</a>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a
-						href="<c:url value='/suggestion/createSuggestionReply/${suggestion.id }'/>">添加回复</a>
+					最后一次更新时间：${suggestion.suggestionDate}
 				</div>
 			</td>
 			<c:forEach items="${replyList }" var="r">

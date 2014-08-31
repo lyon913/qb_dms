@@ -191,7 +191,7 @@ public class FileServiceImpl implements FileService {
 		//check permissions
 	
 		//check if admin
-		boolean isAdmin = SecurityUtil.hasRole(RoleType.ROLE_ADMIN.getName());
+		boolean isAdmin = SecurityUtil.hasRole(RoleType.ROLE_ADMIN);
 		//check if author
 		boolean isAuthor = SecurityUtil.isMe(tfile.getAuthorId());
 		

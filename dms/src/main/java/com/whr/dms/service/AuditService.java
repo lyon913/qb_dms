@@ -1,7 +1,5 @@
 package com.whr.dms.service;
 
-import java.util.Date;
-
 import com.whr.dms.models.TUser;
 
 public interface AuditService {

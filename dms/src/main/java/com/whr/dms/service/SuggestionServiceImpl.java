@@ -57,8 +57,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 		boolean isMe = SecurityUtil.isMe(s.getAuthorId());
 
 		// 是否为业务管理员
-		String needRole = getNeededRole(s.getType());
-		boolean isManager = SecurityUtil.hasRole(needRole);
+		boolean isManager = SecurityUtil.hasRole(getNeededRole(s.getType()));
 
 		if (isMe || isManager) {
 			// 有操作权
@@ -106,13 +105,13 @@ public class SuggestionServiceImpl implements SuggestionService {
 	 * @param type
 	 * @return
 	 */
-	private String getNeededRole(SuggestionType type) {
+	private RoleType getNeededRole(SuggestionType type) {
 		if (SuggestionType.Suggestion.equals(type)) {
-			return RoleType.ROLE_SUGGESTION_MANAGER.getName();
+			return RoleType.ROLE_SUGGESTION_MANAGER;
 		} else if (SuggestionType.President.equals(type)) {
-			return RoleType.ROLE_PRESIDENT_MANAGER.getName();
+			return RoleType.ROLE_PRESIDENT_MANAGER;
 		} else if (SuggestionType.Managment.equals(type)) {
-			return RoleType.ROLE_HOSPITAL_MANAGER.getName();
+			return RoleType.ROLE_HOSPITAL_MANAGER;
 		}
 		throw new RuntimeException("意见簿类型匹配错误");
 	}

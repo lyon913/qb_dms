@@ -1,6 +1,7 @@
 package com.whr.dms.web.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -24,8 +25,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.SuggestionState;
 import com.whr.dms.models.SuggestionType;
+import com.whr.dms.models.TReply;
 import com.whr.dms.models.TSuggestion;
 import com.whr.dms.models.TUser;
+import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.SuggestionReplyService;
 import com.whr.dms.service.SuggestionService;
@@ -87,7 +90,7 @@ public class SuggestionController {
 	 * @return
 	 * @throws ParameterCheckException
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
 	public String initUpdateForm(@PathVariable long id, Model m)
 			throws ParameterCheckException {
 		TSuggestion s = suggServ.findById(id);
@@ -99,11 +102,11 @@ public class SuggestionController {
 			throw new AccessDeniedException("只有作者本人才能修改");
 		}
 
-		if (SuggestionState.Public.equals(s.getState())) {
+		if (!SuggestionState.Private.equals(s.getState())) {
 			throw new AccessDeniedException("意见已经过审核，不能修改。");
 		}
 		m.addAttribute("s", s);
-		return "suggestion/createSuggestion";
+		return "suggestion/createOrUpdate";
 	}
 
 	/**
@@ -114,18 +117,60 @@ public class SuggestionController {
 	 * @param status
 	 * @return
 	 */
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public String processUpdateForm(TSuggestion s, BindingResult bind,
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
+	public String processUpdateForm(@ModelAttribute("s") @Valid TSuggestion s, BindingResult bind,
 			SessionStatus status) {
 		if (bind.hasErrors()) {
-			return "suggestion/createSuggestion";
+			return "suggestion/createOrUpdate";
 		}
 
 		suggServ.saveSuggestion(s);
 		status.setComplete();
-		return "suggestion/createSuggestion";
+		return "redirect:/suggestion/list/my";
 	}
 
+	/**
+	 * 查看意见表单
+	 * 
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public String showForm(@PathVariable long id,Model m) {
+		TSuggestion s = suggServ.findById(id);
+		m.addAttribute("suggestion", s);
+		List<TReply> rlist = srservice.getSuggestionReply(id);
+		m.addAttribute("replyList", rlist);
+		return "suggestion/readSuggestion";
+	}
+	
+	/**
+	 * 删除意见表单
+	 * 
+	 * @param id
+	 * @param m
+	 * @return
+	 * @throws ParameterCheckException
+	 */
+	@RequestMapping(value = "/{id}/del", method = RequestMethod.GET)
+	public String delete(@PathVariable long id)
+			throws ParameterCheckException {
+		TSuggestion s = suggServ.findById(id);
+		if (s == null) {
+			throw new ParameterCheckException("未找到此记录");
+		}
+
+		if (!SecurityUtil.isMe(s.getAuthorId()) && !SecurityUtil.hasRole(RoleType.ROLE_SUGGESTION_MANAGER) ) {
+			throw new AccessDeniedException("只有作者本人或者有权限的用户才能删除");
+		}
+
+		if (SuggestionState.Deleted.equals(s.getState())) {
+			throw new AccessDeniedException("意见已经删除！");
+		}
+		suggServ.deleteSuggestion(id);
+		return "redirect:/suggestion/list/my";
+	}
+	
 	/**
 	 * 用户本人的意见列表
 	 * 

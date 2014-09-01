@@ -3,8 +3,7 @@ package com.whr.dms.service;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.whr.dms.dao.TReplyDao;
 import com.whr.dms.dao.TSuggestionDao;
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.SuggestionState;
@@ -23,8 +23,11 @@ import com.whr.dms.security.SecurityUtil;
 
 @Service
 public class SuggestionServiceImpl implements SuggestionService {
-	@Resource
+	@Autowired
 	private TSuggestionDao sdao;
+	
+	@Autowired
+	private TReplyDao rdao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -125,6 +128,55 @@ public class SuggestionServiceImpl implements SuggestionService {
 			title = "%";
 		}
 		return sdao.findByUserId(userId, title, type, p);
+	}
+
+	@Transactional
+	@Override
+	public void assessSuggestions(long suggsId, boolean checked) throws ParameterCheckException {
+		TSuggestion s = sdao.findOne(suggsId);
+		
+		if(s == null) {
+			throw new ParameterCheckException("未找到记录");
+		}
+		
+		if(SuggestionState.Deleted.equals(s.getState())) {
+			throw new ParameterCheckException("记录已被删除，无法操作");
+		}
+		
+		if (checked) {
+			s.setState(SuggestionState.Public);
+		}else {
+			s.setState(SuggestionState.Private);
+		}
+		
+		sdao.save(s);
+		
+	}
+
+	@Transactional
+	@Override
+	public void reply(long suggsId, String reply, boolean checked) throws ParameterCheckException {
+		TSuggestion s = sdao.findOne(suggsId);
+		
+		if(s == null) {
+			throw new ParameterCheckException("未找到记录");
+		}
+		
+		if(SuggestionState.Deleted.equals(s.getState())) {
+			throw new ParameterCheckException("记录已被删除，无法操作");
+		}
+		
+		if (checked) {
+			s.setState(SuggestionState.Public);
+		}else {
+			s.setState(SuggestionState.Private);
+		}
+		sdao.save(s);
+		
+		TReply r = new TReply(suggsId,SecurityUtil.getCurrentUser(),reply);
+		
+		rdao.save(r);
+		
 	}
 
 }

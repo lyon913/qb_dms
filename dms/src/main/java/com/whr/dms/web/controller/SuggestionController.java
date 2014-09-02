@@ -32,9 +32,10 @@ import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.SuggestionReplyService;
 import com.whr.dms.service.SuggestionService;
+import com.whr.dms.web.form.AssessForm;
 
 @Controller
-@SessionAttributes({ "s" })
+@SessionAttributes({ "s","assForm" })
 @RequestMapping("/suggestion")
 public class SuggestionController {
 
@@ -215,13 +216,14 @@ public class SuggestionController {
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping("/assess/list")
+	@RequestMapping("/manage/list/private")
 	public String privateList(@PageableDefault(page = 0, size = 20) Pageable p,@RequestParam(required = false)String key,
 			Model m) {
 		Page<TSuggestion> result = suggServ.findSuggestion(key,
 				SuggestionType.Suggestion, SuggestionState.Private, p);
 		m.addAttribute("result", result);
-		return "suggestion/assessList";
+		m.addAttribute("key",key);
+		return "suggestion/manage/privateList";
 	}
 
 	/**
@@ -231,11 +233,13 @@ public class SuggestionController {
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping("/assess/{id}")
+	@RequestMapping("/manage/assess/{id}")
 	public String initAssessForm(long id, Model m) {
 		TSuggestion s = suggServ.findById(id);
-		m.addAttribute("s", s);
-		return "suggestion/assessList";
+		AssessForm a = new AssessForm(s);
+		m.addAttribute("suggestion", s);
+		m.addAttribute("assForm", a);
+		return "suggestion/manage/assess";
 	}
 
 	@RequestMapping(value = "/public", method = RequestMethod.GET)

@@ -7,7 +7,8 @@
 	<div class="title">
 		<span>意见簿</span>
 		<span style="float: right;">
-			<a href="###">我的意见</a>
+			<c:url var="myUrl" value="/suggestion/list/my"/>
+			<a href="${myUrl }">我的意见</a>
 			<c:url var="newUrl" value="/suggestion/new"/>
 			<a href="${newUrl }">提出意见</a>
 		</span>

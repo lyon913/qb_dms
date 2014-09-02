@@ -26,7 +26,7 @@
 						<span>保存</span>
 					</button>
 					<c:url var="listUrl" value="/suggesion/list"/>
-					<a class="btn-normal" href="###" onclick="history.go(-1);">
+					<a class="btn-normal" href="###" onclick="javascript:window.close();history.back();return false;">
 						<span class="dijitEditorIcon dijitEditorIconUndo"></span>
 						<span>返回</span>
 					</a>

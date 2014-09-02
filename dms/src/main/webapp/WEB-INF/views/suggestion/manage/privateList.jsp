@@ -3,36 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
-<script type="text/javascript">
-function readSuggestion(id){
-	var scrWidth = screen.width * 0.9;
-	var scrHeight = screen.height * 0.9;
-	
-	var scrWidth1 = scrWidth+"px";
-	var scrHeight1 = scrHeight+"px";
-	var url = "<%=request.getContextPath()%>/suggestion/" + id;
-	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
-}
-
-function deleteSuggestion(id){
-	var baseUrl = "<c:url value='/'/>";
-	var url = baseUrl + "suggestion/" + id + "/del";
-	
-	if(confirm("是否确认删除？")){
-		window.location = url;
-	}
-}
-</script>
 <div class="panel">
 	<div class="title">
-		<span>我的意见</span>
-		<div style="float: right;margin: 0;padding: 0">
+		<span>待审核意见簿</span>
+		<span style="float: right;">
+		<c:url var="allUrl" value="/suggestion/manage/list/all"/>
+			<a href="${allUrl }">全部意见</a>
+			
 		
-			<c:url var="publicUrl" value="/suggestion/list/public"/>
-			<a href="${publicUrl }" >返回意见簿</a>
-			<c:url var="newUrl" value="/suggestion/new"/>
-			<a href="${newUrl }">提出意见</a>
-		</div>
+		</span>
 	</div>
 	<form id="searchForm" method="post">
 		<label for="key">标题：</label>
@@ -57,12 +36,9 @@ function deleteSuggestion(id){
 					<td width="10%">${s.suggestionDate }</td>
 					<td width="10%">${s.state.displayName }</td>
 					<td width="10%">
-					
-						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
-						<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
-						<a href="${editUrl }">编辑</a>
-						
-						<a href="###" onclick="deleteSuggestion('${s.id}')">删除</a>
+						<a href="###" onclick="">查看</a>
+						<c:url var="assessUrl" value="/suggestion/manage/assess/${s.id }"/>
+						<a href="${assessUrl }" onclick="">审核</a>
 					</td>
 				</tr>
 

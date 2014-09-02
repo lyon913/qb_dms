@@ -24,8 +24,8 @@ alter table TSuggestion add type varchar(10) not null;
 alter table TSuggestion add state varchar(10) not null;
 
 -- 更新历史记录
-update TSuggestion set type='Public';
-update TSuggestion set state='Published';
+update TSuggestion set type='Suggestion';
+update TSuggestion set state='Public';
 
 
 alter table TDatabaseChange add opDate datetime;

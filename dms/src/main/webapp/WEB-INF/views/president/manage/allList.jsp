@@ -10,13 +10,12 @@ function readSuggestion(id){
 	
 	var scrWidth1 = scrWidth+"px";
 	var scrHeight1 = scrHeight+"px";
-	var url = "<%=request.getContextPath()%>/suggestion/" + id;
+	var url = "<%=request.getContextPath()%>/president/" + id;
 	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
 }
-
 function deleteSuggestion(id){
 	var baseUrl = "<c:url value='/'/>";
-	var url = baseUrl + "suggestion/" + id + "/del/1";
+	var url = baseUrl + "president/" + id + "/del/2";
 	
 	if(confirm("是否确认删除？")){
 		window.location = url;
@@ -25,20 +24,19 @@ function deleteSuggestion(id){
 </script>
 <div class="panel">
 	<div class="title">
-		<span>我的意见</span>
-		<div style="float: right;margin: 0;padding: 0">
+		<span>全部信件</span>
+		<span style="float: right;">
+		<c:url var="privateUrl" value="/president/manage/list/private"/>
+			<a href="${privateUrl }">待审核信件</a>
+			
 		
-			<c:url var="publicUrl" value="/suggestion/list/public"/>
-			<a href="${publicUrl }" >返回意见簿</a>
-			<c:url var="newUrl" value="/suggestion/new"/>
-			<a href="${newUrl }">提出意见</a>
-		</div>
+		</span>
 	</div>
 	<form id="searchForm" method="post">
 		<label for="key">标题：</label>
 		<input id="key" name="key" value="${key }" class="input-text"> 
 		<input name="page" value="0" type="hidden">
-		<input name="size" value="20" type="hidden">
+		<input name="size" value="10" type="hidden">
 		<button type="submit" class="btn-normal">查询</button>
 	</form>
 	<table width="100%" class="table">
@@ -57,12 +55,11 @@ function deleteSuggestion(id){
 					<td width="10%">${s.suggestionDate }</td>
 					<td width="10%">${s.state.displayName }</td>
 					<td width="10%">
-					
-						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
-						<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
-						<a href="${editUrl }">编辑</a>
-						
+						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
 						<a href="###" onclick="deleteSuggestion('${s.id}')">删除</a>
+						<c:url var="assessUrl" value="/president/manage/assess/${s.id }"/>
+						<a href="${assessUrl }" onclick="">审核管理</a>
+						
 					</td>
 				</tr>
 

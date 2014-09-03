@@ -1,7 +1,6 @@
 package com.whr.dms.service;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -89,10 +88,16 @@ public class SuggestionServiceImpl implements SuggestionService {
 	}
 
 	@Override
-	public List<TSuggestion> searchAllSuggestions(String key,
-			SuggestionType type, SuggestionState state) {
+	public Page<TSuggestion> findAllSuggestions(String key,
+			SuggestionType type, Pageable page) {
 		// TODO Auto-generated method stub
-		return null;
+		if(StringUtils.hasText(key)){
+			key = "%" + key + "%";
+		}else{
+			key = "%";
+		}
+		Page<TSuggestion> sp = sdao.findAll(key, type, page);
+		return sp;
 	}
 
 

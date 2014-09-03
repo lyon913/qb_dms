@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
 <div style="width: 100%; height: 100%; overflow: auto" class="panel">
-	<div class="title">院长信箱</div>
+	<div class="title">给院长写信</div>
 	<form:form modelAttribute="s" method="post">
 
 		<table class="formTable">
@@ -25,8 +25,8 @@
 						<span class="dijitIconSave"></span>
 						<span>保存</span>
 					</button>
-					<c:url var="listUrl" value="/president/list"/>
-					<a class="btn-normal" href="###" onclick="history.go(-1);">
+
+					<a class="btn-normal" href="###" onclick="javascript:window.close();history.back();return false;">
 						<span class="dijitEditorIcon dijitEditorIconUndo"></span>
 						<span>返回</span>
 					</a>

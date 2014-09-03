@@ -16,8 +16,10 @@
 		<intercept-url pattern="/notice/manage/**" access="ROLE_NOTICE_MANAGER,ROLE_ADMIN" />
 		<intercept-url pattern="/publicnews/manage/**" access="ROLE_PUBLICNEWS_MANAGER,ROLE_ADMIN" />
 		<intercept-url pattern="/software/softwareMana"	access="ROLE_SOFTWARE_MANAGER,ROLE_ADMIN" />
-		<intercept-url pattern="/suggestion/del/**" access="ROLE_SUGGESTION_MANAGER" />
-		<intercept-url pattern="/suggestion/*Reply*/**" access="ROLE_SUGGESTION_REPLY" />
+		
+		<intercept-url pattern="/suggestion/manage/**" access="ROLE_SUGGESTION_MANAGER" />
+		<intercept-url pattern="/president/manage/**" access="ROLE_PRESIDENT_MANAGER" />
+
 		<intercept-url pattern="/**" access="ROLE_USER" />
 
 		<form-login login-page='/login.jsp' authentication-success-handler-ref="loginSuccessHandler" />

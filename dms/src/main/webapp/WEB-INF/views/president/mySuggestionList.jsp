@@ -10,13 +10,13 @@ function readSuggestion(id){
 	
 	var scrWidth1 = scrWidth+"px";
 	var scrHeight1 = scrHeight+"px";
-	var url = "<%=request.getContextPath()%>/suggestion/" + id;
+	var url = "<%=request.getContextPath()%>/president/" + id;
 	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
 }
 
 function deleteSuggestion(id){
 	var baseUrl = "<c:url value='/'/>";
-	var url = baseUrl + "suggestion/" + id + "/del/1";
+	var url = baseUrl + "president/" + id + "/del/1";
 	
 	if(confirm("是否确认删除？")){
 		window.location = url;
@@ -25,13 +25,13 @@ function deleteSuggestion(id){
 </script>
 <div class="panel">
 	<div class="title">
-		<span>我的意见</span>
+		<span>我的信箱</span>
 		<div style="float: right;margin: 0;padding: 0">
 		
-			<c:url var="publicUrl" value="/suggestion/list/public"/>
-			<a href="${publicUrl }" >返回意见簿</a>
-			<c:url var="newUrl" value="/suggestion/new"/>
-			<a href="${newUrl }">提出意见</a>
+			<c:url var="publicUrl" value="/president/list/public"/>
+			<a href="${publicUrl }" >返回院长信箱</a>
+			<c:url var="newUrl" value="/president/new"/>
+			<a href="${newUrl }">给院长写信</a>
 		</div>
 	</div>
 	<form id="searchForm" method="post">
@@ -59,7 +59,7 @@ function deleteSuggestion(id){
 					<td width="10%">
 					
 						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
-						<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
+						<c:url var="editUrl" value='/president/${s.id }/edit'/>
 						<a href="${editUrl }">编辑</a>
 						
 						<a href="###" onclick="deleteSuggestion('${s.id}')">删除</a>

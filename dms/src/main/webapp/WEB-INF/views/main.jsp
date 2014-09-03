@@ -124,6 +124,9 @@ html,body {
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("/suggestion/list/public"); }'>意见簿</div>
+						<div data-dojo-type="dijit.MenuItem"
+						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
+						onClick:function(){ go("/president/list/public"); }'>院长信箱</div>
 				</div>
 			</div>
 			<div data-dojo-type="dijit.layout.AccordionPane" title="系统管理" style="padding: 0px">
@@ -140,7 +143,9 @@ html,body {
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("/suggestion/manage/list/private"); }'>意见簿管理</div>
-					
+					<div data-dojo-type="dijit.MenuItem"
+						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
+						onClick:function(){ go("/president/manage/list/private"); }'>院长信箱管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("/admin/department/departmentMana");  }'>科室管理</div>

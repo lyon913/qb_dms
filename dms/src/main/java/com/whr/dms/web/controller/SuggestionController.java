@@ -35,7 +35,7 @@ import com.whr.dms.service.SuggestionService;
 import com.whr.dms.web.form.AssessForm;
 
 @Controller
-@SessionAttributes({ "s","assForm" })
+@SessionAttributes({ "s", "assForm" })
 @RequestMapping("/suggestion")
 public class SuggestionController {
 
@@ -119,8 +119,8 @@ public class SuggestionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
-	public String processUpdateForm(@ModelAttribute("s") @Valid TSuggestion s, BindingResult bind,
-			SessionStatus status) {
+	public String processUpdateForm(@ModelAttribute("s") @Valid TSuggestion s,
+			BindingResult bind, SessionStatus status) {
 		if (bind.hasErrors()) {
 			return "suggestion/createOrUpdate";
 		}
@@ -137,14 +137,14 @@ public class SuggestionController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public String showForm(@PathVariable long id,Model m) {
+	public String showForm(@PathVariable long id, Model m) {
 		TSuggestion s = suggServ.findById(id);
 		m.addAttribute("suggestion", s);
 		List<TReply> rlist = srservice.getSuggestionReply(id);
 		m.addAttribute("replyList", rlist);
 		return "suggestion/readSuggestion";
 	}
-	
+
 	/**
 	 * 删除意见表单
 	 * 
@@ -153,15 +153,16 @@ public class SuggestionController {
 	 * @return
 	 * @throws ParameterCheckException
 	 */
-	@RequestMapping(value = "/{id}/del", method = RequestMethod.GET)
-	public String delete(@PathVariable long id)
+	@RequestMapping(value = "/{id}/del/{returnType}", method = RequestMethod.GET)
+	public String delete(@PathVariable long id, @PathVariable int returnType)
 			throws ParameterCheckException {
 		TSuggestion s = suggServ.findById(id);
 		if (s == null) {
 			throw new ParameterCheckException("未找到此记录");
 		}
 
-		if (!SecurityUtil.isMe(s.getAuthorId()) && !SecurityUtil.hasRole(RoleType.ROLE_SUGGESTION_MANAGER) ) {
+		if (!SecurityUtil.isMe(s.getAuthorId())
+				&& !SecurityUtil.hasRole(RoleType.ROLE_SUGGESTION_MANAGER)) {
 			throw new AccessDeniedException("只有作者本人或者有权限的用户才能删除");
 		}
 
@@ -169,9 +170,17 @@ public class SuggestionController {
 			throw new AccessDeniedException("意见已经删除！");
 		}
 		suggServ.deleteSuggestion(id);
-		return "redirect:/suggestion/list/my";
+
+		String returnUrl = "/suggestion/list/my";
+		if (returnType == 2) {
+			returnUrl = "/suggestion/manage/list/all";
+		}
+		if (returnType == 3) {
+			returnUrl = "/suggestion/manage/list/private";
+		}
+		return "redirect:" + returnUrl;
 	}
-	
+
 	/**
 	 * 用户本人的意见列表
 	 * 
@@ -182,14 +191,14 @@ public class SuggestionController {
 	@RequestMapping("/list/my")
 	public String myList(
 			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
-			@RequestParam(required = false)String key, Model m) {
+			@RequestParam(required = false) String key, Model m) {
 		long userId = SecurityUtil.getUserId();
-		Page<TSuggestion> result = suggServ.findUserSuggesions(userId, key, SuggestionType.Suggestion, p);
+		Page<TSuggestion> result = suggServ.findUserSuggesions(userId, key,
+				SuggestionType.Suggestion, p);
 		m.addAttribute("result", result);
 		m.addAttribute("key", key);
 		return "suggestion/mySuggestionList";
 	}
-
 
 	/**
 	 * 意见公共列表
@@ -201,14 +210,15 @@ public class SuggestionController {
 	@RequestMapping("/list/public")
 	public String publicList(
 			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
-			@RequestParam(required = false)String key, Model m) {
-	
-		Page<TSuggestion> result = suggServ.findSuggestion(key,SuggestionType.Suggestion, SuggestionState.Public, p);
+			@RequestParam(required = false) String key, Model m) {
+
+		Page<TSuggestion> result = suggServ.findSuggestion(key,
+				SuggestionType.Suggestion, SuggestionState.Public, p);
 		m.addAttribute("result", result);
 		m.addAttribute("key", key);
 		return "suggestion/publicList";
 	}
-	
+
 	/**
 	 * 待审核列表
 	 * 
@@ -217,12 +227,13 @@ public class SuggestionController {
 	 * @return
 	 */
 	@RequestMapping("/manage/list/private")
-	public String privateList(@PageableDefault(page = 0, size = 20) Pageable p,@RequestParam(required = false)String key,
-			Model m) {
+	public String privateList(
+			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
+			@RequestParam(required = false) String key, Model m) {
 		Page<TSuggestion> result = suggServ.findSuggestion(key,
 				SuggestionType.Suggestion, SuggestionState.Private, p);
 		m.addAttribute("result", result);
-		m.addAttribute("key",key);
+		m.addAttribute("key", key);
 		return "suggestion/manage/privateList";
 	}
 
@@ -236,21 +247,59 @@ public class SuggestionController {
 	@RequestMapping(value = "/manage/assess/{id}", method = RequestMethod.GET)
 	public String initAssessForm(@PathVariable long id, Model m) {
 		TSuggestion s = suggServ.findById(id);
+		List<TReply> replyList = srservice.getSuggestionReply(id);
 		AssessForm a = new AssessForm(s);
 		m.addAttribute("suggestion", s);
 		m.addAttribute("assForm", a);
+		m.addAttribute("replyList", replyList);
 		return "suggestion/manage/assess";
 	}
-	
+
+	/**
+	 * 处理审核表单
+	 * 
+	 * @param id
+	 * @param form
+	 * @param m
+	 * @return
+	 * @throws ParameterCheckException
+	 */
 	@RequestMapping(value = "/manage/assess/{id}", method = RequestMethod.POST)
-	public String processAssessForm(@PathVariable long id, AssessForm form, Model m) throws ParameterCheckException {
+	public String processAssessForm(@PathVariable long id, AssessForm form,
+			Model m) throws ParameterCheckException {
 		suggServ.reply(id, form.getReply(), form.isChecked());
 		return "redirect:/suggestion/manage/list/private";
 	}
 
-	@RequestMapping(value = "/public", method = RequestMethod.GET)
-	public String publicList() {
-		return "suggestion/public";
+	/**
+	 * 全部意见列表（管理端），不包含已删除的记录
+	 * 
+	 * @param p
+	 * @param key
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping(value = "/manage/list/all", method = RequestMethod.GET)
+	public String allList(
+			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
+			@RequestParam(required = false) String key, Model m) {
+		Page<TSuggestion> result = suggServ.findAllSuggestions(key,
+				SuggestionType.Suggestion, p);
+		m.addAttribute("result", result);
+		m.addAttribute("key", key);
+		return "suggestion/manage/allList";
+	}
+
+	/**
+	 * 删除回复
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/manage/reply/{id}/delete", method = RequestMethod.GET)
+	public String deleteReply(@PathVariable long id) {
+		TReply r = srservice.getById(id);
+		srservice.deleteSuggestionReply(id);
+		return "redirect:/suggestion/manage/assess/" + r.getSuggestionId();
 	}
 
 }

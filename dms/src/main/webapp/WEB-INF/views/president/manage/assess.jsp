@@ -9,7 +9,7 @@
 	<input id="suggestion_id" name="id" type="hidden"
 		value="${suggestion.id }">
 	<div class="title">
-		<span>意见审核</span>
+		<span>信件审核及回复</span>
 
 	</div>
 	<table class="formTable">
@@ -38,7 +38,7 @@
 					<div
 						style="line-height: 24px; padding-right: 1em; padding-left: 1em">
 						${r.replyContent }</div>
-						<c:url var="delUrl" value="/suggestion/manage/reply/${r.id }/delete"></c:url>
+						<c:url var="delUrl" value="/president/manage/reply/${r.id }/delete"></c:url>
 					<div style="float: right; font-style: italic">
 						&nbsp;&nbsp;&nbsp;回复时间：${r.replyDate }&nbsp;&nbsp;<a href="${delUrl }">删除回复</a></div>
 						

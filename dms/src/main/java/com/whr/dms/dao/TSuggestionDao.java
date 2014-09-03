@@ -23,4 +23,7 @@ public interface TSuggestionDao extends JpaRepository<TSuggestion, Long> {
 	public Page<TSuggestion> findByUserId(@Param("userId") long userId,
 			@Param("title") String title,
 			@Param("type") SuggestionType type, Pageable p);
+	
+	@Query("from TSuggestion s where s.suggestionTitle like :title and type=:type and state<>'Deleted'")
+	public Page<TSuggestion> findAll(@Param("title")String title,@Param("type")SuggestionType type,Pageable pageable);
 }

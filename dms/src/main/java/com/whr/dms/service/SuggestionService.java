@@ -1,7 +1,5 @@
 package com.whr.dms.service;
 
-import java.util.List;
-
 import javax.security.sasl.AuthenticationException;
 
 import org.springframework.data.domain.Page;
@@ -56,8 +54,8 @@ public interface SuggestionService {
 	 * @param page
 	 * @return
 	 */
-	public List<TSuggestion> searchAllSuggestions(String key,
-			SuggestionType type, SuggestionState state);
+	public Page<TSuggestion> findAllSuggestions(String key,
+			SuggestionType type, Pageable page);
 
 
 	/**

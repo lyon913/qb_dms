@@ -7,7 +7,12 @@ public class AssessForm {
 	private boolean checked;
 	private String reply;
 	
+	public AssessForm(){
+		super();
+	}
+	
 	public AssessForm(TSuggestion s) {
+		super();
 		if(SuggestionState.Public.equals(s.getState())) {
 			this.checked=true;
 		}
@@ -17,6 +22,7 @@ public class AssessForm {
 		else {
 			throw new RuntimeException("状态不正确");
 		}
+		
 	}
 	
 	public boolean isChecked() {

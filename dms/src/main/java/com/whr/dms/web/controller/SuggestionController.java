@@ -233,13 +233,19 @@ public class SuggestionController {
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping("/manage/assess/{id}")
-	public String initAssessForm(long id, Model m) {
+	@RequestMapping(value = "/manage/assess/{id}", method = RequestMethod.GET)
+	public String initAssessForm(@PathVariable long id, Model m) {
 		TSuggestion s = suggServ.findById(id);
 		AssessForm a = new AssessForm(s);
 		m.addAttribute("suggestion", s);
 		m.addAttribute("assForm", a);
 		return "suggestion/manage/assess";
+	}
+	
+	@RequestMapping(value = "/manage/assess/{id}", method = RequestMethod.POST)
+	public String processAssessForm(@PathVariable long id, AssessForm form, Model m) throws ParameterCheckException {
+		suggServ.reply(id, form.getReply(), form.isChecked());
+		return "redirect:/suggestion/manage/list/private";
 	}
 
 	@RequestMapping(value = "/public", method = RequestMethod.GET)

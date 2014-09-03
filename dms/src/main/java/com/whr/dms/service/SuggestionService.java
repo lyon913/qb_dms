@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.SuggestionState;
 import com.whr.dms.models.SuggestionType;
-import com.whr.dms.models.TReply;
 import com.whr.dms.models.TSuggestion;
 
 public interface SuggestionService {
@@ -60,21 +59,6 @@ public interface SuggestionService {
 	public List<TSuggestion> searchAllSuggestions(String key,
 			SuggestionType type, SuggestionState state);
 
-	/**
-	 * 保存回复，并公开意见
-	 * 
-	 * @param suggestionId
-	 * @param reply
-	 */
-	public void replyPublic(long suggestionId, TReply reply);
-
-	/**
-	 * 保存回复，但不公开意见
-	 * 
-	 * @param suggestionId
-	 * @param reply
-	 */
-	public void replyPrivate(long suggestionId, TReply reply);
 
 	/**
 	 * 查找指定用户的意见

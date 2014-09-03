@@ -79,6 +79,11 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Override
 	public Page<TSuggestion> findSuggestion(String key,SuggestionType type,
 			SuggestionState state, Pageable page) {
+		if(StringUtils.hasText(key)){
+			key = "%" + key + "%";
+		}else{
+			key = "%";
+		}
 		Page<TSuggestion> sp = sdao.search(key, type, state, page);
 		return sp;
 	}
@@ -90,17 +95,6 @@ public class SuggestionServiceImpl implements SuggestionService {
 		return null;
 	}
 
-	@Override
-	public void replyPublic(long suggestionId, TReply reply) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void replyPrivate(long suggestionId, TReply reply) {
-		// TODO Auto-generated method stub
-
-	}
 
 	/**
 	 * 根据意见簿类型（意见簿、院长信箱、医院管理）查找需要的角色
@@ -166,6 +160,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 			throw new ParameterCheckException("记录已被删除，无法操作");
 		}
 		
+		//保存审核结果
 		if (checked) {
 			s.setState(SuggestionState.Public);
 		}else {
@@ -173,9 +168,12 @@ public class SuggestionServiceImpl implements SuggestionService {
 		}
 		sdao.save(s);
 		
-		TReply r = new TReply(suggsId,SecurityUtil.getCurrentUser(),reply);
-		
-		rdao.save(r);
+		//如果同时提交了回复内容则保存回复
+		if(StringUtils.hasText(reply)){
+			TReply r = new TReply(suggsId,SecurityUtil.getCurrentUser(),reply);
+			rdao.save(r);
+		}
+
 		
 	}
 

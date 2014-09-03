@@ -44,10 +44,9 @@
 				<tr>
 					<td valign="top">&nbsp;&nbsp;审核：</td>
 					<td>
-					<form:select path="checked">
-						<form:option value="true">审核通过</form:option>
-						<form:option value="false">待审核 </form:option>
-					</form:select></td>
+						<form:radiobutton path="checked" value="true" label="审核通过"/>
+						<form:radiobutton path="checked" value="false" label="待审核"/>
+					</td>
 				</tr>
 				<tr>
 

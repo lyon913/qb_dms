@@ -10,6 +10,8 @@
 	</appender>
 
 
+	<!-- 可让每天产生一个日志文件，最多 300 个，自动回滚 -->
+	<property name="logFilePath" value="${catalina.base}/logs" />
 	<appender name="RollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 
@@ -17,21 +19,16 @@
 			<level>WARN</level>
 		</filter>
 
-		<!-- 可让每天产生一个日志文件，最多 300 个，自动回滚 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>log/dms-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${logFilePath}/dms-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>300</maxHistory>
 		</rollingPolicy>
 
 		<!-- 下面这段注释的代码可以在日志文件超过 5MB 时进行归档，并且归档文件后缀只要是 .zip 或 .gz 就会自动压缩日志归档 -->
-		<!--file>d:/log/Unmi.log</file> 
-		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
-			<fileNamePattern>d:/log/Unmi.%i.log.zip</fileNamePattern> 
-			<minIndex>1</minIndex> 
-			<maxIndex>10</maxIndex> 
-		</rollingPolicy> <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> 
-		<maxFileSize>5MB</maxFileSize> 
-		</triggeringPolicy -->
+		<!--file>d:/log/Unmi.log</file> <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy"> 
+			<fileNamePattern>d:/log/Unmi.%i.log.zip</fileNamePattern> <minIndex>1</minIndex> 
+			<maxIndex>10</maxIndex> </rollingPolicy> <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy"> 
+			<maxFileSize>5MB</maxFileSize> </triggeringPolicy -->
 
 		<encoder>
 			<pattern>%date %level %logger [%file:%line] %msg%n</pattern>
@@ -41,7 +38,7 @@
 	<!-- 输出到控制台和文件，可定义更多的 Appender -->
 
 	<root level="WARN">
-		<appender-ref ref="RollingFile"/>
+		<appender-ref ref="RollingFile" />
 	</root>
 
 	<!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
@@ -49,5 +46,5 @@
 	<logger name="org.apache" level="WARN" />
 	<logger name="org.hibernate" level="WARN" />
 	<!-- spring jdbc sql log -->
-	<logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG"/>
+	<logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG" />
 </configuration>

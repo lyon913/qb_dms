@@ -23,7 +23,7 @@ function deleteSuggestion(id){
 	}
 }
 </script>
-<div class="panel">
+<div class="panel"  style="height: 100%;overflow: scroll;">
 	<div class="title">
 		<span>我的意见</span>
 		<div style="float: right;margin: 0;padding: 0">

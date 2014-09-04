@@ -24,6 +24,7 @@
 
 .panel {
 	border: 1px solid #bfbfbf;
+	overflow: scroll;
 }
 
 .panel .title {

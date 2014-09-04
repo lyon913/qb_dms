@@ -278,7 +278,7 @@ public class PresidentController {
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping(value = "/manage/list/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/list/all")
 	public String allList(
 			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
 			@RequestParam(required = false) String key, Model m) {

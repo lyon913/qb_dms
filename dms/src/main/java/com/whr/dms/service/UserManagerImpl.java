@@ -48,8 +48,14 @@ public class UserManagerImpl implements UserManager {
 		if (u != null) {
 			//判断用户名是否存在
 			TUser userExists = uDao.getUserByLoginName(u.getLoginName());
-			if (userExists != null && u.getId() != userExists.getId()) {
-				throw new ParameterCheckException("用户已存在");
+			if (userExists != null) {
+				if(u.getId() == null) {
+					throw new ParameterCheckException("用户已存在");
+				}
+				if(u.getId() != null && !u.getId().equals(userExists.getId())) {
+					throw new ParameterCheckException("用户已存在");
+				}
+				
 			}
 			
 			if (u.getId() != null) {

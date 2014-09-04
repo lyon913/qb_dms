@@ -45,7 +45,7 @@ function readSuggestion(id){
 				<tr>
 					<td width="70%">${s.suggestionTitle }</td>
 					<td width="10%">${s.suggestionDate }</td>
-					<td width="10%">${s.state.displayName }</td>
+					<td width="10%">${s.state.pName }</td>
 					<td width="10%">
 						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
 					</td>

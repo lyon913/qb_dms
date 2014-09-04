@@ -19,10 +19,22 @@ public class RoleManagerImpl implements RoleManager {
 		}
 		return rList;
 	}
+	
+	@Override
+	public List<String> findAllRoleNames() {
+		List<String> rList = new ArrayList<String>();
+		for(RoleType rt : RoleType.values()) {
+			if(!rt.equals(RoleType.ROLE_USER))
+				rList.add(rt.getName());
+		}
+		return rList;
+	}
 
 	@Override
 	public RoleType getRoleType(String roleName) {
 		return RoleType.valueOf(roleName);
 	}
+
+
 
 }

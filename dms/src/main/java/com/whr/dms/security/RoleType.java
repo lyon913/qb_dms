@@ -9,7 +9,7 @@ public enum RoleType {
 	
 	ROLE_PUBLICNEWS_MANAGER("ROLE_PUBLICNEWS_MANAGER","院务政务管理","院务政务公开信息的发布、删除等事项管理"),
 	
-	ROLE_FILE_MANAGER("ROLE_SOFTWARE_MANAGER","文件管理","共享文件、文件夹等内容的增加、删除管理"),
+	ROLE_FILE_MANAGER("ROLE_FILE_MANAGER","文件管理","共享文件、文件夹等内容的增加、删除管理"),
 	
 	ROLE_SOFTWARE_MANAGER("ROLE_SOFTWARE_MANAGER","软件管理","共享软件的上传、删除等管理"),
 	
@@ -52,4 +52,6 @@ public enum RoleType {
 	public void setDescribe(String describe) {
 		this.describe = describe;
 	}
+	
+	
 }

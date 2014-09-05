@@ -55,13 +55,13 @@ function deleteSuggestion(id){
 				<tr>
 					<td width="70%">${s.suggestionTitle }</td>
 					<td width="10%">${s.suggestionDate }</td>
-					<td width="10%">${s.state.displayName }</td>
+					<td width="10%">${s.state.pName }</td>
 					<td width="10%">
 					
 						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
-						<c:url var="editUrl" value='/president/${s.id }/edit'/>
+						<!--<c:url var="editUrl" value='/president/${s.id }/edit'/>
 						<a href="${editUrl }">编辑</a>
-						
+						-->
 						<a href="###" onclick="deleteSuggestion('${s.id}')">删除</a>
 					</td>
 				</tr>

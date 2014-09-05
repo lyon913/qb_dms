@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -279,7 +280,7 @@ public class SuggestionController {
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping(value = "/manage/list/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/list/all")
 	public String allList(
 			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
 			@RequestParam(required = false) String key, Model m) {
@@ -294,12 +295,27 @@ public class SuggestionController {
 	 * 删除回复
 	 * @param id
 	 * @return
+	 * @throws ParameterCheckException 
 	 */
-	@RequestMapping(value = "/manage/reply/{id}/delete", method = RequestMethod.GET)
-	public String deleteReply(@PathVariable long id) {
-		TReply r = srservice.getById(id);
+	@RequestMapping(value = "/reply/{id}/delete", method = RequestMethod.GET)
+	public @ResponseBody String deleteReply(@PathVariable long id) throws ParameterCheckException {
 		srservice.deleteSuggestionReply(id);
-		return "redirect:/suggestion/manage/assess/" + r.getSuggestionId();
+		String result = "OK";
+		return result;
 	}
 
+	/**
+	 * 保存回复
+	 * 
+	 * @param id
+	 * @param form
+	 * @param m
+	 * @return
+	 * @throws ParameterCheckException
+	 */
+	@RequestMapping(value = "/{id}/reply", method = RequestMethod.POST)
+	public String processReplyForm(@PathVariable long id,String reply) throws ParameterCheckException {
+		suggServ.reply(id, reply);
+		return "redirect:/suggestion/"+id;
+	}
 }

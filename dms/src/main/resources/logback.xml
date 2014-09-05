@@ -10,6 +10,8 @@
 	</appender>
 
 
+	<!-- 可让每天产生一个日志文件，最多 300 个，自动回滚 -->
+	<property name="logFilePath" value="${catalina.base}/logs" />
 	<appender name="RollingFile"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 

@@ -66,5 +66,13 @@ public class TUserRole extends BaseEntity implements GrantedAuthority{
 	public String toString() {
 		return this.getRole().getName();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof TUserRole) {
+			return ((TUserRole)obj).toString().equals(this.toString());
+		}
+		return false;
+	}
 
 }

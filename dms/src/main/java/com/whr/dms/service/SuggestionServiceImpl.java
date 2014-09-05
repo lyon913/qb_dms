@@ -182,4 +182,16 @@ public class SuggestionServiceImpl implements SuggestionService {
 		
 	}
 
+	/**
+	 * 保存回复内容，不用审核
+	 */
+	@Override
+	public void reply(long suggsId, String reply)
+			throws ParameterCheckException {
+		//保存回复内容
+		TReply r =  new TReply(suggsId,SecurityUtil.getCurrentUser(),reply);
+		rdao.save(r);
+		
+	}
+
 }

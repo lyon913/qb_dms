@@ -50,9 +50,9 @@
 	<form:form modelAttribute="assForm" method="post">
 		<table class="formTable" align="center">
 			<tr>
-				<th style="width: 150px">审核：</th>
-				<td><form:radiobutton path="checked" value="true" label="审核通过" />
-					<form:radiobutton path="checked" value="false" label="待审核" /></td>
+				<th style="width: 150px">是否公开：</th>
+				<td><form:radiobutton path="checked" value="true" label="公开信件" />
+					<form:radiobutton path="checked" value="false" label="不公开信件" /></td>
 			</tr>
 			<tr>
 

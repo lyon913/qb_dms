@@ -14,7 +14,7 @@ function readSuggestion(id){
 	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
 }
 </script>
-<div class="panel">
+<div class="panel" style="height: 100%;overflow: scroll;">
 	<div class="title">
 		<span>意见簿</span>
 		<span style="float: right;">

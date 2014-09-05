@@ -278,7 +278,7 @@ public class PresidentController {
 	 * @param m
 	 * @return
 	 */
-	@RequestMapping(value = "/manage/list/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/manage/list/all")
 	public String allList(
 			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
 			@RequestParam(required = false) String key, Model m) {
@@ -293,9 +293,10 @@ public class PresidentController {
 	 * 删除回复
 	 * @param id
 	 * @return
+	 * @throws ParameterCheckException 
 	 */
 	@RequestMapping(value = "/manage/reply/{id}/delete", method = RequestMethod.GET)
-	public String deleteReply(@PathVariable long id) {
+	public String deleteReply(@PathVariable long id) throws ParameterCheckException {
 		TReply r = srservice.getById(id);
 		srservice.deleteSuggestionReply(id);
 		return "redirect:/president/manage/assess/" + r.getSuggestionId();

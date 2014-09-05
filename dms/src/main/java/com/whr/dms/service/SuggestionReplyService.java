@@ -2,6 +2,7 @@ package com.whr.dms.service;
 
 import java.util.List;
 
+import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TReply;
 
 
@@ -23,8 +24,9 @@ public interface SuggestionReplyService {
 	/**
 	 * 删除回复
 	 * @param suggestionId
+	 * @throws ParameterCheckException 
 	 */
-	public void deleteSuggestionReply(long replyId);
+	public void deleteSuggestionReply(long replyId) throws ParameterCheckException;
 	
 	/**
 	 * 获取回复列表，并按发布时间倒序排列；支持分页

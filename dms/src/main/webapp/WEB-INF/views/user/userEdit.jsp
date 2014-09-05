@@ -35,8 +35,10 @@
 			</c:if>
 			<tr>
 				<td>管理权限：</td>
-				<td><form:checkboxes path="roles" items="${roleList }"
-						itemLabel="displayName" itemValue="name" cssClass="checkbox" /></td>
+				<td>
+					<form:checkboxes path="roles" items="${roleList }"
+						itemLabel="displayName" itemValue="name" cssClass="checkbox" />
+				</td>
 			</tr>
 
 			<tr>

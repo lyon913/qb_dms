@@ -23,7 +23,7 @@ function deleteSuggestion(id){
 	}
 }
 </script>
-<div class="panel">
+<div class="panel"  style="height: 100%;overflow: scroll;">
 	<div class="title">
 		<span>我的意见</span>
 		<div style="float: right;margin: 0;padding: 0">
@@ -59,9 +59,9 @@ function deleteSuggestion(id){
 					<td width="10%">
 					
 						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
-						<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
+						<!--<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
 						<a href="${editUrl }">编辑</a>
-						
+						-->
 						<a href="###" onclick="deleteSuggestion('${s.id}')">删除</a>
 					</td>
 				</tr>

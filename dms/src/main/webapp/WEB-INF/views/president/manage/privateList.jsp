@@ -26,7 +26,7 @@ function deleteSuggestion(id){
 </script>
 <div class="panel">
 	<div class="title">
-		<span>待审核信件列表</span>
+		<span>未公开信件列表</span>
 		<span style="float: right;">
 		<c:url var="allUrl" value="/president/manage/list/all"/>
 			<a href="${allUrl }">全部信件</a>
@@ -55,12 +55,12 @@ function deleteSuggestion(id){
 				<tr>
 					<td width="70%">${s.suggestionTitle }</td>
 					<td width="10%">${s.suggestionDate }</td>
-					<td width="10%">${s.state.displayName }</td>
+					<td width="10%">${s.state.pName }</td>
 					<td width="10%">
 						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
 						<a href="###" onclick="deleteSuggestion('${s.id}')">删除</a>
 						<c:url var="assessUrl" value="/president/manage/assess/${s.id }"/>
-						<a href="${assessUrl }" onclick="">审核</a>
+						<a href="${assessUrl }" onclick="">回复</a>
 					</td>
 				</tr>
 

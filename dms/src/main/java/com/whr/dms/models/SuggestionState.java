@@ -4,28 +4,31 @@ public enum SuggestionState {
 	/**
 	 * 已经删除的
 	 */
-	Deleted("已删除"),
+	Deleted("已删除","已删除"),
 	
 	/**
 	 * 公开的
 	 */
-	Public("已公开"),
+	Public("已公开","已公开"),
 	
 	/**
 	 * 未公开的
 	 */
-	Private("待审核");
+	Private("待审核","未公开");
 	
 	private String displayName;
+	private String pName;
 	
-	private SuggestionState(String name) {
+	private SuggestionState(String name,String pName) {
 		this.displayName = name;
+		this.pName = pName;
 	}
 	
 	public String getDisplayName() {
 		return this.displayName;
 	}
-	
-	
 
+	public String getpName() {
+		return pName;
+	}
 }

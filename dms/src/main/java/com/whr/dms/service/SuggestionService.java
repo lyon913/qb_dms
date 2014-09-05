@@ -87,5 +87,18 @@ public interface SuggestionService {
 	 * @throws ParameterCheckException 
 	 */
 	public void reply(long suggsId, String reply, boolean checked) throws ParameterCheckException;
+	
+	/**
+	 * 只是回复意见
+	 * 
+	 * @param suggsId
+	 *            意见id
+	 * @param reply
+	 *            回复内容
+	 * @param checked
+	 *            是否通过审核
+	 * @throws ParameterCheckException 
+	 */
+	public void reply(long suggsId, String reply) throws ParameterCheckException;
 
 }

@@ -46,14 +46,19 @@ public class UserManagerImpl implements UserManager {
 	@Transactional
 	public void saveUser(TUser u) throws ParameterCheckException {
 		if (u != null) {
-			//新建的用户
-			if (u.getId() == null) {
-				//判断用户名是否存在
-				TUser userExists = uDao.getUserByLoginName(u.getLoginName());
-				if (userExists != null) {
+			//判断用户名是否存在
+			TUser userExists = uDao.getUserByLoginName(u.getLoginName());
+			if (userExists != null) {
+				if(u.getId() == null) {
 					throw new ParameterCheckException("用户已存在");
 				}
-			}else {
+				if(u.getId() != null && !u.getId().equals(userExists.getId())) {
+					throw new ParameterCheckException("用户已存在");
+				}
+				
+			}
+			
+			if (u.getId() != null) {
 				//修改已存在的用户
 				//删除之前关联的角色
 				urDao.deleteByUserId(u.getId());

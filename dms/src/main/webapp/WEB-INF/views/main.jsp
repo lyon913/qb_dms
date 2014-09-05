@@ -87,7 +87,7 @@ html,body {
 		    .getPrincipal();
 			%>
 			<div style="position:absolute;bottom:1px;right:1px">
-			<font color="white" size="3px"><b>您好&nbsp;&nbsp; <%=ud.getName() %>,欢迎使用院内信息共享平台!&nbsp;&nbsp;&nbsp;</b></font>
+			<font color="white" size="3px"><b>您好&nbsp;&nbsp;<%=ud.getDepartment().getName() %>&nbsp;&nbsp; <%=ud.getName() %>，欢迎使用院内信息共享平台!&nbsp;&nbsp;&nbsp;</b></font>
 			<button data-dojo-type="dijit.form.Button" 
 				onclick="changePW()" type="button"
 				data-dojo-props="iconClass:'dijitCommonIcon dijitIconKey'"><font size="3">修改密码</font></button>

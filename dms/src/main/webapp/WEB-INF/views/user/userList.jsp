@@ -3,7 +3,7 @@
 <%@ page import="com.whr.dms.models.TUser"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="panel">
+<div class="panel"  style="height: 100%;overflow: scroll;">
 	<div class="title">用户管理</div>
 	<div>
 		<c:url var="addUserUrl" value="/admin/user/new" />

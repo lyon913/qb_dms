@@ -4,7 +4,7 @@
 	<groupId>com.whr</groupId>
 	<artifactId>dms</artifactId>
 	<packaging>war</packaging>
-	<version>1.3.0-SNAPSHOT</version>
+	<version>1.4.0-SNAPSHOT</version>
 	<name>dms Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<properties>

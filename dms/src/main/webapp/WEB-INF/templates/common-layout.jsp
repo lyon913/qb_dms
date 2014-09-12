@@ -8,35 +8,33 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>丘北县人民医院内网信息共享平台</title>
-<link rel="stylesheet"
-	href="<c:url value='/resources/js/dojo-release-1.7.3/dojo/resources/dojo.css'/>" />
-<link rel="stylesheet"
-	href="<c:url value='/resources/js/dojo-release-1.7.3/dijit/themes/soria/soria.css'/>" />
-<link rel="stylesheet"
-	href="<c:url value='/resources/js/dojo-release-1.7.3/dojox/grid/enhanced/resources/EnhancedGrid.css'/>" />
-<link rel="stylesheet"
-	href="<c:url value='/resources/js/dojo-release-1.7.3/dojox/grid/resources/soriaGrid.css'/>" />
-<link rel="stylesheet" href="<c:url value='/resources/css/public.css'/>" />
-<link rel="stylesheet" href="<c:url value='/resources/css/pagination.css'/>" />
-<link rel="stylesheet" href="<c:url value='/resources/css/themes/soria/soria.css'/>" />
+<c:url var="ctx" value="/" scope="session"/>
 
-<script type="text/javascript"
-	src="<c:url value='/resources/js/dojo-release-1.7.3/dojo/dojo.js'/>"
+<link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dojo/resources/dojo.css"/>
+<link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dijit/themes/soria/soria.css"/>
+<link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dojox/grid/enhanced/resources/EnhancedGrid.css" />
+<link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dojox/grid/resources/soriaGrid.css" />
+<link rel="stylesheet" href="${ctx }resources/css/public.css" />
+<link rel="stylesheet" href="${ctx }resources/css/pagination.css" />
+<link rel="stylesheet" href="${ctx }resources/css/themes/soria/soria.css" />
+
+<script type="text/javascript" src="${ctx }resources/js/dojo-release-1.7.3/dojo/dojo.js"
 	data-dojo-config="parseOnLoad:true"></script>
-<script type="text/javascript"
-	src="<c:url value='/resources/js/utils.js'/>"></script>
+<script type="text/javascript" src="${ctx }resources/js/utils.js"></script>
 
 <style type="text/css">
 html,body {
 	width: 100%;
 	height: 100%;
 	margin: 0px;
-	overflow: hidden;
+	overflow:hidden;
 	font-size: 14px;
 }
 </style>
 
 <script type="text/javascript">
+	var _ctx="${ctx}";
+
 	dojo.require("dijit/layout/ContentPane");
 	dojo.require("dijit/layout/BorderContainer");
 	dojo.require("dijit/layout/AccordionContainer");
@@ -44,6 +42,8 @@ html,body {
 	dojo.require("dijit/Menu");
 	dojo.require("dijit/Dialog");
 	dojo.require("dojo/date/locale");
+	
+	
 </script>
 </head>
 <body class="soria">

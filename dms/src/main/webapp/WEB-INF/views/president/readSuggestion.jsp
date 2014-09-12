@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<div class="panel">
+<div class="panel" style="height: 100%;overflow: auto;">
 	<div class="title">
 		<span>标题：${suggestion.suggestionTitle}</span>
 	</div>
@@ -39,7 +39,7 @@
 			<td colspan="2" align="right">
 
 				<button type="button"
-					onclick="javascript:window.close();window.history.back();return false;"
+					onclick="parent.closeFrameDialog();"
 					class="btn-normal">返回列表</button>
 
 			</td>

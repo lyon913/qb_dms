@@ -9,37 +9,63 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>丘北县人民医院内网信息共享平台</title>
-<link rel="stylesheet"	
-	href="<c:url value='/resources/js/dojo-release-1.7.3/dojo/resources/dojo.css'/>" />
-<link rel="stylesheet"
-	href="<c:url value='/resources/js/dojo-release-1.7.3/dijit/themes/soria/soria.css'/>" />
-<link rel="stylesheet"
-	href="<c:url value='/resources/css/public.css'/>" />
-<link rel="stylesheet" href="<c:url value='/resources/css/themes/soria/soria.css'/>" />
+
+<c:url var="ctx" value="/" scope="session"/>
+<link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dojo/resources/dojo.css" />
+<link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dijit/themes/soria/soria.css" />
+<link rel="stylesheet" href="${ctx }resources/css/themes/soria/soria.css" />
+<link rel="stylesheet" href="${ctx }resources/css/public.css" />
 
 
-<script type="text/javascript"
-	src="<c:url value='/resources/js/dojo-release-1.7.3/dojo/dojo.js'/>"
+<script type="text/javascript" src="${ctx }resources/js/dojo-release-1.7.3/dojo/dojo.js"
 	data-dojo-config="parseOnLoad:true"></script>
+<script type="text/javascript" src="${ctx }resources/js/utils.js"></script>
 <script type="text/javascript">
+	var _ctx="${ctx}";
+	
 	dojo.require("dijit.layout.ContentPane");
 	dojo.require("dijit.layout.BorderContainer");
 	dojo.require("dijit.layout.AccordionContainer");
 	dojo.require("dijit.form.Button");
 	dojo.require("dijit.Menu");
+	dojo.require("dijit.Dialog");
 	
 	function go(url){
-		var basePath = "<%=request.getContextPath() %>";
-		dojo.byId("content").src=basePath + url;
+		dojo.byId("content").src=_ctx + url;
 	}
 	
 	function logout(){
-		window.location.href="<c:url value='/j_spring_security_logout'/>";
+		window.location.href=_ctx + "j_spring_security_logout";
 	}
 	
 	function changePW(){
-		dojo.byId("content").src="<c:url value='/account/changePWPage'/>";
+		dojo.byId("content").src=_ctx + "account/changePWPage";
 	}
+	
+	function showFrameDialog(title, url, width, height) {
+		var dialog = new dijit.Dialog({
+			title : title,
+			id:'_frameDialog',
+			style : 'width:' + width + 'px;height:' + height+'px;',
+			content : '<iframe src="' + url
+					+ '" frameborder="0" scrolling="auto" style="width:' + width
+					+ 'px;height:' + (height-30) + 'px;margin:0;padding:0;overflow:scroll"></iframe>',
+			hide:function(){
+				this.destroyRecursive();
+			}
+		});
+		dialog.show();
+	}
+
+	function closeFrameDialog(){
+		var dialog = dijit.byId("_frameDialog");
+		if(dialog){
+			dialog.hide();
+			return true;
+		}
+		return false;
+	}
+
 </script>
 <style type="text/css">
 html,body {
@@ -63,7 +89,7 @@ html,body {
 #layout_top{
 	width: 100%;
 	height: 70px;
-	background:url("<c:url value='/resources/images/top.jpg'/>");
+	background:url("${ctx}resources/images/top.jpg");
 	background-repeat:repeat;
 }
 
@@ -105,61 +131,61 @@ html,body {
 				<div id="navMenu" data-dojo-type="dijit.Menu" style='width: 100%;'>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/home"); }'>首页</div>
+						onClick:function(){ go("home"); }'>首页</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/about"); }'>丘北县人民医院</div>
+						onClick:function(){ go("about"); }'>丘北县人民医院</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/notice/noticeMana");  }'>院内通知</div>
+						onClick:function(){ go("notice/noticeMana");  }'>院内通知</div>
 						<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/publicnews/pubMana");  }'>院务政务公开</div>
+						onClick:function(){ go("publicnews/pubMana");  }'>院务政务公开</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){go("/files");}'>文件共享</div>
+						onClick:function(){go("files");}'>文件共享</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){go("/software/list");}'>软件下载</div>
+						onClick:function(){go("software/list");}'>软件下载</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/suggestion/list/public"); }'>意见簿</div>
+						onClick:function(){ go("suggestion/list/public"); }'>意见簿</div>
 						<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/president/list/public"); }'>院长信箱</div>
+						onClick:function(){ go("president/list/public"); }'>院长信箱</div>
 				</div>
 			</div>
 			<div data-dojo-type="dijit.layout.AccordionPane" title="系统管理" style="padding: 0px">
 				<div id="adminMenu" data-dojo-type="dijit.Menu" style="width: 100%">
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/notice/manage/1");  }'>通知管理</div>
+						onClick:function(){ go("notice/manage/1");  }'>通知管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/publicnews/manage/2");  }'>院务政务管理</div>
+						onClick:function(){ go("publicnews/manage/2");  }'>院务政务管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/software/softwareMana"); }'>软件管理</div>
+						onClick:function(){ go("software/softwareMana"); }'>软件管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/suggestion/manage/list/private"); }'>意见簿管理</div>
+						onClick:function(){ go("suggestion/manage/list/private"); }'>意见簿管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/president/manage/list/private"); }'>院长信箱管理</div>
+						onClick:function(){ go("president/manage/list/private"); }'>院长信箱管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/admin/department/departmentMana");  }'>科室管理</div>
+						onClick:function(){ go("admin/department/departmentMana");  }'>科室管理</div>
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("/admin/user/list");  }'>用户管理</div>
+						onClick:function(){ go("admin/user/list");  }'>用户管理</div>
 				</div>
 			</div>
 		</div>
 		<!-- center -->
 		<div id="layout_center" data-dojo-type="dijit.layout.ContentPane"
-			data-dojo-props="region:'center'" style="padding:0px">
-			<c:url var="homeUrl" value="/home"/>
-			<iframe id="content" src="${homeUrl}" scrolling="auto"
+			data-dojo-props="region:'center'" style="padding:0px;margin:0;overflow: hidden;">
+			<c:url var="homeUrl" value="home"/>
+			<iframe id="content" src="${homeUrl}" scrolling="no"
 			frameborder="0"  style="width:100%;height:100%;border:0;"></iframe>
 		</div>
 		<!-- end TabContainer -->

@@ -6,56 +6,8 @@ html,body{
 	font-family: "宋体";
 }
 
-.warp_table thead th{
-	height:24px!important;
-	padding:0 10px;
-	background:#E0ECFF;
-}
-.warp_table{
-	width:100%;
-	border-collapse:collapse;
-	margin:0 0 10px 0!important;
-}
-.warp_table tr {
-    height:30px;
-}
-.warp_table tr th{
-    font:bold 14px/28px arial,sans-serif;
-}
-
-.warp_table td,.warp_table th {
-	border:1px solid #A5D3F6;
-	text-overflow:ellipsis; 
-	font:16px/18px arial,sans-serif;
-	/* 
-	overflow:hidden;
-	*/
-    color:#0265AC;
-}
-
-.warp_table thead h1{
-	padding:0 30px;
-	margin:0 0;
-	text-align:center;
-	background:url("../images/list.gif") 0 -33px no-repeat;
-	width:120px;
-	height:30px;
-	font:bold 14px/28px arial,sans-serif;
-	color:#0265AC;
-}
-
-.warp_table thead th font{
-	padding:0 0;
-	margin:0 0;
-}
-.textarea{
-	line-height:22px;
-	padding-right: 1em;
-	padding-left:1em;
-	padding-top: 0.25em;
-	padding-bottom:0.25em;
-	font:16px;
-	color:#0265AC;
+.dijitDialogPaneContent{
+	padding: 0!important;
 }
 
 

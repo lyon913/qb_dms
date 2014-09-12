@@ -71,13 +71,10 @@ function optionFormatter(id){
 	}
 	
 function readPublicNews(id){
-	var scrWidth = screen.width * 0.9;
-	var scrHeight = screen.height * 0.9;
-	
-	var scrWidth1 = scrWidth+"px";
-	var scrHeight1 = scrHeight+"px";
-	var url = "<%=request.getContextPath()%>/publicnews/" + id;
-	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
+	var w = parseInt(document.body.clientWidth * 0.9);
+	var h = parseInt(document.body.clientHeight * 0.9);
+	var url = _ctx + "publicnews/" + id;
+	parent.showFrameDialog("查看信件",url,w,h);
 }
 
 

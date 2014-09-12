@@ -3,18 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
-<script type="text/javascript">
-function readSuggestion(id){
-	var scrWidth = screen.width * 0.7;
-	var scrHeight = screen.height * 0.7;
-	
-	var scrWidth1 = scrWidth+"px";
-	var scrHeight1 = scrHeight+"px";
-	var url = "<%=request.getContextPath()%>/suggestion/" + id;
-	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
-}
-</script>
-<div class="panel" style="height: 100%;overflow: scroll;">
+<script type="text/javascript" src="${ctx }resources/js/suggestion.js"></script>
+<div class="panel">
 	<div class="title">
 		<span>意见簿</span>
 		<span style="float: right;">

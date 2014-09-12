@@ -22,6 +22,16 @@ function deleteReply(id){
 		dojo.xhrGet(xhrArgs);
 	}
 }
+
+function submitReply(){
+	var textArea = document.getElementById('reply');
+	var form = document.getElementById('rForm');
+	if(/^\s*$/.test(textArea.value)){
+		alert("请填写内容。");
+		return false;
+	}
+	form.submit();
+}
 </script>
 <div class="panel">
 	<div class="title">
@@ -60,21 +70,21 @@ function deleteReply(id){
 	</table>
 	<br>
 	<c:url var="rUrl" value="/suggestion/${suggestion.id }/reply" />
-	<form action="${rUrl }" method="post" target="_self">
+	<form id="rForm" action="${rUrl }" method="post" target="_self">
 	<input type="hidden" name="suggId" value="${suggestion.id }"> 
 		<table class="formTable" align="center">
 			<tr>
 				<th width="150px">回复内容：</th>
-				<td><textarea name="reply" style="width:90%" rows="10" ></textarea></td>
+				<td><textarea id="reply" name="reply" style="width:90%" rows="10"></textarea></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">
-					<button class="btn-normal" type="submit">
+					<button class="btn-normal" type="button" onclick="submitReply();">
 						<span class="dijitIconSave"></span> <span>保存</span>
-					</button> <a class="btn-normal" href="###"
-					onclick="javascript:window.close();history.back();return false;">
+					</button>
+					<button class="btn-normal" type="button" onclick="parent.closeFrameDialog();">
 						<span class="dijitEditorIcon dijitEditorIconUndo"></span> <span>返回</span>
-				</a>
+					</button>
 				</td>
 			</tr>
 		</table>

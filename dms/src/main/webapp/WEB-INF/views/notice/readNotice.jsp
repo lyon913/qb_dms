@@ -14,9 +14,10 @@
 	}
 	);
 	function goToNoticeList(){
-		//window.location.href = "<c:url value='/notice/noticeMana'/>";
-		window.close();
-		history.back();
+		if(!parent.closeFrameDialog()){
+			history.back();
+			return false;
+		}
 	}
 	
 	function loadAttachmentList(){

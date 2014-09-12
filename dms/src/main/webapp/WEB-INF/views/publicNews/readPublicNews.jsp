@@ -24,9 +24,10 @@ dojo.require("dijit.TitlePane");
 	}
 	);
 	function goToPublicNewsList(){
-		//window.location.href = "<c:url value='/publicnews/pubMana'/>";
-		window.close();
-		history.back();
+		if(!parent.closeFrameDialog()){
+			history.back();
+			return false;
+		}
 	}
 	
 	function loadAttachmentList(){

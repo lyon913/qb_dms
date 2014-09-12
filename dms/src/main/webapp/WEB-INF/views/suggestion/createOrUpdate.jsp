@@ -3,19 +3,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
-<div style="width: 100%; height: 100%; overflow: auto" class="panel">
+<div class="panel">
 	<div class="title">提出意见或建议</div>
 	<form:form modelAttribute="s" method="post">
 
 		<table class="formTable">
 			<tr>
-				<th>标题：</th>
-				<td><dms:inputText name="suggestionTitle" /></td>
+				<th width="150px">标题：</th>
+				<td><dms:inputText name="suggestionTitle" cssStyle="width:99%;"/></td>
 			</tr>
 			<tr>
-				<th>内容：</th>
+				<th width="150px">内容：</th>
 				<td>
-					<dms:textarea name="suggestionContent" cssStyle="width:100%;height:100px;"/>
+					<dms:textarea name="suggestionContent" cssStyle="width:99%;height:100px;"/>
 				</td>
 			</tr>
 

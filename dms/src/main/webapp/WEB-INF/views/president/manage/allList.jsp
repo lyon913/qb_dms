@@ -3,25 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
-<script type="text/javascript">
-function readSuggestion(id){
-	var scrWidth = screen.width * 0.9;
-	var scrHeight = screen.height * 0.9;
-	
-	var scrWidth1 = scrWidth+"px";
-	var scrHeight1 = scrHeight+"px";
-	var url = "<%=request.getContextPath()%>/president/" + id;
-	window.showModalDialog(url,null,"dialogWidth=" + scrWidth1 + ";dialogHeight="+ scrHeight1+";center=yes;");
-}
-function deleteSuggestion(id){
-	var baseUrl = "<c:url value='/'/>";
-	var url = baseUrl + "president/" + id + "/del/2";
-	
-	if(confirm("是否确认删除？")){
-		window.location = url;
-	}
-}
-</script>
+<script type="text/javascript" src="${ctx }resources/js/president.js"></script>
 <div class="panel">
 	<div class="title">
 		<span>全部信件</span>
@@ -54,7 +36,7 @@ function deleteSuggestion(id){
 					<td width="10%">${s.state.pName }</td>
 					<td width="10%">
 						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
-						<a href="###" onclick="deleteSuggestion('${s.id}')">删除</a>
+						<a href="###" onclick="deleteSuggestion('${s.id}',2)">删除</a>
 						<c:url var="assessUrl" value="/president/manage/assess/${s.id }"/>
 						<a href="${assessUrl }" onclick="">回复</a>
 						

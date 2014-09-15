@@ -36,6 +36,7 @@ import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TFile;
 import com.whr.dms.models.TFolder;
 import com.whr.dms.models.TUser;
+import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.DepartmentManager;
 import com.whr.dms.service.FileService;
@@ -73,6 +74,9 @@ public class FileManageController {
 		TUser u = um.findTUserByLoginName(username);
 		m.addAttribute("departList", dm.getAllDepartments());
 		m.addAttribute("user", u);
+		
+		
+		m.addAttribute("isManager", SecurityUtil.hasRole(RoleType.ROLE_FILE_MANAGER));
 		return "files/files";
 	}
 

@@ -21,12 +21,11 @@
 
 			<tr>
 				<td colspan="2" align="center">
-					<button class="btn-normal">
+					<button class="btn-normal" type="submit">
 						<span class="dijitIconSave"></span>
 						<span>保存</span>
 					</button>
-					<c:url var="listUrl" value="/suggesion/list"/>
-					<a class="btn-normal" href="###" onclick="javascript:window.close();history.back();return false;">
+					<a class="btn-normal" href="###" onclick="history.back();return false;">
 						<span class="dijitEditorIcon dijitEditorIconUndo"></span>
 						<span>返回</span>
 					</a>

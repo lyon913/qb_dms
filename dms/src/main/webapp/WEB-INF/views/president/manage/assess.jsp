@@ -63,7 +63,7 @@
 			</tr>
 			<tr>
 				<td align="center" colspan="2">
-					<button class="btn-normal">
+					<button class="btn-normal" type="submit">
 						<span class="dijitIconSave"></span> <span>保存</span>
 					</button> <a class="btn-normal" href="###"
 					onclick="history.back();return false;">

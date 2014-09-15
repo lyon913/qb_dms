@@ -74,7 +74,7 @@ function readPublicNews(id){
 	var w = parseInt(document.body.clientWidth * 0.9);
 	var h = parseInt(document.body.clientHeight * 0.9);
 	var url = _ctx + "publicnews/" + id;
-	parent.showFrameDialog("查看信件",url,w,h);
+	parent.showFrameDialog("阅读公告",url,w,h);
 }
 
 

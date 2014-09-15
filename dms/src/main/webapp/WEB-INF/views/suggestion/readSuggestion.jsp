@@ -74,8 +74,8 @@ function submitReply(){
 	<input type="hidden" name="suggId" value="${suggestion.id }"> 
 		<table class="formTable" align="center">
 			<tr>
-				<th width="150px">回复内容：</th>
-				<td><textarea id="reply" name="reply" style="width:90%" rows="10"></textarea></td>
+				<th width="20%">回复内容：</th>
+				<td width="75%"><textarea id="reply" name="reply" style="width:90%" rows="10"></textarea></td>
 			</tr>
 			<tr>
 				<td align="center" colspan="2">

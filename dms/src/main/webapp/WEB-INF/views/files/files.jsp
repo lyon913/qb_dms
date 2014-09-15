@@ -162,48 +162,52 @@
 					targetNodeIds : [ "folderTree" ],
 					selector : ".dijitTreeNode"
 				});
-
-				//新建文件夹菜单按钮
-				pMenu.addChild(new dijit.MenuItem({
-					label : "新建文件夹",
-					iconClass : "dijitCommonIcon dijitFolderClosed",
-					onClick : function(item) {
-						dijit.byId("cDlg").show();
-					}
-				}));
-
-				//删除文件夹菜单按钮
-				pMenu.addChild(new dijit.MenuItem({
-					label : "删除文件夹",
-					iconClass : "dijitCommonIcon dijitIconDelete",
-					onClick : function(item) {
-						var xhrArgs = {
-							url : "<c:url value='/folder/'/>"
-									+ tree.selectedNode.item.id,
-							handleAs : "json",
-							content : {
-								_method : "delete"
-							},
-							load : function(data) {
-								if (data.success) {
-									var selected = tree.selectedNode;
-									restModel.get(selected.getParent().item.id)
-											.then(function(fullNode) {
-														fullNode.name = selected.getParent().item.name;
-														tree.model.put(fullNode);
-												  });
-								} else {
-									showMessage("错误",data.message);
+				
+				var isManager = ${isManager};
+				
+				//管理权限
+				if(isManager){
+					//新建文件夹菜单按钮
+					pMenu.addChild(new dijit.MenuItem({
+						label : "新建文件夹",
+						iconClass : "dijitCommonIcon dijitFolderClosed",
+						onClick : function(item) {
+							dijit.byId("cDlg").show();
+						}
+					}));
+	
+					//删除文件夹菜单按钮
+					pMenu.addChild(new dijit.MenuItem({
+						label : "删除文件夹",
+						iconClass : "dijitCommonIcon dijitIconDelete",
+						onClick : function(item) {
+							var xhrArgs = {
+								url : "<c:url value='/folder/'/>"
+										+ tree.selectedNode.item.id,
+								handleAs : "json",
+								content : {
+									_method : "delete"
+								},
+								load : function(data) {
+									if (data.success) {
+										var selected = tree.selectedNode;
+										restModel.get(selected.getParent().item.id)
+												.then(function(fullNode) {
+															fullNode.name = selected.getParent().item.name;
+															tree.model.put(fullNode);
+													  });
+									} else {
+										showMessage("错误",data.message);
+									}
+								},
+								error : function(error) {
+									showMessage("错误", error);
 								}
-							},
-							error : function(error) {
-								showMessage("错误", error);
-							}
-						};
-						dojo.xhrPost(xhrArgs);
-					}
-				}));
-
+							};
+							dojo.xhrPost(xhrArgs);
+						}
+					}));
+				}
 				//上传文件菜单按钮
 				pMenu.addChild(new dijit.MenuItem(
 								{
@@ -287,11 +291,11 @@
 	}
 
 	function rowOperationFormatter(id, index) {
-		return '<button data-dojo-type="dijit.form.Button" onclick="downLoad('
-				+ id
-				+ ')">下载</button>'
-				+ '<button data-dojo-type="dijit.form.Button" onclick="deleteFile('
+		var rtv = '<button data-dojo-type="dijit.form.Button" onclick="downLoad('
+			+ id + ')">下载</button>';
+		rtv = rtv + '<button data-dojo-type="dijit.form.Button" onclick="deleteFile('
 				+ id + ')">删除</button>';
+		return rtv;
 	}
 
 	function downLoad(id) {
@@ -327,31 +331,6 @@
 		var form = dijit.byId("search_form");
 		if (form.validate()) {
 			var key = dijit.byId("key").get('value');
-			/**
-			var xhrArgs = {
-				url : "<c:url value='/files/search'/>",
-				content : {
-					nameKey : key
-				},
-				handleAs : "json",
-				load : function(data) {
-					var obj = {
-						identifier : 'id',
-						items : data
-					};
-					var store = new dojo.data.ItemFileWriteStore({
-						data : obj
-					});
-					//刷新grid
-					var grid = dijit.byId("grid");
-					grid.setStore(store);
-				},
-				error : function(error) {
-					showMessage("错误", error);
-				}
-			};
-			dojo.xhrPost(xhrArgs);
-			**/
 			
 			var store = new dojo.store.JsonRest({
 				target : "<c:url value='/files/search'/>",

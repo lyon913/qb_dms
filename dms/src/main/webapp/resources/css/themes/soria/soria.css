@@ -88,6 +88,7 @@ span.error{
 	border-top:none;
 	border-spacing:0;
 	margin:0;
+	padding:5px;
 	border-collapse: collapse;
 	height: 1.5em;
 }

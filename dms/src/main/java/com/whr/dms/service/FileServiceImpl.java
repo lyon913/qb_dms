@@ -103,6 +103,10 @@ public class FileServiceImpl implements FileService {
 	@Override
 	@Transactional
 	public void createFolder(TFolder folder) throws ParameterCheckException {
+		//检查权限
+		if(!SecurityUtil.hasRole(RoleType.ROLE_FILE_MANAGER)) {
+			throw new ParameterCheckException("无权限进行该操作。");
+		}
 		if (folderDao.getFolderCountByName(folder.getName(), folder.getParentId())==0) {
 			folderDao.save(folder);
 		} else {
@@ -197,7 +201,7 @@ public class FileServiceImpl implements FileService {
 		
 		//判断是否有权操作
 		if(!isAdmin && !isAuthor){
-			throw new AccessDeniedException("你无权删除此文件。");
+			throw new AccessDeniedException("只有文件上传者和管理员可以删除文件。");
 		}
 		
 		File file = new File(savePath + tfile.getFilePath());
@@ -215,7 +219,7 @@ public class FileServiceImpl implements FileService {
 		//check permissions
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
 		if(fdDao.getPersmissionCount(username, fileId)==0){
-			throw new AccessDeniedException("你无权访问此文件。");
+			throw new AccessDeniedException("无权访问此文件。");
 		}
 		
 		return fileDao.findOne(fileId);

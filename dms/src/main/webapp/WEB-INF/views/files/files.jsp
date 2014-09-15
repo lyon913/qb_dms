@@ -73,8 +73,13 @@
 				}, {
 					'name' : '操作',
 					'field' : 'id',
-					'width' : '15%',
-					formatter : rowOperationFormatter
+					'width' : '7%',
+					formatter : rowDownload
+				}, {
+					'name' : ' ',
+					'field' : 'id',
+					'width' : '8%',
+					formatter : rowDelete
 				} ];
 				//grid列表
 				var grid = new dojox.grid.EnhancedGrid({
@@ -83,7 +88,7 @@
 					structure : layout,
 					sortInfo:-5,
 			        canSort:function(colIndex){
-			        	if(colIndex == 1|| colIndex == 6){
+			        	if(colIndex == 1|| colIndex == 6 || colIndex == 7){
 			        		return false;
 			        	}
 			        	return true;
@@ -182,12 +187,8 @@
 						iconClass : "dijitCommonIcon dijitIconDelete",
 						onClick : function(item) {
 							var xhrArgs = {
-								url : "<c:url value='/folder/'/>"
-										+ tree.selectedNode.item.id,
+								url : _ctx + "folder/" + tree.selectedNode.item.id + "/delete",
 								handleAs : "json",
-								content : {
-									_method : "delete"
-								},
 								load : function(data) {
 									if (data.success) {
 										var selected = tree.selectedNode;
@@ -280,7 +281,7 @@
 	//刷新grid
 	function loadList(folderId) {
 		var store = new dojo.store.JsonRest({
-			target : "<c:url value='/files/list/'/>" + folderId,
+			target : _ctx + "files/list/" + folderId,
 			sortParam : "sort"
 		});
 		var grid = dijit.byId("grid");
@@ -290,26 +291,37 @@
 		);
 	}
 
-	function rowOperationFormatter(id, index) {
-		var rtv = '<button data-dojo-type="dijit.form.Button" onclick="downLoad('
-			+ id + ')">下载</button>';
-		rtv = rtv + '<button data-dojo-type="dijit.form.Button" onclick="deleteFile('
-				+ id + ')">删除</button>';
-		return rtv;
+	function rowDelete(id, index) {
+
+		var btn = new dijit.form.Button({
+			label:"删除",
+			onClick:function(){
+				deleteFile(id);
+			}
+		})
+		
+		return btn;
+	}
+	
+	function rowDownload(id, index) {
+		var btn = new dijit.form.Button({
+			label:"下载",
+			onClick:function(){
+				downLoad(id);
+			}
+		})
+		return btn;
 	}
 
 	function downLoad(id) {
-		window.location.href = "<c:url value='/files/'/>" + id;
+		window.location.href = _ctx + "files/" + id;
 	}
 
 	function deleteFile(id) {
 		if (confirm("确定要删除吗？")) {
 			var xhrArgs = {
-				url : "<c:url value='/files/'/>" + id,
+				url : _ctx + "files/" + id + "/delete",
 				handleAs : "json",
-				content : {
-					_method : "delete"
-				},
 				load : function(data) {
 					if (data.success) {
 						showMessage("信息", "删除成功。");
@@ -333,7 +345,7 @@
 			var key = dijit.byId("key").get('value');
 			
 			var store = new dojo.store.JsonRest({
-				target : "<c:url value='/files/search'/>",
+				target : _ctx + "files/search",
 				sortParam : "sort"
 			});
 			var objStore =  new dojo.data.ObjectStore({objectStore:store});
@@ -377,7 +389,7 @@
 
 		<!-- 新建文件夹对话框 -->
 		<div id="cDlg" data-dojo-type="dijit.Dialog" title="新建文件夹">
-			<form action="<c:url value="/folder"/> " id="cForm">
+			<form action="<c:url value="/folder/new"/> " id="cForm">
 				<input type="hidden" name="parentId" id="parentId" value="">
 				<table width="100%">
 					<tr>

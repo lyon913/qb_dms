@@ -1,8 +1,21 @@
 function showMessage(title, message) {
 	var dialog = new dijit.Dialog({
 		title : title,
-		content : message
+		content : '<div id="_mb_body" style="margin:0px;padding:10px;font-size:1em;">' + message
+				+ '<br><br></div>',
+		hide : function() {
+			this.destroyRecursive();
+		}
 	});
+	var btn = new dijit.form.Button({
+		label : "确定",
+		onClick : function() {
+			dialog.hide();
+		}
+	});
+	var _mb_body = dojo.query("#_mb_body",dialog.domNode)[0];
+	
+	_mb_body.appendChild(btn.domNode);
 	dialog.show();
 }
 
@@ -29,4 +42,3 @@ function onPageSelected(page, size, formId) {
 	form["size"] = size;
 	form.submit();
 }
-

@@ -11,12 +11,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -49,16 +49,16 @@ import com.whr.dms.web.form.FolderTreeNode;
 
 @Controller
 public class FileManageController {
-	@Resource
+	@Autowired
 	FileService fs;
 	
-	@Resource
+	@Autowired
 	UserManager um;
 	
-	@Resource
+	@Autowired
 	DepartmentManager dm;
 	
-	@Resource
+	@Autowired
 	Config cfg;
 	
 	public TUser getUser(){
@@ -67,6 +67,11 @@ public class FileManageController {
 		return u;
 	}
 
+	/**
+	 * 文件共享页面
+	 * @param m
+	 * @return
+	 */
 	@RequestMapping("/files")
 	public String filePage(Model m) {
 		//check permissions
@@ -80,6 +85,11 @@ public class FileManageController {
 		return "files/files";
 	}
 
+	/**
+	 * 子文件夹列表（树形）
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping("/folder/list/{id}")
 	public @ResponseBody
 	FolderTreeNode listFolders(@PathVariable long id) {
@@ -88,7 +98,14 @@ public class FileManageController {
 		return fullNode;
 	}
 
-	@RequestMapping(value = "/folder", method = RequestMethod.POST)
+	/**
+	 * 创建文件夹
+	 * @param parentId
+	 * @param name
+	 * @param description
+	 * @return
+	 */
+	@RequestMapping(value = "/folder/new", method = RequestMethod.POST)
 	public @ResponseBody
 	JsonResponse createFolder(long parentId, String name, String description) {
 		TFolder folder = new TFolder();
@@ -104,7 +121,12 @@ public class FileManageController {
 		}
 	}
 
-	@RequestMapping(value = "/folder/{id}", method = RequestMethod.DELETE)
+	/**
+	 * 删除文件夹
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/folder/{id}/delete")
 	public @ResponseBody
 	JsonResponse deleteFolder(@PathVariable long id) {
 		try {
@@ -117,6 +139,15 @@ public class FileManageController {
 		}
 	}
 
+	/**
+	 * 上传文件
+	 * @param parentId
+	 * @param sharedDepartmentId
+	 * @param file
+	 * @param request
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping(value = "/files/upload", method = RequestMethod.POST)
 	public ResponseEntity<String> upload(long parentId, long[] sharedDepartmentId, MultipartFile file, HttpServletRequest request) throws UnsupportedEncodingException {
 		HttpHeaders headers = new HttpHeaders();
@@ -149,6 +180,13 @@ public class FileManageController {
 
 	}
 	
+	/**
+	 * 文件夹下的文件列表
+	 * @param sort
+	 * @param range
+	 * @param folderId
+	 * @return
+	 */
 	@RequestMapping(value = "/files/list/{folderId}", method = RequestMethod.GET)
 	public @ResponseBody
 	ResponseEntity<List<TFile>> listFiles(@RequestParam(required = false)String sort,@RequestHeader("Range") String range,@PathVariable long folderId) {
@@ -159,6 +197,12 @@ public class FileManageController {
 		return new ResponseEntity<List<TFile>>(page.getContent(), headers, HttpStatus.OK);
 	}
 	
+	/**
+	 * 下载
+	 * @param fileId
+	 * @param request
+	 * @param response
+	 */
 	@RequestMapping("/files/{fileId}")
 	public void download(@PathVariable long fileId,HttpServletRequest request,HttpServletResponse response){
 		FileInputStream in = null;
@@ -198,7 +242,13 @@ public class FileManageController {
 		}
 	}
 	
-	@RequestMapping(value = "/files/{id}", method = RequestMethod.DELETE)
+	/**
+	 * 删除文件
+	 * @param id
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/files/{id}/delete")
 	public @ResponseBody JsonResponse deleteFile(@PathVariable long id,HttpServletRequest request){
 		
 		try {
@@ -210,6 +260,14 @@ public class FileManageController {
 		}
 	}
 	
+	/**
+	 * 文件查找
+	 * @param sort
+	 * @param range
+	 * @param nameKey
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
 	@RequestMapping(value = "/files/search")
 	public @ResponseBody ResponseEntity<List<TFile>> searchFiles(@RequestParam(required = false)String sort,@RequestHeader("Range") String range,String nameKey) throws UnsupportedEncodingException{
 		PageableRange pr = new PageableRange(range,new DojoSort(sort).toSpringSort());

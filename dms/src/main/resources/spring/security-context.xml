@@ -15,6 +15,8 @@
 		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
 		<intercept-url pattern="/notice/manage/**" access="ROLE_NOTICE_MANAGER,ROLE_ADMIN" />
 		<intercept-url pattern="/publicnews/manage/**" access="ROLE_PUBLICNEWS_MANAGER,ROLE_ADMIN" />
+		
+		
 		<intercept-url pattern="/software/softwareMana"	access="ROLE_SOFTWARE_MANAGER,ROLE_ADMIN" />
 		
 		<intercept-url pattern="/suggestion/manage/**" access="ROLE_SUGGESTION_MANAGER" />

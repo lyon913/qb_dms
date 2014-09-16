@@ -93,7 +93,8 @@ public class FileManageController {
 	@RequestMapping("/folder/list/{id}")
 	public @ResponseBody
 	FolderTreeNode listFolders(@PathVariable long id) {
-		FolderTreeNode fullNode = new FolderTreeNode(fs.getSubDirs(id));
+		FolderTreeNode fullNode = new FolderTreeNode();
+		fullNode.setChildrenTFolder(fs.getSubDirs(id));
 		fullNode.setId(id);
 		return fullNode;
 	}
@@ -275,6 +276,12 @@ public class FileManageController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Range", new ContentRangeHeader(pr.getOffset(), page.getNumberOfElements(), page.getTotalElements()).toString());
 		return new ResponseEntity<List<TFile>>(page.getContent(), headers, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/files/moveDialog")
+	public String moveFilesDialog(@RequestParam long[] fileId, Model m) {
+		
+		return "files/moveFiles";
 	}
 
 }

@@ -5,6 +5,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import com.whr.dms.models.TFolder;
+import com.whr.dms.web.form.FolderTreeNode;
 
 public class Utils {
 	
@@ -31,6 +35,10 @@ public class Utils {
 		} catch (ParseException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public static List<FolderTreeNode> formatFolderList(List<TFolder> folders){
+		return null;
 	}
 
 }

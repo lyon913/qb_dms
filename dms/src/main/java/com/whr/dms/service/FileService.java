@@ -134,5 +134,11 @@ public interface FileService {
 	 * @return
 	 */
 	public boolean hasAccessPermission(String loginName, long fileId);
+	
+	/**
+	 * 获取所有folder
+	 * @return
+	 */
+	public List<TFolder> findAllFolders();
 
 }

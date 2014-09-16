@@ -166,7 +166,8 @@ public class SoftwareController {
 	@RequestMapping("/softwarefolder/list/{id}")
 	public @ResponseBody
 	FolderTreeNode listFolders(@PathVariable long id) {
-		FolderTreeNode fullNode = new FolderTreeNode(sservice.getSubDirs(id));
+		FolderTreeNode fullNode = new FolderTreeNode();
+		fullNode.setChildrenTFolder(sservice.getSubDirs(id));
 		fullNode.setId(id);
 		return fullNode;
 	}

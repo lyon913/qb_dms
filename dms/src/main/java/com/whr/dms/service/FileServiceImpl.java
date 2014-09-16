@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,16 +37,16 @@ import com.whr.dms.security.SecurityUtil;
 @Service
 public class FileServiceImpl implements FileService {
 
-	@Resource
+	@Autowired
 	private TFolderDao folderDao;
 	
-	@Resource
+	@Autowired
 	private TFileDao fileDao;
 	
-	@Resource
+	@Autowired
 	private TUserDao uDao;
 	
-	@Resource
+	@Autowired
 	private TFile_TDepartmentDao fdDao;
 	
 	//@Resource
@@ -233,6 +233,12 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public boolean hasAccessPermission(String loginName, long fileId) {
 		return fdDao.getPersmissionCount(loginName, fileId)>0;
+	}
+
+	@Override
+	public List<TFolder> findAllFolders() {
+		Sort s = new Sort("name");
+		return folderDao.findAll(s);
 	}
 
 }

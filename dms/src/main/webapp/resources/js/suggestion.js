@@ -3,8 +3,8 @@
  */
 function readSuggestion(id){
 	
-	var w = parseInt(document.body.clientWidth * 0.9);
-	var h = parseInt(document.body.clientHeight * 0.9);
+	var w = parseInt(document.body.clientWidth);
+	var h = parseInt(document.body.clientHeight);
 	var url = _ctx + "suggestion/" + id;
 	parent.showFrameDialog("查看意见内容",url,w,h);
 }

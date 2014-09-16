@@ -34,6 +34,7 @@
 	dojo.require("dojox.form.BusyButton");
 	dojo.require("dojox.grid.EnhancedGrid");
 	dojo.require("dojox.grid.enhanced.plugins.Pagination");
+	dojo.require("dojox.grid._CheckBoxSelector");
 	dojo.require("dojo.data.ObjectStore");
 	dojo.require("dijit.TitlePane");
 	dojo.require("dijit.form.Form");
@@ -47,10 +48,10 @@
 				 **/
 
 				//数据结构
-				var layout = [ {
+				var cells = [{
 					'name' : '#',
 					'field' : 'id',
-					'width' : '5%',
+					'width' : '4%',
 					formatter : rowIndexFormatter
 				}, {
 					'name' : '文件名',
@@ -64,7 +65,7 @@
 				}, {
 					'name' : '上传者',
 					'field' : 'author',
-					'width' : '15%px'
+					'width' : '10%'
 				}, {
 					'name' : '上传时间',
 					'field' : 'createTime',
@@ -81,6 +82,12 @@
 					'width' : '8%',
 					formatter : rowDelete
 				} ];
+				
+				layout = [ {
+					// First, our view using the _CheckBoxSelector custom type
+					type: "dojox.grid._CheckBoxSelector",
+					'width' : '4%'
+				}, cells];
 				//grid列表
 				var grid = new dojox.grid.EnhancedGrid({
 					id : 'grid',
@@ -93,7 +100,6 @@
 			        	}
 			        	return true;
 			        },
-					rowSelector : '20px',
 			        plugins: {
 			            pagination: {
 			               pageSizes: ["10", "25", "50"],
@@ -276,6 +282,16 @@
 				dojo.connect(dojo.byId("upload_form"),"onSubmit",function(e){
 					alter(dijit.byId("shareSelect").get("value"));
 				});
+				
+				//批量移动按钮
+				dojo.connect(dojo.byId("bt_move"),"click",function(e){
+					var selectedRow = grid.selection.getSelected();
+					var idArray = new Array();
+					dojo.forEach(selectedRow,function(r){
+						idArray.push(r.id);
+					});
+					alert(idArray);
+				});
 			});
 
 	//刷新grid
@@ -374,6 +390,10 @@
 		dojo.forEach(nodes,function(chk){
 			dijit.byId(chk.id).set("checked",false);
 		});
+	}
+	
+	function batchMoveFiles(){
+		
 	}
 </script>
 
@@ -488,12 +508,13 @@
 						data-dojo-props="title:'文件查找'" style="width: 100%">
 						<form id="search_form" data-dojo-type="dijit.form.Form"
 							action="<c:url value='/files/search'/>" method="post">
-							<label for="key">关键字：</label> <input id="key" name="nameKey"
-								data-dojo-type="dijit.form.ValidationTextBox"
-								data-dojo-props="required:true">
-							<button type="button" data-dojo-type="dijit.form.Button"
-								data-dojo-props="onClick:function(){search();},iconClass:'dijitCommonIcon dijitIconSearch'">查找</button>
+								<label for="key">关键字：</label>
+								<input id="key" name="nameKey" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="required:true">
+								<button type="button" data-dojo-type="dijit.form.Button"
+									data-dojo-props="onClick:function(){search();},iconClass:'dijitCommonIcon dijitIconSearch'">查找</button>
+								<button id="bt_move" type="button" style="position: absolute;right: 10px;width: 80px">批量移动</button>
 						</form>
+						
 					</div>
 			</div>
 			<div data-dojo-type="dijit.layout.ContentPane"

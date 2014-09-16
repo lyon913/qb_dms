@@ -1,16 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登录::丘北县人民医院内网信息共享平台</title>
 <style type="text/css">
-
-html,body{
+html, body {
 	width: 98%;
 	height: 98%;
 }
+
 .qb-nerong {
 	width: 581px;
 	height: 439px;
@@ -24,31 +25,46 @@ html,body{
 	font-size: 16px;
 	color: #1C4060;
 	text-align: right;
-	width: 
+	width:
 }
 
-.inputField{
+.inputField {
 	width: 130px;
 	height: 20px;
 	font-size: 16px;
 }
 
-.button{
+.button {
 	width: 65px;
 	height: 30px;
 }
 
-.error{
+.error {
 	color: red;
 	font-size: 16px;
 	font-weight: bold;
 	text-align: center;
 }
 
-.label{
+.label {
 	
 }
 </style>
+
+<c:url var="_ctx" value="/" scope="page" />
+<script type="text/javascript"
+	src="${_ctx}resources/js/dojo-release-1.7.3/dojo/dojo.js"></script>
+<script type="text/javascript">
+	require([ "dojo/ready" ], function(ready) {
+		ready(function() {
+			//判断是否在iframe中
+			if (self.frameElement && self.frameElement.tagName == "IFRAME") {
+				alert("登陆超时，请重新登陆");
+				window.parent.location = "${_ctx}";
+			}
+		});
+	});
+</script>
 </head>
 <body>
 
@@ -78,24 +94,22 @@ html,body{
 																<table height="146" align="center">
 																	<tbody>
 																		<tr>
-																			<td colspan="2"  class="error">
-																				${SPRING_SECURITY_LAST_EXCEPTION.message}
-																			</td>
+																			<td colspan="2" class="error">
+																				${SPRING_SECURITY_LAST_EXCEPTION.message}</td>
 																		</tr>
 																		<tr>
-																			<td height="28"  class="STYLE1">
-																				用户名：
-																			</td>
+																			<td height="28" class="STYLE1">用户名：</td>
 																			<td><input name="j_username" class="inputField"></td>
 																		</tr>
 																		<tr>
 																			<td height="28" class="STYLE1">密 码：</td>
-																			<td><input name="j_password" type="password"  class="inputField"></td>
+																			<td><input name="j_password" type="password"
+																				class="inputField"></td>
 																		</tr>
 																		<tr>
-																			<td height="47" colspan="2" align="right">
-																				<input name="submit" type="submit" class="button" value="登陆" /> 
-																			</td>
+																			<td height="47" colspan="2" align="right"><input
+																				name="submit" type="submit" class="button"
+																				value="登陆" /></td>
 																		</tr>
 																	</tbody>
 																</table>

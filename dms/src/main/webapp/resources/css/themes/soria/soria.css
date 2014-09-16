@@ -82,15 +82,23 @@ span.error{
 	border: 1px dotted #D5CDB5;
 }
 
+.table tr{
+	height: 25px;
+}
+
 .table th, .table td {
 	border: 1px dotted #D5CDB5;
 	border-left:none;
 	border-top:none;
 	border-spacing:0;
 	margin:0;
-	padding:5px;
+	padding:0px 5px 0px 5px;
 	border-collapse: collapse;
-	height: 1.5em;
+	height: 100%;
+}
+
+.table tr:nth-child(even) td{
+	background-color: #f2f5f9;
 }
 
 .table th {

@@ -134,7 +134,7 @@ html, body {
 
 		<!-- west -->
 		<div data-dojo-type="dijit.layout.AccordionContainer"
-			data-dojo-props="minSize:30, region:'leading', splitter:true,persist:true"
+			data-dojo-props="minSize:30, region:'leading', splitter:true"
 			style="width: 200px; font-size: 20px" id="leftAccordion">
 			<div data-dojo-type="dijit.layout.AccordionPane" title="功能导航"
 				style='padding: 0px;'>

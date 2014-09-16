@@ -6,27 +6,28 @@
 <script type="text/javascript" src="${ctx }resources/js/hospMana.js"></script>
 <div class="panel">
 	<div class="title">
-		<span>意见簿</span>
-		<span style="float: right;">
-			<c:url var="myUrl" value="/suggestion/list/my"/>
-			<a href="${myUrl }">我的意见</a>
-			<c:url var="newUrl" value="/suggestion/new"/>
-			<a href="${newUrl }">提出意见</a>
-		</span>
+		<span>医院管理——我的帖子</span>
+		<div style="float: right;margin: 0;padding: 0">
+		
+			<c:url var="publicUrl" value="/hospMana/list/public"/>
+			<a href="${publicUrl }" >返回医院管理</a>
+			<c:url var="newUrl" value="/hospMana/new"/>
+			<a href="${newUrl }">发帖</a>
+		</div>
 	</div>
 	<form id="searchForm" method="post">
 		<label for="key">标题：</label>
 		<input id="key" name="key" value="${key }" class="input-text"> 
 		<input name="page" value="0" type="hidden">
-		<input name="size" value="10" type="hidden">
+		<input name="size" value="20" type="hidden">
 		<button type="submit" class="btn-normal">查询</button>
 	</form>
 	<table width="100%" class="table">
 		<thead>
 			<tr>
 				<th>标题</th>
+				<th>发帖人</th>
 				<th>日期</th>
-				<th>状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -34,10 +35,17 @@
 			<c:forEach items="${result.content }" var="s">
 				<tr>
 					<td width="70%">${s.suggestionTitle }</td>
+					<td width="10%">${s.author }</td>
 					<td width="10%">${s.suggestionDate }</td>
-					<td width="10%">${s.state.displayName }</td>
 					<td width="10%">
-						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
+					
+						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
+						<!--<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
+						<a href="${editUrl }">编辑</a>
+						-->
+						<a href="###" onclick="deleteSuggestion('${s.id}',1)">删除</a>
+						
+						<a href="###" onclikc="uploadAttachment('${s.id }')">附件管理</a>
 					</td>
 				</tr>
 

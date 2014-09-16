@@ -3,6 +3,8 @@ package com.whr.dms.models;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,8 +25,8 @@ public class TAttachment extends BaseAuditEntity implements Serializable {
 	 * 附件所属主外键表
 	 */
 	@NotNull
-	@Size(max = 20)
-	private String foreignTable;
+	@Enumerated(EnumType.STRING)
+	private AttachmentType foreignTable;
 	
 	/**
 	 * 附件所属外键值
@@ -51,5 +53,45 @@ public class TAttachment extends BaseAuditEntity implements Serializable {
 	 */
 	@NotNull
 	private Long size;
+
+	public AttachmentType getForeignTable() {
+		return foreignTable;
+	}
+
+	public void setForeignTable(AttachmentType foreignTable) {
+		this.foreignTable = foreignTable;
+	}
+
+	public Long getForeignKey() {
+		return foreignKey;
+	}
+
+	public void setForeignKey(Long foreignKey) {
+		this.foreignKey = foreignKey;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
+	}
 
 }

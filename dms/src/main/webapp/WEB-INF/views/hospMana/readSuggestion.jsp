@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:url var="delUrl" value="/suggestion/reply/"/>
-<c:url var="readUrl" value="/suggestion/${suggestion.id }"/>
+<c:url var="delUrl" value="/hospMana/reply/"/>
+<c:url var="readUrl" value="/hospMana/${suggestion.id }"/>
 
 <script type="text/javascript">
 function deleteReply(id){
@@ -35,7 +35,7 @@ function submitReply(){
 </script>
 <div class="panel">
 	<div class="title">
-		<span>帖子标题：${suggestion.suggestionTitle}</span>
+		<span>标题：${suggestion.suggestionTitle}&nbsp;&nbsp;发帖人：${suggestion.author }</span>
 	</div>
 	<table class="formTable">
 		<tr>
@@ -69,7 +69,7 @@ function submitReply(){
 		</c:forEach>
 	</table>
 	<br>
-	<c:url var="rUrl" value="/suggestion/${suggestion.id }/reply" />
+	<c:url var="rUrl" value="/hospMana/${suggestion.id }/reply" />
 	<form id="rForm" action="${rUrl }" method="post" target="_self">
 	<input type="hidden" name="suggId" value="${suggestion.id }"> 
 		<table class="formTable" align="center">

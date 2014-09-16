@@ -1,31 +1,23 @@
 package com.whr.dms.models;
 
-public enum SuggestionType {
-	/**
-	 * 意见簿
-	 */
-	Suggestion("意见簿"),
+public enum AttachmentType {
 	
 	/**
-	 * 院长信箱
+	 * 发帖回复
 	 */
-	President("院长信箱"),
-	
+	TReply("回复"),
 	/**
 	 * 医院管理
 	 */
-	Management("医院管理");
+	TSuggestion("医院管理");
 	
 	private String displayName;
 	
-	private SuggestionType(String name) {
+	private AttachmentType(String name) {
 		this.displayName = name;
 	}
 	
 	public String getDisplayName() {
 		return this.displayName;
 	}
-	
-	
-
 }

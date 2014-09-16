@@ -1,6 +1,13 @@
 package com.whr.dms.service;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,11 +17,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.whr.dms.dao.TAttachmentDao;
 import com.whr.dms.dao.TReplyDao;
 import com.whr.dms.dao.TSuggestionDao;
 import com.whr.dms.exceptions.ParameterCheckException;
+import com.whr.dms.models.AttachmentType;
 import com.whr.dms.models.SuggestionState;
 import com.whr.dms.models.SuggestionType;
+import com.whr.dms.models.TAttachment;
+import com.whr.dms.models.TNoticeAttachment;
 import com.whr.dms.models.TReply;
 import com.whr.dms.models.TSuggestion;
 import com.whr.dms.security.RoleType;
@@ -28,6 +39,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Autowired
 	private TReplyDao rdao;
 
+	@Autowired
+	private TAttachmentDao adao;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public TSuggestion findById(long id) {
@@ -112,7 +126,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 			return RoleType.ROLE_SUGGESTION_MANAGER;
 		} else if (SuggestionType.President.equals(type)) {
 			return RoleType.ROLE_PRESIDENT_MANAGER;
-		} else if (SuggestionType.Managment.equals(type)) {
+		} else if (SuggestionType.Management.equals(type)) {
 			return RoleType.ROLE_HOSPITAL_MANAGER;
 		}
 		throw new RuntimeException("意见簿类型匹配错误");
@@ -194,4 +208,67 @@ public class SuggestionServiceImpl implements SuggestionService {
 		
 	}
 
+	@Override
+	public List<TAttachment> attaches(long suggsId, AttachmentType tableName) {
+		// 附件列表
+		List<TAttachment> list = adao.getAttaches(suggsId, tableName);
+		return list;
+	}
+
+
+	@Override
+	public TAttachment downloadAttachment(long attachmentId) {
+		// TODO Auto-generated method stub
+		TAttachment attachment = adao.findOne(attachmentId);
+		return attachment;
+		
+	}
+
+	@Override
+	@Transactional
+	public void addAttachment(TAttachment attach, InputStream is,String uploadDir) throws Exception {
+		
+		//get upload dir
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String relativePath = df.format(new Date()) + "\\";
+		String path = uploadDir + relativePath;
+		File folder = new File(path);
+		if(!folder.exists()){
+			folder.mkdirs();
+		}
+		
+		String uuid = UUID.randomUUID().toString();
+		File outputFile = new File(path + uuid);
+		BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(outputFile));
+		
+		//read buffer
+		byte[] buffer = new byte[1024];
+		while(is.read(buffer) > -1){
+			os.write(buffer);
+		}
+		is.close();
+		os.close();
+		
+		try {
+			attach.setPath(relativePath + uuid);
+			adao.save(attach);
+		} catch (Exception e) {
+			if (outputFile.exists()) {
+				outputFile.delete();
+			}
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteAttachment(long attachmentId) {
+		// TODO Auto-generated method stub
+		adao.delete(attachmentId);
+	}
+
+	@Override
+	public TAttachment getAttachment(long attachmentId) {
+		// TODO Auto-generated method stub
+		return adao.findOne(attachmentId);
+	}
 }

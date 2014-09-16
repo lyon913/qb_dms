@@ -1,13 +1,18 @@
 package com.whr.dms.service;
 
+import java.io.InputStream;
+import java.util.List;
+
 import javax.security.sasl.AuthenticationException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.whr.dms.exceptions.ParameterCheckException;
+import com.whr.dms.models.AttachmentType;
 import com.whr.dms.models.SuggestionState;
 import com.whr.dms.models.SuggestionType;
+import com.whr.dms.models.TAttachment;
 import com.whr.dms.models.TSuggestion;
 
 public interface SuggestionService {
@@ -100,5 +105,33 @@ public interface SuggestionService {
 	 * @throws ParameterCheckException 
 	 */
 	public void reply(long suggsId, String reply) throws ParameterCheckException;
+	
+	/**
+	 * 列出对应的附件
+	 * @param suggsId
+	 * @param tableName
+	 * @return
+	 */
+	public List<TAttachment> attaches(long suggsId,AttachmentType tableName);
+	
+	public void addAttachment(TAttachment attach, InputStream is,String uploadDir) throws Exception;
+	/**
+	 * 下载附件
+	 * @param attachment
+	 */
+	public TAttachment downloadAttachment(long attachmentId);
+	
+	/**
+	 * 删除附件
+	 * @param attachId
+	 */
+	public void deleteAttachment(long attachId);
+	
+	/**
+	 * 获取附件
+	 * @param attachmentId
+	 * @return
+	 */
+	public TAttachment getAttachment(long attachmentId);
 
 }

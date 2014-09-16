@@ -6,12 +6,12 @@
 <script type="text/javascript" src="${ctx }resources/js/hospMana.js"></script>
 <div class="panel">
 	<div class="title">
-		<span>意见簿</span>
+		<span>医院管理</span>
 		<span style="float: right;">
-			<c:url var="myUrl" value="/suggestion/list/my"/>
-			<a href="${myUrl }">我的意见</a>
-			<c:url var="newUrl" value="/suggestion/new"/>
-			<a href="${newUrl }">提出意见</a>
+			<c:url var="myUrl" value="/hospMana/list/my"/>
+			<a href="${myUrl }">我的帖子</a>
+			<c:url var="newUrl" value="/hospMana/new"/>
+			<a href="${newUrl }">发帖</a>
 		</span>
 	</div>
 	<form id="searchForm" method="post">
@@ -25,8 +25,8 @@
 		<thead>
 			<tr>
 				<th>标题</th>
+				<th>发帖人</th>
 				<th>日期</th>
-				<th>状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -34,8 +34,8 @@
 			<c:forEach items="${result.content }" var="s">
 				<tr>
 					<td width="70%">${s.suggestionTitle }</td>
+					<td width="10%">${s.author }</td>
 					<td width="10%">${s.suggestionDate }</td>
-					<td width="10%">${s.state.displayName }</td>
 					<td width="10%">
 						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
 					</td>

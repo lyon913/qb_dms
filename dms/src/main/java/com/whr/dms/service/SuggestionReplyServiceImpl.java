@@ -85,7 +85,7 @@ public class SuggestionReplyServiceImpl implements SuggestionReplyService {
 			return RoleType.ROLE_SUGGESTION_MANAGER;
 		} else if (SuggestionType.President.equals(type)) {
 			return RoleType.ROLE_PRESIDENT_MANAGER;
-		} else if (SuggestionType.Managment.equals(type)) {
+		} else if (SuggestionType.Management.equals(type)) {
 			return RoleType.ROLE_HOSPITAL_MANAGER;
 		}
 		throw new RuntimeException("意见簿类型匹配错误");

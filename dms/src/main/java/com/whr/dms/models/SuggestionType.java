@@ -14,7 +14,7 @@ public enum SuggestionType {
 	/**
 	 * 医院管理
 	 */
-	Managment("医院管理");
+	Management("医院管理");
 	
 	private String displayName;
 	

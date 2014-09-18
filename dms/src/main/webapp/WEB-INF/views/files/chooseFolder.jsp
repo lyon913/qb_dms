@@ -3,6 +3,7 @@
 <%@ page import="com.whr.dms.models.TUser"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<!-- 本页面提供其他页面选择文件夹功能，确定按钮绑定函数 onFolderChose由调用页面实现-->
 <div>
 	<div>
 		<select id="folderSel"

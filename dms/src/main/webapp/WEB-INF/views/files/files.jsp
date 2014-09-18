@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet"
 	href="<c:url value="/resources/js/dojo-release-1.7.3/dojox/form/resources/UploaderFileList.css"/>" />
 <link rel="stylesheet"
@@ -51,7 +52,7 @@
 				var cells = [{
 					'name' : '#',
 					'field' : 'id',
-					'width' : '4%',
+					'width' : '3%',
 					formatter : rowIndexFormatter
 				}, {
 					'name' : '文件名',
@@ -60,11 +61,15 @@
 				}, {
 					'name' : '大小(MB)',
 					'field' : 'size',
-					'width' : '15%',
+					'width' : '10%',
 					formatter : byteSizeFormatter
 				}, {
 					'name' : '上传者',
 					'field' : 'author',
+					'width' : '8%'
+				}, {
+					'name' : '上传科室',
+					'field' : 'authorDepart',
 					'width' : '10%'
 				}, {
 					'name' : '上传时间',
@@ -93,7 +98,7 @@
 					id : 'grid',
 					store : null,
 					structure : layout,
-					sortInfo:-5,
+					sortInfo:-6,
 			        canSort:function(colIndex){
 			        	if(colIndex == 1|| colIndex == 6 || colIndex == 7){
 			        		return false;
@@ -216,59 +221,48 @@
 					}));
 				}
 				//上传文件菜单按钮
-				pMenu.addChild(new dijit.MenuItem(
-								{
-									label : "上传文件",
-									iconClass : "dijitCommonIcon dijitIconUndo",
-									onClick : function(item) {
-										dijit.byId("upDlg").show();
-										dojo.byId("uploader_parentId").value = tree.selectedNode.item.id;
-										dijit.byId("uploader_submit_button").resetTimeout();
-									}
-								}));
+				pMenu.addChild(new dijit.MenuItem({
+					label : "上传文件",
+					iconClass : "dijitCommonIcon dijitIconUndo",
+					onClick : function(item) {
+						dijit.byId("upDlg").show();
+						dojo.byId("uploader_parentId").value = tree.selectedNode.item.id;
+						dijit.byId("uploader_submit_button").resetTimeout();
+					}
+				}));
 
 				pMenu.startup();
 				pMenu.bindDomNode(dojo.byId("folderTree"));
 
 				//提交创建文件夹表单
 				var form = dojo.byId("cForm");
-				dojo.connect(
-								form,
-								"onsubmit",
-								function(event) {
-									dojo.stopEvent(event);
-									dojo.byId("parentId").value = tree.selectedNode.item.id;
-									//form.parentId = tree.selectedNode.item.id;
-									var xhrArgs = {
-										form : form,
-										handleAs : "json",
-										load : function(data) {
-											if (data.success) {
-												restModel
-														.get(
-																tree.selectedNode.item.id)
-														.then(
-																function(
-																		fullNode) {
-																	fullNode.name = tree.selectedNode.item.name;
-																	restModel
-																			.put(fullNode);
-																});
-											} else {
-												showMessage("错误", data.message);
-											}
-										},
-										error : function(error) {
-											showMessage("错误", "服务器发生错误。");
-										}
-									};
-									dojo.xhrPost(xhrArgs);
-									dijit.byId("cDlg").hide();
+				dojo.connect(form, "onsubmit",	function(event) {
+					dojo.stopEvent(event);
+					dojo.byId("parentId").value = tree.selectedNode.item.id;
+					//form.parentId = tree.selectedNode.item.id;
+					var xhrArgs = {
+						form : form,
+						handleAs : "json",
+						load : function(data) {
+							if (data.success) {
+								restModel.get(tree.selectedNode.item.id).then(function(fullNode) {
+									fullNode.name = tree.selectedNode.item.name;
+									restModel.put(fullNode);
 								});
+							} else {
+								showMessage("错误", data.message);
+							}
+						},
+						error : function(error) {
+							showMessage("错误", "服务器发生错误。");
+						}
+					};
+					dojo.xhrPost(xhrArgs);
+					dijit.byId("cDlg").hide();
+				});
 
 				//文件上传完成事件
-				dojo.connect(dijit.byId("uploader"), "onComplete", function(
-						dataArray) {
+				dojo.connect(dijit.byId("uploader"), "onComplete", function(dataArray) {
 					dijit.byId("upDlg").hide();
 					if (dataArray.success == true) {
 						//刷新grid
@@ -282,15 +276,9 @@
 				dojo.connect(dojo.byId("upload_form"),"onSubmit",function(e){
 					alter(dijit.byId("shareSelect").get("value"));
 				});
-				
-				//批量移动按钮
-				dojo.connect(dojo.byId("bt_move"),"click",function(e){
-					var selectedRow = grid.selection.getSelected();
-					var idArray = new Array();
-					dojo.forEach(selectedRow,function(r){
-						idArray.push(r.id);
-					});
-					alert(idArray);
+				//grid加载刷新后清空选中状态			
+				dojo.connect(grid, "_onFetchComplete", function(){
+					grid.selection.clear();
 				});
 			});
 
@@ -305,6 +293,7 @@
 				objectStore : store
 			}),null,null
 		);
+		
 	}
 
 	function rowDelete(id, index) {
@@ -392,8 +381,55 @@
 		});
 	}
 	
-	function batchMoveFiles(){
+	
+	function openFolderChooseDialog() {
+
+		var fcDlg = new dijit.Dialog({
+			id : "fcDlg",
+			title : "文件夹选择",
+			href : _ctx + "files/chooseFolder",
+			style : "width:400px;;",
+			hide : function() {
+				this.destroyRecursive();
+			}
+		});
+		fcDlg.show();
+	}
+	
+	function onFolderChose(folderId){
+		var fcDlg = dijit.byId("fcDlg");
+		if(fcDlg){
+			fcDlg.hide();
+		}
 		
+		var grid = dijit.byId("grid");
+		var filesId = new Array();
+		dojo.forEach(grid.selection.getSelected(), function(selectedItem){
+			filesId.push(selectedItem.id);
+		});
+		
+		//move
+		var xhrArgs = {
+				url : _ctx + "files/move",
+				handleAs : "json",
+				content : {
+					filesId : filesId,
+					folderId : folderId
+				},
+				load : function(data) {
+					if (data.success) {
+						//刷新grid
+						grid._refresh();
+						showMessage("信息", "文件移动成功。");
+					} else {
+						showMessage("错误", data.message);
+					}
+				},
+				error : function(error) {
+					showMessage("错误", error);
+				}
+			};
+		dojo.xhrPost(xhrArgs);
 	}
 </script>
 
@@ -512,7 +548,9 @@
 								<input id="key" name="nameKey" data-dojo-type="dijit.form.ValidationTextBox" data-dojo-props="required:true">
 								<button type="button" data-dojo-type="dijit.form.Button"
 									data-dojo-props="onClick:function(){search();},iconClass:'dijitCommonIcon dijitIconSearch'">查找</button>
-								<button id="bt_move" type="button" style="position: absolute;right: 10px;width: 80px">批量移动</button>
+								<c:if test="${isManager}">
+									<button type="button" onclick="openFolderChooseDialog()" class="btn-normal" style="position: absolute;right: 10px;width: 80px" >移动文件</button>
+								</c:if>
 						</form>
 						
 					</div>

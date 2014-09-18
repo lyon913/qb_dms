@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -239,6 +240,20 @@ public class FileServiceImpl implements FileService {
 	public List<TFolder> findAllFolders() {
 		Sort s = new Sort("name");
 		return folderDao.findAll(s);
+	}
+
+	@Transactional
+	@Override
+	public void moveFiles(long[] filesId, long folderId) throws ParameterCheckException {
+		if(filesId != null && filesId.length > 0) {
+			List<Long> idList = new ArrayList<Long>();
+			for(long id : filesId) {
+				idList.add(id);
+			}
+			fileDao.moveFiles(idList,folderId);
+		}else {
+			throw new ParameterCheckException("没有要移动的文件。");
+		}
 	}
 
 }

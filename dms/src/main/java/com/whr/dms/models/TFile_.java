@@ -4,7 +4,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2014-07-05T18:15:19.869+0800")
+@Generated(value="Dali", date="2014-09-18T11:06:43.523+0800")
 @StaticMetamodel(TFile.class)
 public class TFile_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TFile, String> name;
@@ -14,4 +14,5 @@ public class TFile_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TFile, Long> parentId;
 	public static volatile SingularAttribute<TFile, String> filePath;
 	public static volatile SingularAttribute<TFile, Long> size;
+	public static volatile SingularAttribute<TFile, String> authorDepart;
 }

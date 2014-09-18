@@ -162,7 +162,8 @@ public class FileManageController {
 		tfile.setParentId(parentId);
 		tfile.setName(FilenameUtils.getName(file.getOriginalFilename()));
 		tfile.setSize(file.getSize());
-        tfile.setAuthor(u.getDepartment().getName());
+        tfile.setAuthor(u.getName());
+        tfile.setAuthorDepart(u.getDepartment().getName());
         tfile.setAuthorId(u.getId());
 
 		
@@ -278,10 +279,35 @@ public class FileManageController {
 		return new ResponseEntity<List<TFile>>(page.getContent(), headers, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/files/moveDialog")
-	public String moveFilesDialog(@RequestParam long[] fileId, Model m) {
-		
-		return "files/moveFiles";
+	/**
+	 * 选择文件夹对话框
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping(value = "/files/chooseFolder")
+	public String chooseFolderDialog(Model m) {
+		List<TFolder> list = fs.findAllFolders();
+		FolderTreeNode n = new FolderTreeNode(list);
+		List<FolderTreeNode> formated = n.loadFormatedList();
+		m.addAttribute("folders",formated);
+		return "files/chooseFolder";
+	}
+	
+	/**
+	 * 移动文件
+	 * @param filesId
+	 * @param folerId
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping(value = "/files/move", method = RequestMethod.POST)
+	public @ResponseBody JsonResponse moveFiles(long[] filesId, long folderId, Model m) {
+		try {
+			fs.moveFiles(filesId,folderId);
+			return new JsonResponse(true, null, null);
+		} catch (Exception e) {
+			return new JsonResponse(false, e.getMessage(), null);
+		}
 	}
 
 }

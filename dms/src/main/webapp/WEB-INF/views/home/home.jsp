@@ -30,86 +30,99 @@
 	}
 </script>
 <style>
-.portalTitle {
-	width: 250px;
-	display: inline-block;
+
+.portalTitle{
+	height:25px;
+	padding: 0 20px 0 20px;
+}
+.portalTitleLeft {
+	width: 65%;
+	display: inline;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	word-wrap: normal;
 	white-space: nowrap;
-	max-width: 250px;
+	max-width: 65%;
+	float: left;
+}
+
+.portalTitleRight {
+	float: right;
+	display:inline;
 }
 </style>
 <div data-dojo-type="dojox.layout.GridContainer" id="gc1"
 	acceptTypes="dojox.widget.Portlet, dojox.widget.FeedPortlet,dojox.widget.ExpandableFeedPortlet"
-	hasResizableColumns="true" opacity="0.3" nbZones="2"
-	allowAutoScroll="true" withHandles="false"
-	handleClasses="dijitTitlePaneTitle" minChildWidth="200"
-	minColWidth="40" style="width: 100%; height: 100%; overflow: auto;">
+	hasResizableColumns="false"
+	nbZones="2"	
+	allowAutoScroll="true" 
+	withHandles="true"
+	handleClasses="dijitTitlePaneTitle" 
+	style="width: 100%; height: 100%; overflow: auto;">
 
 	<div data-dojo-type="dojox.widget.Portlet" title="通知公告">
-
-		<ul>
-			<c:forEach items="${latestNotices }" var="notice">
-				<li><a href="#" onclick="readNotice('${notice.id}')"
-					class="portalTitle"> ${notice.title} </a> &nbsp;&nbsp;&nbsp;&nbsp;
-					<fmt:formatDate value="${notice.publishDate }" /></li>
-			</c:forEach>
-		</ul>
-
+		<c:forEach items="${latestNotices }" var="notice">
+			<div class="portalTitle">
+				<a href="#" onclick="readNotice('${notice.id}')" class="portalTitleLeft">${notice.title}</a> 
+				<span class="portalTitleRight">
+					<fmt:formatDate value="${notice.publishDate }"  pattern="yyyy-MM-dd"/>
+				</span>
+			</div>
+		</c:forEach>
 	</div>
 	<div data-dojo-type="dojox.widget.Portlet" title="文件下载">
-
-		<ul>
-			<c:forEach items="${latestFiles }" var="file">
-				<li><a href="#" onclick="downLoad('${file.id}')"
-					class="portalTitle"> ${file.name} </a> &nbsp;&nbsp;&nbsp;&nbsp; <fmt:formatDate
-						value="${file.createTime }" /> &nbsp;&nbsp;&nbsp;&nbsp;
-					上传用户:${file.author }</li>
-			</c:forEach>
-		</ul>
-
+		<c:forEach items="${latestFiles }" var="file">
+			<div class="portalTitle">
+				<a href="#" onclick="downLoad('${file.id}')" class="portalTitleLeft" style="width: 40%">
+					${file.name}
+				</a>
+				<span class="portalTitleRight">
+					${file.authorDepart }&nbsp;&nbsp;
+					<fmt:formatDate	value="${file.createTime }"  pattern="yyyy-MM-dd"/>
+				</span>
+			</div>
+		</c:forEach>
 	</div>
 
 	<div data-dojo-type="dojox.widget.Portlet" title="软件下载">
-
-		<ul>
-			<c:forEach items="${latestSoftwares }" var="soft">
-				<li><a href="#" onclick="downLoadsoft('${soft.id}')"
-					class="portalTitle"> ${soft.name} </a> &nbsp;&nbsp;&nbsp;&nbsp; <fmt:formatDate
-						value="${soft.createTime }" /> &nbsp;&nbsp;&nbsp;&nbsp;
-					上传用户:${soft.author }</li>
-			</c:forEach>
-		</ul>
+		<c:forEach items="${latestSoftwares }" var="soft">
+			<div class="portalTitle">
+				<a href="#" onclick="downLoadsoft('${soft.id}')"
+				class="portalTitleLeft"> ${soft.name} </a>
+				<span class="portalTitleRight">
+					${soft.author }&nbsp;&nbsp;
+					<fmt:formatDate value="${soft.createTime }"  pattern="yyyy-MM-dd"/>
+				</span>
+			</div>
+		</c:forEach>
 	</div>
 
 
 
 	<div data-dojo-type="dojox.widget.Portlet" title="院务政务信息公开">
-
-		<ul>
-			<c:forEach items="${latestPubNews }" var="pubnews">
-				<li><a href="#" onclick="readPubNews('${pubnews.id}')"
-					class="portalTitle"> ${pubnews.title} </a> &nbsp;&nbsp;&nbsp;&nbsp;
-					<fmt:formatDate value="${pubnews.publishDate }" /></li>
-			</c:forEach>
-		</ul>
-
+		<c:forEach items="${latestPubNews }" var="pubnews">
+			<div class="portalTitle">
+				<a href="#" onclick="readPubNews('${pubnews.id}')"
+				class="portalTitleLeft"> ${pubnews.title} </a>
+				<span class="portalTitleRight">
+					<fmt:formatDate value="${pubnews.publishDate }" pattern="yyyy-MM-dd"/>
+				</span>
+			</div>
+		</c:forEach>
 	</div>
 
 
 
 	<div data-dojo-type="dojox.widget.Portlet" title="日历">
-		<div data-dojo-type="dojox.widget.Calendar" style="display: inline-block;"></div>
-		<div style="display: inline-block;">
-		<ul>
-		<li>
-		网站总登录量（次）：${totalCounts }
-		</li>
-		<li>
-		当天登录用户量（次）：${curDayCounts }
-		</li>
-		</ul>
+		<div style="height: 200px;">
+			<div data-dojo-type="dojox.widget.Calendar"
+				style="float:left;display: inline;"></div>
+			<div style="display: inline;float: left;">
+				<ul>
+					<li>网站总登录量（次）：${totalCounts }</li>
+					<li>当天登录用户量（次）：${curDayCounts }</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 

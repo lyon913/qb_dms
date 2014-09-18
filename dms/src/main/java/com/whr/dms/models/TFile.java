@@ -31,6 +31,9 @@ public class TFile extends BaseAuditEntity {
 	@Size(max = 50)
 	private String author;
 	
+	@Size(max = 50)
+	private String authorDepart;
+	
 	private Long authorId;
 
 
@@ -75,6 +78,14 @@ public class TFile extends BaseAuditEntity {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public String getAuthorDepart() {
+		return authorDepart;
+	}
+
+	public void setAuthorDepart(String authorDepart) {
+		this.authorDepart = authorDepart;
 	}
 
 	public Long getAuthorId() {

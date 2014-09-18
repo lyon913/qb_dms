@@ -140,5 +140,13 @@ public interface FileService {
 	 * @return
 	 */
 	public List<TFolder> findAllFolders();
+	
+	/**
+	 * 移动文件到新的文件夹下
+	 * @param filesId 要移动的文件id数组
+	 * @param folderId 移动的目标文件夹id
+	 * @throws ParameterCheckException 
+	 */
+	public void moveFiles(long[] filesId, long folderId) throws ParameterCheckException;
 
 }

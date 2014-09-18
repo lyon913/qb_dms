@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.whr.dms.dao.TAttachmentDao;
 import com.whr.dms.dao.TReplyDao;
@@ -25,7 +27,6 @@ import com.whr.dms.models.AttachmentType;
 import com.whr.dms.models.SuggestionState;
 import com.whr.dms.models.SuggestionType;
 import com.whr.dms.models.TAttachment;
-import com.whr.dms.models.TNoticeAttachment;
 import com.whr.dms.models.TReply;
 import com.whr.dms.models.TSuggestion;
 import com.whr.dms.security.RoleType;
@@ -53,6 +54,20 @@ public class SuggestionServiceImpl implements SuggestionService {
 	public void saveSuggestion(TSuggestion suggestion) {
 		suggestion.setSuggestionDate(new Date());
 		sdao.save(suggestion);
+	}
+	
+	@Override
+	@Transactional
+	public void saveSuggestion(TSuggestion suggestion, MultipartFile attch) {
+		suggestion.setSuggestionDate(new Date());
+		sdao.save(suggestion);
+		
+		TAttachment a = new TAttachment();
+		a.setForeignTable(AttachmentType.TSuggestion);
+		a.setForeignKey(suggestion.getId());
+		a.setName(FilenameUtils.getName(attch.getOriginalFilename()));
+		a.setSize(attch.getSize());
+
 	}
 
 	@Override
@@ -271,4 +286,6 @@ public class SuggestionServiceImpl implements SuggestionService {
 		// TODO Auto-generated method stub
 		return adao.findOne(attachmentId);
 	}
+
+
 }

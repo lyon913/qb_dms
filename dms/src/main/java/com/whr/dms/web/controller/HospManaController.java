@@ -39,7 +39,6 @@ import com.whr.dms.models.AttachmentType;
 import com.whr.dms.models.SuggestionState;
 import com.whr.dms.models.SuggestionType;
 import com.whr.dms.models.TAttachment;
-import com.whr.dms.models.TNoticeAttachment;
 import com.whr.dms.models.TReply;
 import com.whr.dms.models.TSuggestion;
 import com.whr.dms.models.TUser;
@@ -47,13 +46,11 @@ import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.SuggestionReplyService;
 import com.whr.dms.service.SuggestionService;
-import com.whr.dms.web.ajax.JsonResponse;
-import com.whr.dms.web.form.AssessForm;
 
 @Controller
 @SessionAttributes({ "s", "assForm" })
 @RequestMapping("/hospMana")
-public class ManagementController {
+public class HospManaController {
 	@Autowired
 	SuggestionService suggServ;
 	@Autowired
@@ -87,7 +84,7 @@ public class ManagementController {
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s,
+	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s, MultipartFile attch,
 			BindingResult bind, SessionStatus status) {
 		if (bind.hasErrors()) {
 			return "hospMana/createOrUpdate";
@@ -182,17 +179,12 @@ public class ManagementController {
 		}
 
 		if (SuggestionState.Deleted.equals(s.getState())) {
-			throw new AccessDeniedException("意见已经删除！");
+			throw new AccessDeniedException("帖子已经删除！");
 		}
 		suggServ.deleteSuggestion(id);
 
 		String returnUrl = "/hospMana/list/my";
-		if (returnType == 2) {
-			returnUrl = "/hospMana/manage/list/all";
-		}
-		if (returnType == 3) {
-			returnUrl = "/hospMana/manage/list/private";
-		}
+		
 		return "redirect:" + returnUrl;
 	}
 
@@ -234,76 +226,11 @@ public class ManagementController {
 		return "hospMana/publicList";
 	}
 
-	/**
-	 * 待审核列表
-	 * 
-	 * @param p
-	 * @param m
-	 * @return
-	 */
-	@RequestMapping("/manage/list/private")
-	public String privateList(
-			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
-			@RequestParam(required = false) String key, Model m) {
-		Page<TSuggestion> result = suggServ.findSuggestion(key,
-				SuggestionType.Management, SuggestionState.Public, p);
-		m.addAttribute("result", result);
-		m.addAttribute("key", key);
-		return "hospMana/manage/privateList";
-	}
 
-	/**
-	 * 初始化意见簿管理表单 即：初始化意见簿审核、回复的页面
-	 * 
-	 * @param p
-	 * @param m
-	 * @return
-	 */
-	@RequestMapping(value = "/manage/assess/{id}", method = RequestMethod.GET)
-	public String initAssessForm(@PathVariable long id, Model m) {
-		TSuggestion s = suggServ.findById(id);
-		List<TReply> replyList = srservice.getSuggestionReply(id);
-		AssessForm a = new AssessForm(s);
-		m.addAttribute("suggestion", s);
-		m.addAttribute("assForm", a);
-		m.addAttribute("replyList", replyList);
-		return "hospMana/manage/assess";
-	}
 
-	/**
-	 * 处理审核表单
-	 * 
-	 * @param id
-	 * @param form
-	 * @param m
-	 * @return
-	 * @throws ParameterCheckException
-	 */
-	@RequestMapping(value = "/manage/assess/{id}", method = RequestMethod.POST)
-	public String processAssessForm(@PathVariable long id, AssessForm form,
-			Model m) throws ParameterCheckException {
-		suggServ.reply(id, form.getReply(), form.isChecked());
-		return "redirect:/hospMana/manage/list/private";
-	}
 
-	/**
-	 * 全部意见列表（管理端），不包含已删除的记录
-	 * 
-	 * @param p
-	 * @param key
-	 * @param m
-	 * @return
-	 */
-	@RequestMapping(value = "/manage/list/all")
-	public String allList(
-			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
-			@RequestParam(required = false) String key, Model m) {
-		Page<TSuggestion> result = suggServ.findAllSuggestions(key,
-				SuggestionType.Management, p);
-		m.addAttribute("result", result);
-		m.addAttribute("key", key);
-		return "hospMana/manage/allList";
-	}
+
+
 
 	/**
 	 * 删除回复
@@ -334,7 +261,7 @@ public class ManagementController {
 	}
 	
 	
-	@RequestMapping(value="/{id}uploadAttachment",method=RequestMethod.POST)
+	@RequestMapping(value="/{id}/uploadAttachment",method=RequestMethod.POST)
 	public String uploadAttachment(@PathVariable long id, MultipartFile uploadedfile, HttpServletRequest request)throws Exception{
 		String uploadPath = request.getSession().getServletContext().getRealPath("/") + "upload\\hospMana\\attachment\\";
 		HttpHeaders headers = new HttpHeaders();
@@ -390,12 +317,9 @@ public class ManagementController {
 	
 	@RequestMapping("/deleteAttach/{attachmentId}")
 	public String deleteAttachment(@PathVariable long attachmentId){
-		
 			TAttachment a = suggServ.getAttachment(attachmentId);
 			Long suggId = a.getForeignKey();
 			suggServ.deleteAttachment(attachmentId);
-			
-		
 		return "redirect:/hospMana/"+suggId+"/attachmentList";
 	}
 }

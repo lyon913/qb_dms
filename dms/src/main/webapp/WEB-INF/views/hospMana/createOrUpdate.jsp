@@ -18,6 +18,12 @@
 					<dms:textarea name="suggestionContent" cssStyle="width:99%;height:100px;"/>
 				</td>
 			</tr>
+			<tr>
+				<th width="150px">附件：</th>
+				<td>
+					<input type="file" name="attch" >
+				</td>
+			</tr>
 
 			<tr>
 				<td colspan="2" align="center">

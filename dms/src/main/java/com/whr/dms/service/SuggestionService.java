@@ -7,6 +7,7 @@ import javax.security.sasl.AuthenticationException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.AttachmentType;
@@ -24,6 +25,13 @@ public interface SuggestionService {
 	 * @param suggetion
 	 */
 	public void saveSuggestion(TSuggestion suggestion);
+	
+	/**
+	 * 保存意见
+	 * 
+	 * @param suggetion
+	 */
+	public void saveSuggestion(TSuggestion suggestion,MultipartFile attch);
 
 	/**
 	 * 修改意见内容

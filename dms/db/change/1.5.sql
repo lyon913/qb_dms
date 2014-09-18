@@ -5,4 +5,4 @@ create table TClickCount(
 	counts bigint not null -- 存的是点击次数，默认为0
 );
 
-insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName) values(1,5,0,'1.5.sql');
+insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName,opdate) values(1,5,0,'1.5.sql',now());

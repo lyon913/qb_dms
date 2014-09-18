@@ -48,4 +48,4 @@ ALTER TABLE `dms`.`treply`
 ADD INDEX `suggId` (`suggestionId` ASC),
 ADD INDEX `replyDate` (`replyDate` DESC);
 
-insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName) values(1,6,0,'1.6.sql',now());
+insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName,opdate) values(1,6,0,'1.6.sql',now());

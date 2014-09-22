@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,13 +18,20 @@ public class UploadUtils {
 
 	private static Logger log = LoggerFactory.getLogger(UploadUtils.class);
 
-	public static String saveUploadFile(InputStream is, String baseDir)
+	/**
+	 * 
+	 * @param is
+	 * @param getUploadFilePath
+	 * @return
+	 * @throws IOException
+	 */
+	public static String saveUploadFile(InputStream is, String uploadFilePath)
 			throws IOException {
 		// get upload dir
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String relativePath = df.format(new Date()) + "\\";
-		String path = baseDir + relativePath;
+		String path = uploadFilePath + relativePath;
 		File folder = new File(path);
 		if (!folder.exists()) {
 			folder.mkdirs();
@@ -35,7 +44,7 @@ public class UploadUtils {
 			os = new BufferedOutputStream(new FileOutputStream(outputFile));
 
 			// read buffer
-			byte[] buffer = new byte[1024];
+			byte[] buffer = new byte[4096];
 			while (is.read(buffer) > -1) {
 				os.write(buffer);
 			}
@@ -55,5 +64,15 @@ public class UploadUtils {
 		}
 
 		return relativePath + uuid;
+	}
+	
+	/**
+	 * 获得文件上传的目录路径
+	 * @param sess
+	 * @return
+	 */
+	public static String getUploadFilePath(HttpSession sess) {
+		String uploadPath = sess.getServletContext().getRealPath("/") + "upload\\files\\";
+		return uploadPath;
 	}
 }

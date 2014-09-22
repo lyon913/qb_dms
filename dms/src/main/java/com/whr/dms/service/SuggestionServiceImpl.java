@@ -3,6 +3,7 @@ package com.whr.dms.service;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,6 +32,7 @@ import com.whr.dms.models.TReply;
 import com.whr.dms.models.TSuggestion;
 import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
+import com.whr.dms.utils.UploadUtils;
 
 @Service
 public class SuggestionServiceImpl implements SuggestionService {
@@ -58,7 +60,8 @@ public class SuggestionServiceImpl implements SuggestionService {
 	
 	@Override
 	@Transactional
-	public void saveSuggestion(TSuggestion suggestion, MultipartFile attch) {
+	public void saveSuggestion(TSuggestion suggestion, MultipartFile attch,
+			String uploadPath) throws IOException {
 		suggestion.setSuggestionDate(new Date());
 		sdao.save(suggestion);
 		
@@ -67,7 +70,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 		a.setForeignKey(suggestion.getId());
 		a.setName(FilenameUtils.getName(attch.getOriginalFilename()));
 		a.setSize(attch.getSize());
-
+		
+		String path = UploadUtils.saveUploadFile(attch.getInputStream(), uploadPath);
+		a.setPath(path);
 	}
 
 	@Override

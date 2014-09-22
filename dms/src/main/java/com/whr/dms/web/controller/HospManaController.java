@@ -3,6 +3,7 @@ package com.whr.dms.web.controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
@@ -46,6 +48,7 @@ import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.SuggestionReplyService;
 import com.whr.dms.service.SuggestionService;
+import com.whr.dms.utils.UploadUtils;
 
 @Controller
 @SessionAttributes({ "s", "assForm" })
@@ -85,12 +88,17 @@ public class HospManaController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s, MultipartFile attch,
-			BindingResult bind, SessionStatus status) {
+			HttpSession session, BindingResult bind, SessionStatus status) {
 		if (bind.hasErrors()) {
 			return "hospMana/createOrUpdate";
 		}
 
-		suggServ.saveSuggestion(s);
+		try {
+			suggServ.saveSuggestion(s,attch,UploadUtils.getUploadFilePath(session));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		status.setComplete();
 		return "redirect:/hospMana/list/my";
 	}

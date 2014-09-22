@@ -1,5 +1,6 @@
 package com.whr.dms.service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -30,8 +31,9 @@ public interface SuggestionService {
 	 * 保存意见
 	 * 
 	 * @param suggetion
+	 * @throws IOException
 	 */
-	public void saveSuggestion(TSuggestion suggestion,MultipartFile attch);
+	public void saveSuggestion(TSuggestion suggestion,MultipartFile attch, String uploadPath) throws IOException;
 
 	/**
 	 * 修改意见内容

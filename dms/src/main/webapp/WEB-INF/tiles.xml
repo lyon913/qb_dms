@@ -7,9 +7,11 @@
 		<put-attribute name="content" value="" />
 	</definition>
 	
-	<definition name="main" template="/WEB-INF/views/main.jsp">
+	<!-- main frame page -->
+	<definition name="main" template="/WEB-INF/views/main.jsp"></definition>
 	
-	</definition>
+	<!-- ajax load page -->
+	<definition name="files/chooseFolder" template="/WEB-INF/views/files/chooseFolder.jsp"></definition>
 	
 	<definition name="*/*" extends="base.definition">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />

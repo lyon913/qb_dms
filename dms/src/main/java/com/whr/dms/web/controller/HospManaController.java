@@ -100,7 +100,7 @@ public class HospManaController {
 			e.printStackTrace();
 		}
 		status.setComplete();
-		return "redirect:/hospMana/list/my";
+		return "redirect:/hospMana/" + s.getId();
 	}
 
 	/**
@@ -122,10 +122,6 @@ public class HospManaController {
 		if (!SecurityUtil.isMe(s.getAuthorId())) {
 			throw new AccessDeniedException("只有作者本人才能修改");
 		}
-
-		//if (!SuggestionState.Private.equals(s.getState())) {
-			//throw new AccessDeniedException("医院管理意见已经过审核，不能修改。");
-		//}
 		m.addAttribute("s", s);
 		return "hospMana/createOrUpdate";
 	}

@@ -2,7 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="com.whr.dms.models.TUser"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script type="text/javascript">
+dojo.ready(function(){
+styleTable("tb");
+});
 
+</script>
 <div class="panel"  style="height: 100%;overflow: scroll;">
 	<div class="title">用户管理</div>
 	<div>
@@ -11,7 +16,7 @@
 			class="dijitIconNewTask"></span>新增用户
 		</a>
 	</div>
-	<table width="100%" class="table">
+	<table width="100%" class="table" id="tb">
 		<thead>
 			<tr>
 				<th>ID</th>

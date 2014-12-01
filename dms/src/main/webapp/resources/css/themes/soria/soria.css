@@ -97,9 +97,8 @@ span.error{
 	height: 100%;
 }
 
-.table tr:nth-child(even) td{
-	background-color: #f2f5f9;
-}
+
+
 
 .table th {
 	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;

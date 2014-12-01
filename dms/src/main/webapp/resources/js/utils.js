@@ -1,20 +1,21 @@
 function showMessage(title, message) {
-	var dialog = new dijit.Dialog({
-		title : title,
-		content : '<div id="_mb_body" style="margin:0px;padding:10px;font-size:1em;">' + message
-				+ '<br><br></div>',
-		hide : function() {
-			this.destroyRecursive();
-		}
-	});
+	var dialog = new dijit.Dialog(
+			{
+				title : title,
+				content : '<div id="_mb_body" style="margin:0px;padding:10px;font-size:1em;">'
+						+ message + '<br><br></div>',
+				hide : function() {
+					this.destroyRecursive();
+				}
+			});
 	var btn = new dijit.form.Button({
 		label : "确定",
 		onClick : function() {
 			dialog.hide();
 		}
 	});
-	var _mb_body = dojo.query("#_mb_body",dialog.domNode)[0];
-	
+	var _mb_body = dojo.query("#_mb_body", dialog.domNode)[0];
+
 	_mb_body.appendChild(btn.domNode);
 	dialog.show();
 }
@@ -41,4 +42,28 @@ function onPageSelected(page, size, formId) {
 	form["page"] = page;
 	form["size"] = size;
 	form.submit();
+}
+
+function styleTable(id) {
+	var obj = document.getElementById(id);
+	for (var i = 0; i < obj.rows.length; i++) {
+		if (i % 2 == 0) {
+			obj.rows[i].style.background = "#f2f5f9";
+			obj.rows[i].onmouseover = function() {
+				this.style.background = "#60A1EA";
+			};
+			obj.rows[i].onmouseout = function() {
+				this.style.background = "#f2f5f9";
+			};
+		} else {
+			obj.rows[i].onmouseover = function() {
+				this.style.background = "#60A1EA";
+			};
+			obj.rows[i].onmouseout = function() {
+				this.style.background = "";
+			};
+
+		}
+	}
+
 }

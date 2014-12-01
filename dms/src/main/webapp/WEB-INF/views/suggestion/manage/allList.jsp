@@ -4,6 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
 <script type="text/javascript" src="${ctx }resources/js/suggestion.js"></script>
+<script type="text/javascript">
+dojo.ready(function(){
+styleTable("tb");
+});
+
+</script>
 <div class="panel"  style="height: 100%;overflow: scroll;">
 	<div class="title">
 		<span>全部意见</span>
@@ -21,7 +27,7 @@
 		<input name="size" value="10" type="hidden">
 		<button type="submit" class="btn-normal">查询</button>
 	</form>
-	<table width="100%" class="table">
+	<table width="100%" class="table" id="tb">
 		<thead>
 			<tr>
 				<th>标题</th>
@@ -46,11 +52,9 @@
 				</tr>
 
 			</c:forEach>
-			<tr>
-				<td colspan="4"><dms:pagination page="${result}"
-						formId="searchForm" /></td>
-			</tr>
+			
 		</tbody>
 
 	</table>
+<dms:pagination page="${result}" formId="searchForm" />
 </div>

@@ -4,25 +4,31 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
 <script type="text/javascript" src="${ctx }resources/js/suggestion.js"></script>
+<script type="text/javascript">
+dojo.ready(function(){
+styleTable("tb");
+});
+
+</script>
 <div class="panel">
 	<div class="title">
 		<span>我的意见</span>
-		<div style="float: right;margin: 0;padding: 0">
-		
-			<c:url var="publicUrl" value="/suggestion/list/public"/>
-			<a href="${publicUrl }" >返回意见簿</a>
-			<c:url var="newUrl" value="/suggestion/new"/>
+		<div style="float: right; margin: 0; padding: 0">
+
+			<c:url var="publicUrl" value="/suggestion/list/public" />
+			<a href="${publicUrl }">返回意见簿</a>
+			<c:url var="newUrl" value="/suggestion/new" />
 			<a href="${newUrl }">提出意见</a>
 		</div>
 	</div>
 	<form id="searchForm" method="post">
-		<label for="key">标题：</label>
-		<input id="key" name="key" value="${key }" class="input-text"> 
-		<input name="page" value="0" type="hidden">
-		<input name="size" value="20" type="hidden">
+		<label for="key">标题：</label> <input id="key" name="key"
+			value="${key }" class="input-text"> <input name="page"
+			value="0" type="hidden"> <input name="size" value="20"
+			type="hidden">
 		<button type="submit" class="btn-normal">查询</button>
 	</form>
-	<table width="100%" class="table">
+	<table width="100%" class="table" id="tb">
 		<thead>
 			<tr>
 				<th>标题</th>
@@ -37,22 +43,19 @@
 					<td width="70%">${s.suggestionTitle }</td>
 					<td width="10%">${s.suggestionDate }</td>
 					<td width="10%">${s.state.displayName }</td>
-					<td width="10%">
-					
-						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
-						<!--<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
+					<td width="10%"><a href="###"
+						onclick="readSuggestion(${s.id})">查看</a> <!--<c:url var="editUrl" value='/suggestion/${s.id }/edit'/>
 						<a href="${editUrl }">编辑</a>
-						-->
-						<a href="###" onclick="deleteSuggestion('${s.id}',1)">删除</a>
-					</td>
+						--> <a href="###" onclick="deleteSuggestion('${s.id}',1)">删除</a></td>
 				</tr>
 
 			</c:forEach>
-			<tr>
-				<td colspan="4"><dms:pagination page="${result}"
-						formId="searchForm" /></td>
-			</tr>
+
 		</tbody>
 
 	</table>
+
+	<dms:pagination page="${result}" formId="searchForm" />
+
 </div>
+

@@ -45,5 +45,11 @@ public interface UserManager {
 	 * @param departmentId
 	 */
 	public void setDepartment(long userId,long departmentId);
+	
+	/**
+	 * 重置用户密码为1234
+	 * @param userId
+	 */
+	public void resetPwd(long userId);
 
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -149,6 +150,12 @@ public class UserController {
 	public String del(@PathVariable long id) {
 		um.deleteUser(id);
 		return "forward:/admin/user/list";
+	}
+	
+	@RequestMapping(value = "/{id}/resetPwd")
+	public @ResponseBody String resetPwd(@PathVariable long id) {
+		um.resetPwd(id);
+		return "success";
 	}
 
 }

@@ -3,7 +3,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
-
+<script type="text/javascript">
+<!--
+function resetPwd(userId){
+	if(confirm('是否将该用户密码重置为1234')){
+		var url = '${ctx}admin/user/'+userId+'/resetPwd';
+		var xhrArgs = {
+				url : url,
+				handleAs : "json",
+				load : function(data) {
+					if(data == 'success')
+						showMessage("", "密码已重置");
+					else
+						showMessage("错误", "系统处理错误，请重试。");
+				},
+				error : function(error) {
+					showMessage("错误", error);
+				}
+			};
+		dojo.xhrPost(xhrArgs);
+	}
+}
+//-->
+</script>
 <c:url var="formUrl" value="/admin/user/new" />
 <form:form id="userForm" action="${formUrl}" method="post"
 	modelAttribute="user">
@@ -30,6 +52,15 @@
 				<tr>
 					<td colspan="2">
 						<div>新用户默认密码为：1234</div>
+					</td>
+				</tr>
+			</c:if>
+			<c:if test="${user.id != null }">
+				<tr>
+					<td colspan="2">
+						<button type="button" class="btn-normal" onclick="resetPwd('${user.id}');">
+							重置密码为：1234
+						</button>
 					</td>
 				</tr>
 			</c:if>

@@ -91,4 +91,12 @@ public class UserManagerImpl implements UserManager {
 		uDao.save(u);
 	}
 
+	@Override
+	@Transactional
+	public void resetPwd(long userId) {
+		TUser u = uDao.findOne(userId);
+		u.setPassword("1234");
+		uDao.save(u);	
+	}
+
 }

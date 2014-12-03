@@ -32,7 +32,8 @@ public class FileServiceTest {
 	@Test
 	public void formatFolderTest() {
 		List<TFolder> list = fs.findAllFolders();
-		FolderTreeNode n = new FolderTreeNode(list);
+		TFolder root = fs.getRootFolder();
+		FolderTreeNode n = new FolderTreeNode(root, list);
 		List<FolderTreeNode> formated = n.loadFormatedList();
 		for(FolderTreeNode f : formated) {
 			System.out.println(f.getName());

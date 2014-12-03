@@ -25,61 +25,43 @@ public class FolderTreeNode {
 		this.parentId = parentId;
 	}
 
-	private Long getParentId() {
-		return this.parentId;
-	}
-
-	private void findSelfChildren(List<FolderTreeNode> allNodes) {
-		for (FolderTreeNode node : allNodes) {
-			if (node.getParentId() == this.getId()) {
-				this.getChildren().add(node);
+	public FolderTreeNode(TFolder root, List<TFolder> allFolders) {
+		this.parentId = root.getParentId();
+		this.id = root.getId();
+		this.name = root.getName();
+		
+		this.setChildren(new ArrayList<FolderTreeNode>());
+		for (TFolder f : allFolders) {
+			if(this.id.equals(f.getParentId())) {
+				this.getChildren().add(new FolderTreeNode(f, allFolders));
 			}
 		}
+
 	}
 
 	public List<FolderTreeNode> loadFormatedList() {
-
-		return format(this,0);
+		return format(this, 0);
 	}
 
 	private List<FolderTreeNode> format(FolderTreeNode node, int level) {
 		List<FolderTreeNode> result = new ArrayList<FolderTreeNode>();
 		String prefix = "";
-		for (int i = 0; i < level; i++) {
-			prefix += "&nbsp;&nbsp;";
+		if(level != 0) {
+			for (int i = 0; i < level; i++) {
+				prefix += "&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			prefix += "├─";
 		}
 		node.setName(prefix + node.getName());
 		result.add(node);
-		
+
 		if (node.children != null && node.children.size() > 0) {
 			for (FolderTreeNode n : node.children) {
 				result.addAll(format(n, level + 1));
 			}
 		}
 
-
 		return result;
-	}
-
-	public FolderTreeNode(List<TFolder> allFolders) {
-		List<FolderTreeNode> nodes = new ArrayList<FolderTreeNode>();
-		for (TFolder tfolder : allFolders) {
-			FolderTreeNode n = new FolderTreeNode(tfolder.getId(), tfolder.getName(), tfolder.getParentId());
-			if (n.getParentId() == -1) {
-				// root
-				this.id = n.getId();
-				this.name = n.getName();
-				this.parentId = n.getParentId();
-				nodes.add(this);
-			} else {
-				nodes.add(n);
-			}
-		}
-		for (int i = 0; i < nodes.size(); i++) {
-			FolderTreeNode f = nodes.get(i);
-			f.findSelfChildren(nodes);
-		}
-
 	}
 
 	public Long getId() {
@@ -98,6 +80,14 @@ public class FolderTreeNode {
 		this.name = name;
 	}
 
+	public Long getParentId() {
+		return this.parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
+	}
+
 	public List<FolderTreeNode> getChildren() {
 		return children;
 	}
@@ -113,5 +103,18 @@ public class FolderTreeNode {
 				this.children.add(cNode);
 			}
 		}
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null) {
+			return false;
+		}
+		if(obj instanceof FolderTreeNode) {
+			if(this.getId() != null) {
+				return this.getId().equals(((FolderTreeNode)obj).getId());
+			}
+		}
+		return  false;
 	}
 }

@@ -287,7 +287,10 @@ public class FileManageController {
 	@RequestMapping(value = "/files/chooseFolder")
 	public String chooseFolderDialog(Model m) {
 		List<TFolder> list = fs.findAllFolders();
-		FolderTreeNode n = new FolderTreeNode(list);
+		TFolder root = fs.getRootFolder();
+		
+		list.remove(root);
+		FolderTreeNode n = new FolderTreeNode(root,list);
 		List<FolderTreeNode> formated = n.loadFormatedList();
 		m.addAttribute("folders",formated);
 		return "files/chooseFolder";

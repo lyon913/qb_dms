@@ -8,124 +8,173 @@
 <title>登录::丘北县人民医院内网信息共享平台</title>
 <style type="text/css">
 html, body {
-	width: 98%;
-	height: 98%;
-}
-
-.qb-nerong {
-	width: 581px;
-	height: 439px;
-	height: 439px !important;
-	font: normal normal 12px Arial, "宋体", Helvetica, sans-serif;
-	background: url(resources/images/denglu.jpg);
-	background-repeat: no-repeat;
-}
-
-.STYLE1 {
-	font-size: 16px;
-	color: #1C4060;
-	text-align: right;
-	width:
-}
-
-.inputField {
-	width: 130px;
-	height: 20px;
-	font-size: 16px;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden;
 }
 
 .button {
-	width: 65px;
-	height: 30px;
+	width: 50px;
+	height: 25px;
 }
 
 .error {
+	font-family: '微软雅黑';
 	color: red;
 	font-size: 16px;
-	font-weight: bold;
 	text-align: center;
 }
 
-.label {
+.loginDiv {
+
+	width: 100%;
+	margin: auto;
+	position: absolute;
+	top: 50%;
+	margin: -150px 0 0 0;
+}
+
+#titleDiv {
+	height: 50px;
+	width: 300px;
+	padding: 0;
+	margin: 0;
+	background: url(resources/images/title.png);
+	background-repeat: no-repeat;
+	/**IE6**/
+	_background: none;
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/title.png");
+}
+
+.formBgOuter {
+	width: 350px;
+	position: absolute;
+	padding: 0;
+	left: 50%;
+	margin: 0 0 0 -180px;
+	padding: 0;
+}
+
+.formBg {
+	height: 205px;
+	width: 350px;
 	
+	padding:10px 0 0 0;
+	
+	background: url(resources/images/bg-login-form-1.png);
+	background-repeat: no-repeat;
+	/**IE6**/
+	_background: none;
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/bg-login-form-1.png");
+}
+
+.baseinput {
+	height: 18px;
+	background: none transparent scroll repeat 0% 0%;
+	border: none;
+	margin-top: -2px;
+}
+
+.labdiv {
+	font-family: '微软雅黑';
+	z-index: 12;
+	float: left;
+	margin: 0px 2px 0 5px;
+}
+
+.inputtd {
+	height: 30px;
+	padding: 0px 0px 0px 0px;
+	margin: 0;
+}
+
+.inputDiv {
+	height: 30px;
+	width: 223px;
+	background: url(resources/images/text1.png) no-repeat;
+	font-family: '微软雅黑';
+	font-size: 14px;
+	padding: 4px 0px 4px 0px;
+	margin: 0;
+	z-index: 12;
 }
 </style>
 
-<c:url var="_ctx" value="/" scope="page" />
+<c:set var="_ctx" value="${pageContext.request.contextPath}/" />
 <script type="text/javascript"
-	src="${_ctx}resources/js/dojo-release-1.7.3/dojo/dojo.js"></script>
+	src="${_ctx}resources/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript"
+	src="${_ctx}resources/js/jquery.backstretch.min.js"></script>
 <script type="text/javascript">
-	require([ "dojo/ready" ], function(ready) {
-		ready(function() {
-			//判断是否在iframe中
-			if (self.frameElement && self.frameElement.tagName == "IFRAME") {
-				alert("登陆超时，请重新登陆");
-				window.parent.location = "${_ctx}";
-			}
-		});
+	$(function() {
+		//背景图片
+		$.backstretch("/dms/resources/images/bg-login.jpg");
+		$("#j_username").focus();
+		//判断是否在iframe中
+		if (self.frameElement && self.frameElement.tagName == "IFRAME") {
+			alert("登陆超时，请重新登陆");
+			window.parent.location = "${_ctx}";
+		}
 	});
 </script>
 </head>
 <body>
+	<form action="j_spring_security_check" method="post">
+		<div class="loginDiv">
 
-	<table width="90%" height="90%" border="0" align="center"
-		cellspacing="0">
-		<tr>
-			<td width="100%" height="100%" align="center" bgcolor="#FFFFFF"><div
-					class="qb-nerong">
-					<table width="580" height="436" border="0" align="center"
-						cellspacing="0">
-						<tr>
-							<td width="569" height="429" align="left" valign="top"><p>&nbsp;&nbsp;</p>
-								<p>&nbsp;</p>
-								<p>&nbsp;</p>
-								<table width="458" border="0" align="center" cellspacing="0">
-									<tr>
-										<td width="140" height="253" rowspan="2">&nbsp;</td>
-										<td width="314" height="102">&nbsp;</td>
-									</tr>
-									<tr>
-										<td height="141"><table width="382" height="153"
-												border="0" align="center" cellpadding="0" cellspacing="0">
-												<tbody>
-													<tr>
-														<td height="153">
-															<form action="j_spring_security_check" method="post">
-																<table height="146" align="center">
-																	<tbody>
-																		<tr>
-																			<td colspan="2" class="error">
-																				${SPRING_SECURITY_LAST_EXCEPTION.message}</td>
-																		</tr>
-																		<tr>
-																			<td height="28" class="STYLE1">用户名：</td>
-																			<td><input name="j_username" class="inputField"></td>
-																		</tr>
-																		<tr>
-																			<td height="28" class="STYLE1">密 码：</td>
-																			<td><input name="j_password" type="password"
-																				class="inputField"></td>
-																		</tr>
-																		<tr>
-																			<td height="47" colspan="2" align="right"><input
-																				name="submit" type="submit" class="button"
-																				value="登陆" /></td>
-																		</tr>
-																	</tbody>
-																</table>
-															</form>
-														</td>
-													</tr>
-												</tbody>
-											</table></td>
-									</tr>
+			<table style="width: 100%;">
+				<tr>
+					<td align="center" valign="bottom" style="padding: 0 0 0 0; margin: 0;">
+						<div id="titleDiv"></div>
+					</td>
+				</tr>
+				<tr>
+					<td  style="padding: 0 0 0 0; margin: 0;">
+						<div class="formBgOuter">
+							<div class="formBg">
+
+								<table align="center" style="position: relative;">
+									<tbody>
+										<tr>
+											<td class="error" height="40" valign="middle">
+												${SPRING_SECURITY_LAST_EXCEPTION.message}</td>
+										</tr>
+										<tr>
+											<td class="inputtd">
+												<div class="inputDiv">
+													<label class="labdiv" for="j_username">帐号：</label> 
+													<input id="j_username" name="j_username" type="text" class="baseinput"
+														style="font-size: 14px; width: 165px;" autocomplete="off" >
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td class="inputtd">
+												<div class="inputDiv">
+													<label class="labdiv" for="j_password">密码：</label> <input
+														type="password" class="baseinput"
+														style="font-size: 14px; width: 165px;" name="j_password"
+														id="j_password" value="" autocomplete="off">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td height="40px" align="center" valign="middle">
+												<input name="submit" type="submit" value="登陆" class="button" />
+												&nbsp;&nbsp;&nbsp;
+												<input type="reset" value="重置" class="button" />
+											</td>
+										</tr>
+									</tbody>
 								</table>
-								<p>&nbsp;</p></td>
-						</tr>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
 
-					</table>
-				</div></td>
-		</tr>
-	</table>
+		</div>
+	</form>
 </body>
 </html>

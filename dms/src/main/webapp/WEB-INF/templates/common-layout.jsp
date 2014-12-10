@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>丘北县人民医院内网信息共享平台</title>
-<c:url var="ctx" value="/" scope="session"/>
+<c:set var="ctx" value="${pageContext.request.contextPath}/" scope="session"/>
 
 <link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dojo/resources/dojo.css"/>
 <link rel="stylesheet" href="${ctx }resources/js/dojo-release-1.7.3/dijit/themes/soria/soria.css"/>

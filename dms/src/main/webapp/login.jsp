@@ -27,7 +27,6 @@ html, body {
 }
 
 .loginDiv {
-
 	width: 100%;
 	margin: auto;
 	position: absolute;
@@ -42,31 +41,18 @@ html, body {
 	margin: 0;
 	background: url(resources/images/title.png);
 	background-repeat: no-repeat;
-	/**IE6**/
+	
+		/**IE6**/
 	_background: none;
 	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/title.png");
-}
-
-.formBgOuter {
-	width: 350px;
-	position: absolute;
-	padding: 0;
-	left: 50%;
-	margin: 0 0 0 -180px;
-	padding: 0;
 }
 
 .formBg {
 	height: 205px;
 	width: 350px;
-	
-	padding:10px 0 0 0;
-	
-	background: url(resources/images/bg-login-form-1.png);
+	padding: 10px 0 0 0;
+	background: url(resources/images/bg-login-form.png);
 	background-repeat: no-repeat;
-	/**IE6**/
-	_background: none;
-	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="resources/images/bg-login-form-1.png");
 }
 
 .baseinput {
@@ -78,7 +64,6 @@ html, body {
 
 .labdiv {
 	font-family: '微软雅黑';
-	z-index: 12;
 	float: left;
 	margin: 0px 2px 0 5px;
 }
@@ -125,50 +110,48 @@ html, body {
 
 			<table style="width: 100%;">
 				<tr>
-					<td align="center" valign="bottom" style="padding: 0 0 0 0; margin: 0;">
+					<td align="center" valign="bottom"
+						style="padding: 0 0 0 0; margin: 0;">
 						<div id="titleDiv"></div>
 					</td>
 				</tr>
 				<tr>
-					<td  style="padding: 0 0 0 0; margin: 0;">
-						<div class="formBgOuter">
-							<div class="formBg">
-
-								<table align="center" style="position: relative;">
-									<tbody>
-										<tr>
-											<td class="error" height="40" valign="middle">
-												${SPRING_SECURITY_LAST_EXCEPTION.message}</td>
-										</tr>
-										<tr>
-											<td class="inputtd">
-												<div class="inputDiv">
-													<label class="labdiv" for="j_username">帐号：</label> 
-													<input id="j_username" name="j_username" type="text" class="baseinput"
-														style="font-size: 14px; width: 165px;" autocomplete="off" >
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td class="inputtd">
-												<div class="inputDiv">
-													<label class="labdiv" for="j_password">密码：</label> <input
-														type="password" class="baseinput"
-														style="font-size: 14px; width: 165px;" name="j_password"
-														id="j_password" value="" autocomplete="off">
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td height="40px" align="center" valign="middle">
-												<input name="submit" type="submit" value="登陆" class="button" />
-												&nbsp;&nbsp;&nbsp;
-												<input type="reset" value="重置" class="button" />
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+					<td style="padding: 0; margin: 0;" align="center">
+						<div class="formBg">
+							<table align="center">
+								<tbody>
+									<tr>
+										<td class="error" height="40" valign="middle">
+											${SPRING_SECURITY_LAST_EXCEPTION.message}</td>
+									</tr>
+									<tr>
+										<td class="inputtd">
+											<div class="inputDiv">
+												<label class="labdiv" for="j_username">帐号：</label> <input
+													id="j_username" name="j_username" type="text"
+													class="baseinput" style="font-size: 14px; width: 165px;"
+													autocomplete="off">
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="inputtd">
+											<div class="inputDiv">
+												<label class="labdiv" for="j_password">密码：</label> <input
+													type="password" class="baseinput"
+													style="font-size: 14px; width: 165px;" name="j_password"
+													id="j_password" value="" autocomplete="off">
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td height="40px" align="center" valign="middle"><input
+											name="submit" type="submit" value="登陆" class="button" />
+											&nbsp;&nbsp;&nbsp; <input type="reset" value="重置"
+											class="button" /></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</td>
 				</tr>

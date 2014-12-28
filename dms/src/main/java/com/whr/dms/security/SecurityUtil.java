@@ -70,6 +70,15 @@ public class SecurityUtil {
 		long myId = getCurrentUser().getId();
 		return myId == userId;
 	}
+	/**
+	 * 判断给定的用户登录名是否为当前登录用户
+	 * @param userId
+	 * @return
+	 */
+	public static boolean isMe(String loginName) {
+		String myId = getCurrentUser().getLoginName();
+		return loginName.equals(myId);
+	}
 	
 	public static long getUserId() {
 		return getCurrentUser().getId();

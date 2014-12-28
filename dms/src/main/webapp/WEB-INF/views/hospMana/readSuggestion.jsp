@@ -89,4 +89,7 @@ function submitReply(){
 			</tr>
 		</table>
 	</form>
+	
+	<c:url var="attachmentUrl" value="/attachment/${suggestion.id }/TSuggestion/attachmentList" />
+<iframe src="${attachmentUrl }" style="width:100%;height:300px;border:0;overflow:auto;" border="0" scrolling="auto"></iframe>
 </div>

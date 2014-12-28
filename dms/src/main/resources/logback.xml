@@ -21,7 +21,7 @@
 
 		<!-- 可让每天产生一个日志文件，最多 300 个，自动回滚 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>log/dms-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${logFilePath}/dms-%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>300</maxHistory>
 		</rollingPolicy>
 

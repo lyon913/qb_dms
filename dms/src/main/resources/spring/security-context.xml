@@ -21,6 +21,7 @@
 		
 		<intercept-url pattern="/suggestion/manage/**" access="ROLE_SUGGESTION_MANAGER" />
 		<intercept-url pattern="/president/manage/**" access="ROLE_PRESIDENT_MANAGER" />
+		<intercept-url pattern="/hospMana/**" access="ROLE_HOSPITAL_MANAGER" />
 
 		<intercept-url pattern="/**" access="ROLE_USER" />
 

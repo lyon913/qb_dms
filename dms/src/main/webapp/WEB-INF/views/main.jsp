@@ -163,11 +163,11 @@ html, body {
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("president/list/public"); }'>院长信箱</div>
-					<!-- 
+					 
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("hospMana/list/public"); }'>医院管理</div>
-					 -->
+					 
 				</div>
 			</div>
 			<div data-dojo-type="dijit.layout.AccordionPane" title="系统管理"

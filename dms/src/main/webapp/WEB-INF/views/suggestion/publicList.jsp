@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
-<script type="text/javascript" src="${ctx }resources/js/hospMana.js"></script>
+<script type="text/javascript" src="${ctx }resources/js/suggestion.js"></script>
 <script type="text/javascript">
 dojo.ready(function(){
 styleTable("tb");

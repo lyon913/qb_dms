@@ -98,8 +98,12 @@ function delNotice(id){
 			  	url: "<c:url value='/notice/del/'/>" + id,
 			  	handleAs: "json",
 			  	load: function(data){
+			  		if(data && data.success){
 		  			//刷新grid
 		  			window.location.href = "<c:url value='/notice/manage/1'/>";
+			  		}else{
+			  			showMessage("错误",data.message);
+			  		}
 			  	},
 			  	error: function(error){
 			  		showMessage("错误",error);

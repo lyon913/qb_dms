@@ -29,6 +29,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -41,11 +42,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.ClickType;
 import com.whr.dms.models.TNotice;
 import com.whr.dms.models.TNoticeAttachment;
 import com.whr.dms.models.TNoticeType;
 import com.whr.dms.models.TUser;
+import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.ClickCountService;
 import com.whr.dms.service.DepartmentManager;
@@ -205,7 +208,7 @@ public class PublicNewsController {
 			n.setNoticetypeId(notice.getNoticetypeId());
 			n.setPublished(notice.isPublished());
 			n.setTitle(notice.getTitle());
-			
+			n.setState(true);
 			ns.saveNotice(n);
 			return new JsonResponse(true, null, n.getId());
 		} catch(Exception e){
@@ -219,10 +222,20 @@ public class PublicNewsController {
 	 * @param id
 	 * @param model
 	 * @return
+	 * @throws ParameterCheckException 
 	 */
 	@RequestMapping(value="/publicnews/edit/{id}")
-	public String prepareEdit(@PathVariable long id,Model m){
+	public String prepareEdit(@PathVariable long id,Model m) throws ParameterCheckException{
 		TNotice n = ns.getById(id);
+		if (n == null) {
+			throw new ParameterCheckException("未找到此记录");
+		}
+
+		if (!SecurityUtil.isMe(n.getLastUpdaterLoginName())
+				&& !SecurityUtil.hasRole(RoleType.ROLE_ADMIN)) {
+			throw new AccessDeniedException("只有作者本人或者管理员才能删除");
+		}
+		
 		m.addAttribute("publicnews", n);	
 		String username = SecurityUtil.getCurrentUserDetials().getUsername();
 		TUser u = um.findTUserByLoginName(username);
@@ -253,7 +266,7 @@ public class PublicNewsController {
 	}
 	
 	/**
-	 * 切换通知发布状态
+	 * 切换院务政务公开信息发布状态
 	 * @return
 	 */
 	@RequestMapping("/publicnews/switchState/{id}")
@@ -267,12 +280,23 @@ public class PublicNewsController {
 	}
 	
 	/**
-	 * 切换通知发布状态
+	 * 删除院务政务公开的信息
 	 * @return
+	 * @throws ParameterCheckException 
 	 */
 	@RequestMapping("/publicnews/del/{id}")
-	public @ResponseBody JsonResponse deletePubliceNews(@PathVariable long id){
+	public @ResponseBody JsonResponse deletePubliceNews(@PathVariable long id) throws ParameterCheckException{
+		
 		try{
+			TNotice n = ns.getById(id);
+			if (n == null) {
+				throw new ParameterCheckException("未找到此记录");
+			}
+
+			if (!SecurityUtil.isMe(n.getLastUpdaterLoginName())
+					&& !SecurityUtil.hasRole(RoleType.ROLE_ADMIN)) {
+				throw new AccessDeniedException("只有作者本人或者管理员才能删除");
+			}
 			ns.deleteNotice(id);
 			return new JsonResponse(true, null, null);
 		}catch(Exception e){

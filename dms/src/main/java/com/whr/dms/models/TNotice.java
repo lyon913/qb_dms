@@ -33,15 +33,6 @@ public class TNotice extends BaseAuditEntity {
 	private String author;
 
 	private Long noticetypeId;
-
-	public Long getNoticetypeId() {
-		return noticetypeId;
-	}
-
-	public void setNoticetypeId(Long noticetypeId) {
-		this.noticetypeId = noticetypeId;
-	}
-
 	private boolean published;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -51,6 +42,16 @@ public class TNotice extends BaseAuditEntity {
 	private Date noticeDate;
 	private Long parentNoticeTypeId;
 
+	private boolean state;
+	
+	public Long getNoticetypeId() {
+		return noticetypeId;
+	}
+
+	public void setNoticetypeId(Long noticetypeId) {
+		this.noticetypeId = noticetypeId;
+	}
+	
 	@Override
 	@PrePersist
 	public void updateAuditInfo() {
@@ -119,6 +120,14 @@ public class TNotice extends BaseAuditEntity {
 
 	public void setParentNoticeTypeId(Long parentNoticeTypeId) {
 		this.parentNoticeTypeId = parentNoticeTypeId;
+	}
+
+	public boolean isState() {
+		return state;
+	}
+
+	public void setState(boolean state) {
+		this.state = state;
 	}
 
 }

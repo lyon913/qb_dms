@@ -99,7 +99,11 @@ function delNotice(id){
 			  	handleAs: "json",
 			  	load: function(data){
 		  			//刷新grid
+		  			if(data && data.success){
 		  			window.location.href = "<c:url value='/publicnews/manage/2'/>";
+		  			}else{
+		  				showMessage("错误",data.message);
+		  			}
 			  	},
 			  	error: function(error){
 			  		showMessage("错误",error);

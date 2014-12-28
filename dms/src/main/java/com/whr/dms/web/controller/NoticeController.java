@@ -32,6 +32,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -45,6 +46,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.whr.dms.config.Config;
+import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.ClickType;
 import com.whr.dms.models.TDepartment;
 import com.whr.dms.models.TNotice;
@@ -52,6 +54,7 @@ import com.whr.dms.models.TNoticeAttachment;
 import com.whr.dms.models.TNoticeType;
 import com.whr.dms.models.TNotice_TDepartment;
 import com.whr.dms.models.TUser;
+import com.whr.dms.security.RoleType;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.ClickCountService;
 import com.whr.dms.service.DepartmentManager;
@@ -247,10 +250,21 @@ public class NoticeController {
 	 * @param id
 	 * @param model
 	 * @return
+	 * @throws ParameterCheckException 
 	 */
 	@RequestMapping(value="/notice/edit/{id}")
-	public String prepareEdit(@PathVariable long id,Model m){
+	public String prepareEdit(@PathVariable long id,Model m) throws ParameterCheckException{
 		TNotice n = ns.getById(id);
+		
+		if (n == null) {
+			throw new ParameterCheckException("未找到此记录");
+		}
+
+		if (!SecurityUtil.isMe(n.getLastUpdaterLoginName())
+				&& !SecurityUtil.hasRole(RoleType.ROLE_ADMIN)) {
+			throw new AccessDeniedException("只有作者本人或者管理员才能删除");
+		}
+		
 		m.addAttribute("notice", n);
 		
 		List<TNotice_TDepartment> ndList = ns.findNoticeDepartment(id);
@@ -335,12 +349,25 @@ public class NoticeController {
 	}
 	
 	/**
-	 * 切换通知发布状态
+	 *删除通知 
 	 * @return
+	 * @throws ParameterCheckException 
 	 */
 	@RequestMapping("/notice/del/{id}")
-	public @ResponseBody JsonResponse deleteNotice(@PathVariable long id){
+	public @ResponseBody JsonResponse deleteNotice(@PathVariable long id) throws ParameterCheckException{
+		
+
+
 		try{
+			TNotice n = ns.getById(id);
+			if (n == null) {
+				throw new ParameterCheckException("未找到此记录");
+			}
+
+			if (!SecurityUtil.isMe(n.getLastUpdaterLoginName())
+					&& !SecurityUtil.hasRole(RoleType.ROLE_ADMIN)) {
+				throw new AccessDeniedException("只有作者本人或者管理员才能删除");
+			}
 			ns.deleteNotice(id);
 			return new JsonResponse(true, null, null);
 		}catch(Exception e){

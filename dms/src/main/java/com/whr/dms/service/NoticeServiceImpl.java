@@ -39,6 +39,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	@Transactional
 	public void saveNotice(TNotice notice, Set<Long> departIds) {
+		notice.setState(true);
 		nDao.save(notice);
 		if(notice.getId() != null){
 			ndDao.deleteByNoticeId(notice.getId());
@@ -63,7 +64,9 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	@Transactional
 	public void deleteNotice(long noticeId) {
-		nDao.delete(noticeId);
+		TNotice n = nDao.findOne(noticeId);
+		n.setState(false);
+		nDao.save(n);
 	}
 
 	@Override

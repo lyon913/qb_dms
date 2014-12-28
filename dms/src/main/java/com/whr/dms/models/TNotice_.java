@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2014-07-05T18:59:46.461+0800")
+@Generated(value="Dali", date="2014-12-28T16:59:26.482+0800")
 @StaticMetamodel(TNotice.class)
 public class TNotice_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TNotice, String> title;
@@ -16,4 +16,5 @@ public class TNotice_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TNotice, Date> publishDate;
 	public static volatile SingularAttribute<TNotice, Date> noticeDate;
 	public static volatile SingularAttribute<TNotice, Long> parentNoticeTypeId;
+	public static volatile SingularAttribute<TNotice, Boolean> state;
 }

@@ -188,7 +188,6 @@ html, body {
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("president/manage/list/private"); }'>院长信箱管理</div>
-					
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("admin/department/departmentMana");  }'>科室管理</div>

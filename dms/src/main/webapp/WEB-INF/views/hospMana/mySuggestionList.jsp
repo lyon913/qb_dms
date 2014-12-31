@@ -50,8 +50,6 @@ styleTable("tb");
 						<a href="${editUrl }">编辑</a>
 						-->
 						<a href="###" onclick="deleteSuggestion('${s.id}',1)">删除</a>
-						
-						<a href="###" onclikc="uploadAttachment('${s.id }')">附件管理</a>
 					</td>
 				</tr>
 

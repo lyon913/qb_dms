@@ -87,20 +87,16 @@ public class HospManaController {
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s, MultipartFile attch,
+	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s, 
 			HttpSession session, BindingResult bind, SessionStatus status) {
 		if (bind.hasErrors()) {
 			return "hospMana/createOrUpdate";
 		}
 
-		try {
-			suggServ.saveSuggestion(s,attch,UploadUtils.getUploadFilePath(session));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			suggServ.saveSuggestion(s);
+		
 		status.setComplete();
-		return "redirect:/hospMana/" + s.getId();
+		return "redirect:/hospMana/" + s.getId()+"/afterSave";
 	}
 
 	/**
@@ -162,6 +158,20 @@ public class HospManaController {
 	}
 
 	/**
+	 * 查看医院管理意见表单
+	 * 
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}/afterSave", method = RequestMethod.GET)
+	public String afterSaveForm(@PathVariable long id, Model m) {
+		TSuggestion s = suggServ.findById(id);
+		m.addAttribute("suggestion", s);
+		return "hospMana/afterSuggestionSave";
+	}
+	
+	
+	/**
 	 * 删除医院管理意见表单
 	 * 
 	 * @param id
@@ -178,16 +188,21 @@ public class HospManaController {
 		}
 
 		if (!SecurityUtil.isMe(s.getAuthorId())
-				&& !SecurityUtil.hasRole(RoleType.ROLE_SUGGESTION_MANAGER)) {
-			throw new AccessDeniedException("只有作者本人或者有权限的用户才能删除");
+				&& !SecurityUtil.hasRole(RoleType.ROLE_ADMIN)) {
+			throw new AccessDeniedException("只有作者本人或者管理员才能删除");
 		}
 
 		if (SuggestionState.Deleted.equals(s.getState())) {
 			throw new AccessDeniedException("帖子已经删除！");
 		}
 		suggServ.deleteSuggestion(id);
-
-		String returnUrl = "/hospMana/list/my";
+		String returnUrl = "";
+		if(returnType==2){
+			returnUrl = "/hospMana/list/public";
+		}
+		else if(returnType==1){
+			returnUrl = "hospMana/list/my";
+		}
 		
 		return "redirect:" + returnUrl;
 	}
@@ -232,10 +247,6 @@ public class HospManaController {
 
 
 
-
-
-
-
 	/**
 	 * 删除回复
 	 * @param id
@@ -265,65 +276,6 @@ public class HospManaController {
 	}
 	
 	
-	@RequestMapping(value="/{id}/uploadAttachment",method=RequestMethod.POST)
-	public String uploadAttachment(@PathVariable long id, MultipartFile uploadedfile, HttpServletRequest request)throws Exception{
-		String uploadPath = request.getSession().getServletContext().getRealPath("/") + "upload\\hospMana\\attachment\\";
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Content-Type", "text/html; charset=utf-8");
-		
 	
-		
-		try {
-			TAttachment attach = new TAttachment();
-			attach.setForeignTable(AttachmentType.TSuggestion);
-			attach.setForeignKey(id);
-			attach.setName(FilenameUtils.getName(uploadedfile.getOriginalFilename()));
-			attach.setSize(uploadedfile.getSize());
-			
-			//save
-			suggServ.addAttachment(attach, uploadedfile.getInputStream(), uploadPath);
-			
-		} catch (Exception e) {
-			
-			
-		}
-		return "redirect:/hospMana/"+id+"/attachmentList";
-	}
-	
-	@RequestMapping(value="/{id}/attachmentList",method=RequestMethod.POST)
-	public String attachmentList(@PathVariable long id,Model m){
-		List<TAttachment> alist = suggServ.attaches(id, AttachmentType.TSuggestion);
-		m.addAttribute("attachmentList", alist);
-		return "/hospMana/attachmentList";
-	}
 
-	@RequestMapping("/attachment/download/{id}")
-	public void download(@PathVariable long id,HttpServletRequest request,HttpServletResponse response){
-		
-		try {
-			TAttachment file = suggServ.downloadAttachment(id);
-		    response.reset();  
-		    response.setHeader("Content-Disposition", "attachment; filename=\"" + URLEncoder.encode(file.getName(), "UTF-8") + "\"");  
-		    response.addHeader("Content-Length", "" + file.getSize());  
-		    response.setContentType("application/octet-stream;charset=UTF-8");  
-		    OutputStream out = new BufferedOutputStream(response.getOutputStream());
-		    String uploadDir = request.getSession().getServletContext().getRealPath("/") + "upload\\hospMana\\attachment\\";
-		    FileInputStream in = new FileInputStream(new File(uploadDir + file.getPath()));
-		    IOUtils.copy(in, out);
-		    out.flush();
-		    out.close();
-		    in.close();
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		
-	}
-	
-	@RequestMapping("/deleteAttach/{attachmentId}")
-	public String deleteAttachment(@PathVariable long attachmentId){
-			TAttachment a = suggServ.getAttachment(attachmentId);
-			Long suggId = a.getForeignKey();
-			suggServ.deleteAttachment(attachmentId);
-		return "redirect:/hospMana/"+suggId+"/attachmentList";
-	}
 }

@@ -19,13 +19,6 @@
 				</td>
 			</tr>
 			<tr>
-				<th width="150px">附件：</th>
-				<td>
-					<input type="file" name="attch" >
-				</td>
-			</tr>
-
-			<tr>
 				<td colspan="2" align="center">
 					<button class="btn-normal" type="submit">
 						<span class="dijitIconSave"></span>

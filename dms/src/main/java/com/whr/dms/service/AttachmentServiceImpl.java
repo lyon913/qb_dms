@@ -1,14 +1,13 @@
 package com.whr.dms.service;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,15 +43,8 @@ public class AttachmentServiceImpl implements AttachmentService {
 		
 		String uuid = UUID.randomUUID().toString();
 		File outputFile = new File(path + uuid);
-		BufferedOutputStream os = new BufferedOutputStream(new FileOutputStream(outputFile));
-		
-		//read buffer
-		byte[] buffer = new byte[1024];
-		while(is.read(buffer) > -1){
-			os.write(buffer);
-		}
+		FileUtils.copyInputStreamToFile(is, outputFile);
 		is.close();
-		os.close();
 		
 		try {
 			attach.setPath(relativePath + uuid);

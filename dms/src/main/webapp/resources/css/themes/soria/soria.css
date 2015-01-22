@@ -113,3 +113,14 @@ span.error{
 .formTable th {
 	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
 }
+
+
+.radioDiv{
+	display: inline-block;
+	width: 80px;
+	margin: 5px;
+}
+
+.clickable{
+	cursor: pointer;
+}

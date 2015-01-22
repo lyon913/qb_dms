@@ -61,6 +61,11 @@ public class TSuggestion extends BaseAuditEntity {
 	@NotNull
 	@Enumerated(EnumType.STRING)
 	private SuggestionState state;
+	
+	/**
+	 * 关联的投票ID
+	 */
+	private Long voteId;
 
 	public String getAuthor() {
 		return author;
@@ -116,5 +121,13 @@ public class TSuggestion extends BaseAuditEntity {
 
 	public void setState(SuggestionState state) {
 		this.state = state;
+	}
+
+	public Long getVoteId() {
+		return voteId;
+	}
+
+	public void setVoteId(Long voteId) {
+		this.voteId = voteId;
 	}
 }

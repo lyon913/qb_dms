@@ -42,7 +42,7 @@
 
 	<!-- 输出到控制台和文件，可定义更多的 Appender -->
 
-	<root level="WARN">
+	<root level="DEBUG">
 		<appender-ref ref="stdout"/>
 	</root>
 

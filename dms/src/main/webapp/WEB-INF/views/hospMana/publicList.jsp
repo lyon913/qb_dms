@@ -44,6 +44,7 @@ styleTable("tb");
 					<td width="10%">${s.suggestionDate }</td>
 					<td width="10%">
 						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
+						<a href="###" onclick="deleteSuggestion('${s.id}',2)">删除</a>
 					</td>
 				</tr>
 

@@ -58,22 +58,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 		sdao.save(suggestion);
 	}
 	
-	@Override
-	@Transactional
-	public void saveSuggestion(TSuggestion suggestion, MultipartFile attch,
-			String uploadPath) throws IOException {
-		suggestion.setSuggestionDate(new Date());
-		sdao.save(suggestion);
-		
-		TAttachment a = new TAttachment();
-		a.setForeignTable(AttachmentType.TSuggestion);
-		a.setForeignKey(suggestion.getId());
-		a.setName(FilenameUtils.getName(attch.getOriginalFilename()));
-		a.setSize(attch.getSize());
-		
-		String path = UploadUtils.saveUploadFile(attch.getInputStream(), uploadPath);
-		a.setPath(path);
-	}
+	
 
 	@Override
 	@Transactional

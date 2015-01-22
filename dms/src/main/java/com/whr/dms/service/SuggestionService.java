@@ -27,13 +27,6 @@ public interface SuggestionService {
 	 */
 	public void saveSuggestion(TSuggestion suggestion);
 	
-	/**
-	 * 保存意见
-	 * 
-	 * @param suggetion
-	 * @throws IOException
-	 */
-	public void saveSuggestion(TSuggestion suggestion,MultipartFile attch, String uploadPath) throws IOException;
 
 	/**
 	 * 修改意见内容

@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
 <script type="text/javascript">
-var optCount = 3;
+	dojo.require("dijit.form.DateTextBox");
+	
+	//初始化投票项数
+	var optCount = ${opt==null?3:fn:length(opt)};
+	
+	/**
+	*删除投票选项
+	**/
 	function removeOpt(item){
 		if(optCount <= 2){
 			alert("至少需要2个投票选项");
@@ -15,6 +23,9 @@ var optCount = 3;
 		optCount--;
 	}
 	
+	/**
+	*增加投票选项
+	**/
 	function addOpt(){
 		var html = '<div><input name="opt" class="input-text"/>'+
 				   '<span class="dijitEditorIcon dijitEditorIconDelete clickable"'+
@@ -25,56 +36,86 @@ var optCount = 3;
 		optCount++;
 	}
 	
+	function check(){
+		var opts = dojo.query("input[name=opt]");
+		for(var i = 0; i<opts.length;i++){
+			if(dojo.trim(opts[i].value)==""){
+				alert("选项名称不能为空");
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	dojo.ready(function(){
 		var singleR = dojo.byId("_single");
 		var multiR = dojo.byId("_multi");
-		
 		var maxI = dojo.byId("_max");
-		dojo.connect(singleR,"change",function(){
+		//单选按钮激活时，禁用“最多可选几项”输入框
+		dojo.connect(singleR,"click",function(){
 			if(singleR.value){
 				dojo.attr(maxI,"disabled","disabled");
 			}
 		});
-		dojo.connect(multiR,"change",function(){
+		//多选按钮激活时，启用“最多可选几项”输入框
+		dojo.connect(multiR,"click",function(){
 			if(multiR.value){
 				dojo.removeAttr(maxI,"disabled");
 			}
 		});
+		
+		//初始化日期输入框
+		var d = dojo.byId("_endDateInput");
+		new dijit.form.DateTextBox({
+			id:"_endDateInput",
+			name:"endDate",
+			value:d.value,
+			height:"40px"
+		}, "_endDateInput");
 	});
 </script>
+<style>
+
+.radioDiv{
+	display: inline-block;
+	width: 100px;
+	margin: 5px;
+}
+
+</style>
 <div class="panel">
 	<div class="title">发起投票</div>
-	<form:form modelAttribute="vote" method="post">
+	<form:form modelAttribute="vote" method="post" onsubmit="return check();">
 
 		<table class="formTable">
 			<tr>
-				<th width="150px">投票主题：</th>
+				<th width="140px">投票主题：</th>
 				<td><dms:inputText name="title" /></td>
 			</tr>
 
 			<tr>
 				<td colspan="2">
-					<div class="radioDiv">
+					<span class="radioDiv">
 						<form:radiobutton id="_nm" path="isOpen" value="false"/>
 						<label for="_nm">匿名投票</label>
-					</div>
-					<div class="radioDiv">
+					</span>
+					<span  class="radioDiv">
 						<form:radiobutton id="_jm" path="isOpen" value="true"/>
 						<label for="_jm">记名投票</label>
-					</div>
+					</span>
 				</td>
 			</tr>
 			
 			<tr>
 				<td colspan="2">
-					<div class="radioDiv">
+					<span class="radioDiv">
 						<form:radiobutton id="_single" path="isMulti" value="false"/>
 						<label for="_single">单选择</label>
-					</div>
-					<div class="radioDiv">
+					</span>
+					<span class="radioDiv">
 						<form:radiobutton id="_multi" path="isMulti" value="true"/>
 						<label for="_multi">多选择</label>
-					</div>
+					</span>
 				</td>
 			</tr>
 			<tr>
@@ -88,12 +129,12 @@ var optCount = 3;
 				</td>
 			</tr>
 			<tr>
-				<th>投票截止日期：</th>
-				<td><dms:inputText name="endDate" /></td>
+				<th height="30px">投票截止日期：</th>
+				<td><dms:inputText id="_endDateInput" name="endDate"/></td>
 			</tr>
 
 			<tr>
-				<th width="150px">投票选项：</th>
+				<th>投票选项：</th>
 				<td>
 					<div id="optionsDiv">
 						<c:if test="${opt == null }">

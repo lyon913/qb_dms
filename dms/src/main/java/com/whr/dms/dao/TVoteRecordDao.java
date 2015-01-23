@@ -12,4 +12,7 @@ public interface TVoteRecordDao extends JpaRepository<TVoteRecord, Long> {
 	
 	@Query("select count(r) from TVoteRecord r where r.optionId = :optionId")
 	public long countByOptionId(@Param("optionId") long optionId);
+	
+	@Query("select count(r) from TVoteRecord r where r.voteId = :voteId and r.userId = :userId")
+	public long countByUserId(@Param("voteId") long voteId, @Param("userId") long userId);
 }

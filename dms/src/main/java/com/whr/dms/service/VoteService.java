@@ -36,8 +36,9 @@ public interface VoteService {
 	 * @param voteId
 	 * @param optionId
 	 * @param userId
+	 * @throws ParameterCheckException 
 	 */
-	public void vote(long voteId, long  optionId, long userId);
+	public void vote(long voteId, long[] optionId, long userId) throws ParameterCheckException;
 	
 
 	/**

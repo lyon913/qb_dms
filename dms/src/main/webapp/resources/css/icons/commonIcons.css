@@ -33,13 +33,15 @@
 .dijitIconFolderClosed,
 .dijitFolderOpened,
 .dijitIconFolderOpen,
-.dijitIconError {
+.dijitIconError,
+.dijitIconAdd {
 	background-image: url('images/commonIconsObjActEnabled.png'); 
 	width: 16px;
 	height: 16px;
 	display:inline-block;
 	vertical-align: middle;
-	margin: 1px 5px 1px 0;
+	margin: 1px 4px 1px 1px;
+	padding: 0;
 }
 .dj_ie6 .dijitIconSave,
 .dj_ie6 .dijitIconPrint,
@@ -155,10 +157,4 @@
 
 .dijitIconAdd{
 	background:url('images/Add-icon-16.png') no-repeat;
-	width: 16px;
-	height: 16px;
-	display:inline-block;
-	vertical-align: middle;
-	margin: 1px 5px 1px 0;
-	
 }

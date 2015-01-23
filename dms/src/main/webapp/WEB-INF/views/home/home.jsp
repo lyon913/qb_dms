@@ -28,6 +28,11 @@
 	function readPubNews(id) {
 		window.location.href = "<c:url value='/publicnews/'/>" + id;
 	}
+	
+	dojo.ready(function(){
+		//disable GridContainer drag and drop
+		dijit.byId("gc1").disableDnd();
+	});
 </script>
 <style>
 
@@ -52,12 +57,12 @@
 }
 </style>
 <div data-dojo-type="dojox.layout.GridContainer" id="gc1"
-	acceptTypes="dojox.widget.Portlet, dojox.widget.FeedPortlet,dojox.widget.ExpandableFeedPortlet"
+	acceptTypes="dojox.widget.Portlet"
 	hasResizableColumns="false"
 	nbZones="2"	
 	allowAutoScroll="true" 
-	withHandles="true"
-	handleClasses="dijitTitlePaneTitle" 
+	withHandles="false"
+	handleClasses="dijitTitlePaneTitle"
 	style="width: 100%; height: 100%; overflow: auto;">
 
 	<div data-dojo-type="dojox.widget.Portlet" title="通知公告">

@@ -4,7 +4,7 @@
 	display: inline-block;
 	border: 1px solid #8ba0bd;
 	border-bottom: 1px solid #657c9c;
-	padding: 4px 8px 4px 8px;
+	padding: 5px 8px 4px 8px;
 	margin: 0.2em; 
 	color: black;
 	text-decoration: none;
@@ -14,8 +14,12 @@
 	vertical-align: middle;
 	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
 	font-family: "宋体";
+	cursor: pointer;
 }
 
+button.btn-normal{
+	padding: 4px 0px 4px 0px\9
+}
 
 .btn-normal:HOVER {
 	color: #243C5F;
@@ -112,13 +116,6 @@ span.error{
 
 .formTable th {
 	background: #bcd5f0 url(images/buttonEnabled.png) repeat-x top left;
-}
-
-
-.radioDiv{
-	display: inline-block;
-	width: 80px;
-	margin: 5px;
 }
 
 .clickable{

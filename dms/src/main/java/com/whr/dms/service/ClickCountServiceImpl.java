@@ -1,8 +1,8 @@
 package com.whr.dms.service;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.whr.dms.dao.TClickCountDao;
 import com.whr.dms.models.ClickType;
@@ -11,14 +11,17 @@ import com.whr.dms.models.TClickCount;
 @Service
 public class ClickCountServiceImpl implements ClickCountService {
 
-	@Resource
+	@Autowired
 	TClickCountDao clickCountDao;
+	
 	@Override
 	public TClickCount getClickCountById(ClickType clickType, long referencesId) {
 		// 获取点击次数
 		TClickCount cc = clickCountDao.getClickCount(clickType, referencesId);
 		return cc;
 	}
+
+	@Transactional
 	@Override
 	public Long saveClickCount(ClickType clickType, long referenceId) {
 		TClickCount cc = clickCountDao.getClickCount(clickType, referenceId);

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TUser;
@@ -52,7 +53,6 @@ public class VoteController {
 		
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.MONTH, 1);
-		
 		v.setEndDate(c.getTime());
 		
 		m.addAttribute("vote", v);
@@ -167,7 +167,7 @@ public class VoteController {
 	 * @return
 	 * @throws ParameterCheckException 
 	 */
-	@RequestMapping("/{id}")
+	@RequestMapping(value = "/{id}")
 	public String show(@PathVariable long id, Model m) throws ParameterCheckException {
 		TVote v = vs.findById(id);
 		VoteResult vr = vs.getVoteResult(id);
@@ -175,5 +175,27 @@ public class VoteController {
 		m.addAttribute("v", v);
 		m.addAttribute("result", vr);
 		return "vote/show";
+	}
+	
+
+	/**
+	 * 进行投票操作
+	 * @param id
+	 * @param optionId
+	 * @param ra
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}/doVote", method = RequestMethod.POST)
+	public String vote(@PathVariable long id, @RequestParam("optSel") long[] optionId,
+			RedirectAttributes ra) {
+
+		try {
+			//投票操作
+			vs.vote(id, optionId, SecurityUtil.getUserId());
+		} catch (ParameterCheckException e) {
+			//错误信息反馈到跳转后的页面中
+			ra.addFlashAttribute("err", e.getMessage());
+		}
+		return "redirect:/vote/{id}";
 	}
 }

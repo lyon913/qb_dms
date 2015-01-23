@@ -2,7 +2,6 @@
 <%@ attribute name="value" required="true" rtexprvalue="true"%>
 
 <div>
-	<input name="opt" class="input-text" value="${value }"/> <span
-		class="dijitEditorIcon dijitEditorIconDelete clickable"
+	<input name="opt" class="input-text" value="${value}"/><span class="dijitEditorIcon dijitEditorIconDelete clickable"
 		onclick="removeOpt(this);"></span>
 </div>

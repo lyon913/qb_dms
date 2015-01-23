@@ -58,13 +58,37 @@ public class VoteServiceImpl implements VoteService {
 
 	@Transactional
 	@Override
-	public void vote(long voteId, long optionId, long userId) {
-		TVoteRecord r = new TVoteRecord();
-		r.setVoteId(voteId);
-		r.setOptionId(optionId);
-		r.setUserId(userId);
+	public void vote(long voteId, long[] optionId, long userId) throws ParameterCheckException {
+		TVote v = vDao.findOne(voteId);
+		if(v == null) {
+			throw new ParameterCheckException("未找到投票信息");
+		}
+		//选项为空
+		if(optionId == null || optionId.length == 0) {
+			throw new ParameterCheckException("投票选项为空");
+		}
+		//多选时判断选项是否超出最大值
+		if(v.getIsMulti() && optionId.length > v.getMaxVotes()) {
+			throw new ParameterCheckException("选择的投票项目超出最大值");
+		}
 		
-		rDao.save(r);
+		//单选时判断选项是否大于1
+		if(!v.getIsMulti() && optionId.length >1) {
+			throw new ParameterCheckException("选择的投票项目超出最大值");
+		}
+		
+		//判断用户是否已经投票
+		if(rDao.countByUserId(voteId,userId)>0) {
+			throw new ParameterCheckException("你已经过投票，请勿重复投票");
+		}
+		for(long oId : optionId) {
+			TVoteRecord r = new TVoteRecord();
+			r.setVoteId(voteId);
+			r.setOptionId(oId);
+			r.setUserId(userId);
+			rDao.save(r);
+		}
+		
 	}
 
 	@Override

@@ -17,12 +17,16 @@ public class Utils {
 	private static Map<Integer,String> colorMap;
 	static {
 		colorMap = new HashMap<Integer, String>();
-		colorMap.put(0, "#7CFC00");
-		colorMap.put(1, "#FF7F50");
-		colorMap.put(2, "#6495ED");
-		colorMap.put(3, "#D2691E");
-		colorMap.put(4, "#FF00FF");
-		colorMap.put(5, "#DEB887");
+		colorMap.put(0, "#7cb5ec");
+		colorMap.put(1, "#f7a35c");
+		colorMap.put(2, "#90ee7e");
+		colorMap.put(3, "#7798BF");
+		colorMap.put(4, "#aaeeee");
+		colorMap.put(5, "#ff0066");
+		colorMap.put(6, "#eeaaee");
+		colorMap.put(7, "#55BF3B");
+		colorMap.put(8, "#DF5353");
+		colorMap.put(9, "#7798BF");
 	}
 	
 	public static Date getTodayDate() {

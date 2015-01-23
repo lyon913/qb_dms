@@ -26,15 +26,6 @@ html, body {
 	text-align: center;
 }
 
-.bgtd {
-	width: 100%;
-	margin: 100px;
-	position: absolute;
-	background: url(resources/images/bg-login.jpg);
-	background-repeat: no-repeat;
-}
-
-
 .loginDiv {
 	width: 100%;
 	margin: auto;
@@ -59,7 +50,7 @@ html, body {
 .formBg {
 	height: 205px;
 	width: 350px;
-	padding: 20px 0 0 0;
+	padding: 10px 0 0 0;
 	background: url(resources/images/bg-login-form.png);
 	background-repeat: no-repeat;
 }
@@ -74,7 +65,8 @@ html, body {
 .labdiv {
 	font-family: '微软雅黑';
 	float: left;
-	margin: 0px 2px 0 5px;
+	margin: -2px 2px 0 5px;
+	_margin: 2px 2px 0 5px;
 }
 
 .inputtd {
@@ -114,8 +106,9 @@ html, body {
 </script>
 </head>
 <body>
-	<form action="j_spring_security_check" method="post">
+	<form id="loginForm" action="j_spring_security_check" method="post">
 		<div class="loginDiv">
+
 			<table style="width: 100%;">
 				<tr>
 					<td align="center" valign="bottom"
@@ -130,15 +123,14 @@ html, body {
 								<tbody>
 									<tr>
 										<td class="error" height="40" valign="middle">
-											${SPRING_SECURITY_LAST_EXCEPTION.message}</td>
+											${SPRING_SECURITY_LAST_EXCEPTION.message}
+										</td>
 									</tr>
 									<tr>
 										<td class="inputtd">
-										
 											<div class="inputDiv">
-											<label class="labdiv" for="j_username">帐&nbsp;&nbsp;号：</label> 
-												<input
-													id="j_username" name="j_username" type="text"
+												<label class="labdiv" for="j_username">帐号：</label> 
+												<input id="j_username" name="j_username" type="text"
 													class="baseinput" style="font-size: 14px; width: 165px;"
 													autocomplete="off">
 											</div>
@@ -146,21 +138,20 @@ html, body {
 									</tr>
 									<tr>
 										<td class="inputtd">
-										
 											<div class="inputDiv">
-											<label class="labdiv" for="j_password">密&nbsp;&nbsp;码：</label> 
-												<input
-													type="password" class="baseinput"
-													style="font-size: 14px; width: 165px;" name="j_password"
-													id="j_password" value="" autocomplete="off">
+												<label class="labdiv" for="j_password">密码：</label>
+												<input id="j_password" name="j_password" type="password" 
+													class="baseinput" style="font-size: 14px; width: 165px;"
+													value="" autocomplete="off">
 											</div>
 										</td>
 									</tr>
 									<tr>
-										<td height="40px" align="center" valign="middle"><input
-											name="submit" type="submit" value="登陆" class="button" />
-											&nbsp;&nbsp;&nbsp; <input type="reset" value="重置"
-											class="button" /></td>
+										<td height="40px" align="center" valign="middle">
+											<input type="submit" value="登录" class="button" />
+											&nbsp;&nbsp;&nbsp; 
+											<input type="reset" value="重置" class="button" />
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -168,7 +159,8 @@ html, body {
 					</td>
 				</tr>
 			</table>
-			</div>
+
+		</div>
 	</form>
 </body>
 </html>

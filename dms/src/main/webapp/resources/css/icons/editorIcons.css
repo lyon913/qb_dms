@@ -7,7 +7,8 @@
 	text-align: center;
 	display: inline-block;
 	vertical-align: middle;
-	margin: 0 5px 0 0;
+	margin: 1px 4px 1px 1px;
+	padding: 0;
 }
 .dijitDisabled .dijitEditorIcon {
 	background-image: url('images/editorIconsDisabled.png'); 

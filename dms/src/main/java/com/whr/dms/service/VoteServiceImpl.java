@@ -1,6 +1,8 @@
 package com.whr.dms.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +82,14 @@ public class VoteServiceImpl implements VoteService {
 		//判断用户是否已经投票
 		if(rDao.countByUserId(voteId,userId)>0) {
 			throw new ParameterCheckException("你已经过投票，请勿重复投票");
+		}
+		Calendar end = Calendar.getInstance();
+		end.setTime(v.getEndDate());
+		end.set(Calendar.HOUR, 23);
+		end.set(Calendar.MINUTE, 59);
+		end.set(Calendar.SECOND, 59);
+		if(new Date().after(end.getTime())) {
+			throw new ParameterCheckException("投票已经截止，不能计入结果");
 		}
 		for(long oId : optionId) {
 			TVoteRecord r = new TVoteRecord();

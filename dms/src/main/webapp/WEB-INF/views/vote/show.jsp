@@ -52,7 +52,7 @@ dojo.ready(function(){
 							value="${c.optionId }">
 						<label for="optSel_${c.optionId}">${c.optionTitle }</label>
 					</td>
-					<td style="width: 200px;">
+					<td style="width: 200px;padding:1px 8px 1px 2px;">
 						<dms:voteBar index="${s.index }" percent="${c.percent}" />
 					</td>
 					<td>

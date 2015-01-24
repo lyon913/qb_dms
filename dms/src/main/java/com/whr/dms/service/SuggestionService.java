@@ -1,6 +1,5 @@
 package com.whr.dms.service;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import javax.security.sasl.AuthenticationException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.AttachmentType;

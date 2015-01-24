@@ -3,7 +3,10 @@ package com.whr.dms.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TVote;
 import com.whr.dms.models.TVoteOption;
 import com.whr.dms.models.TVoteRecord;
+import com.whr.dms.models.VoteDetails;
 import com.whr.dms.models.VoteRecordCount;
 import com.whr.dms.models.VoteResult;
 
@@ -45,22 +49,9 @@ public class VoteServiceImpl implements VoteService {
 		vDao.deleteVoteIdOnTSuggestion(voteId);;
 	}
 
-//	@Override
-//	public void saveVoteOption(long voteId, TVoteOption option) {
-//		TVote v = vDao.findOne(voteId);
-//		option.setVote(v);
-//		
-//		oDao.save(option);
-//	}
-//
-//	@Override
-//	public void removeVoteOption(long optionId) {
-//		oDao.delete(optionId);
-//	}
-
 	@Transactional
 	@Override
-	public void vote(long voteId, long[] optionId, long userId) throws ParameterCheckException {
+	public void vote(long voteId, long[] optionId, long userId, String userName) throws ParameterCheckException {
 		TVote v = vDao.findOne(voteId);
 		if(v == null) {
 			throw new ParameterCheckException("未找到投票信息");
@@ -83,12 +74,8 @@ public class VoteServiceImpl implements VoteService {
 		if(rDao.countByUserId(voteId,userId)>0) {
 			throw new ParameterCheckException("你已经过投票，请勿重复投票");
 		}
-		Calendar end = Calendar.getInstance();
-		end.setTime(v.getEndDate());
-		end.set(Calendar.HOUR, 23);
-		end.set(Calendar.MINUTE, 59);
-		end.set(Calendar.SECOND, 59);
-		if(new Date().after(end.getTime())) {
+
+		if(isExpired(v.getEndDate())) {
 			throw new ParameterCheckException("投票已经截止，不能计入结果");
 		}
 		for(long oId : optionId) {
@@ -96,6 +83,7 @@ public class VoteServiceImpl implements VoteService {
 			r.setVoteId(voteId);
 			r.setOptionId(oId);
 			r.setUserId(userId);
+			r.setUserName(userName);
 			rDao.save(r);
 		}
 		
@@ -138,5 +126,66 @@ public class VoteServiceImpl implements VoteService {
 		result.setCounts(cList);
 		return result;
 	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public VoteDetails getVoteDetails(long voteId) throws ParameterCheckException {
+		TVote v = vDao.findOne(voteId);
+		if(v == null) {
+			throw new ParameterCheckException("未找到投票信息");
+		}
+		
+		if(!v.getIsOpen()) {
+			throw new ParameterCheckException("匿名投票无法查看投票明细");
+		}
+		
+		VoteDetails result = new VoteDetails();
+		result.setVoteId(voteId);
+		result.setTitle(v.getTitle());
+		
+		//根据投票选项ID分组投票者
+		List<TVoteRecord> records = rDao.findByVoteId(voteId);
+		Map<Long,List<String>> groupedNames = new HashMap<Long, List<String>>();
+		if(records != null && records.size() > 0) {
+			for(TVoteRecord r : records) {
+				long optId = r.getOptionId();
+				List<String> names = groupedNames.get(optId);
+				if(names == null) {
+					names = new ArrayList<String>();
+					groupedNames.put(optId, names);
+				}
+				names.add(r.getUserName());
+			}
+		}
+		
+		//组装成最后的结果
+		Map<TVoteOption,List<String>> details = new LinkedHashMap<TVoteOption,List<String>>();
+		result.setDetails(details);
+		
+		List<TVoteOption> opts = v.getOptions();
+		for(TVoteOption opt : opts) {
+			List<String> nList = groupedNames.get(opt.getId());
+			if(nList == null) {
+				nList = new ArrayList<String>();
+			}
+			details.put(opt, nList);
+		}
+		return result;
+		
+	}
+	
+	@Override
+	public boolean isExpired(Date endDate) {
+		Date now = new Date();
+		
+		Calendar end = Calendar.getInstance();
+		end.setTime(endDate);
+		end.set(Calendar.HOUR, 23);
+		end.set(Calendar.MINUTE, 59);
+		end.set(Calendar.SECOND, 59);
+		return now.after(end.getTime());
+	}
+
+
 
 }

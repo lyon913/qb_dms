@@ -9,12 +9,11 @@ create table TVote (
 	lastUpdaterIp varchar(20), 
 	lastUpdaterLoginName varchar(32), 
 	lastUpdaterName varchar(20), 
-	description varchar(500), 
 	endDate date not null, 
 	isMulti bit not null, 
 	isOpen bit not null, 
 	maxVotes integer not null, 
-	title varchar(50) not null,
+	title varchar(30) not null,
 	authorId bigint not null,
 	authorName varchar(20) not null,
 	primary key (id)
@@ -29,8 +28,7 @@ create table TVoteOption (
 	lastUpdaterIp varchar(20), 
 	lastUpdaterLoginName varchar(32), 
 	lastUpdaterName varchar(20), 
-	description varchar(200), 
-	title varchar(50) not null, 
+	title varchar(20) not null, 
 	voteId bigint not null, 
 	primary key (id)
 );
@@ -43,10 +41,11 @@ create table TVoteRecord (
 	lastUpdate datetime, 
 	lastUpdaterIp varchar(20), 
 	lastUpdaterLoginName varchar(32), 
-	lastUpdaterName varchar(20), 
+	lastUpdaterName varchar(20),
+	voteId bigint not null,
 	optionId bigint not null, 
-	userId bigint not null, 
-	voteId bigint not null, 
+	userId bigint not null,
+	userName varchar(20),
 	primary key (id)
 );
 alter table TVoteOption add constraint FK_TVoteoption_TVote foreign key (voteId) references TVote (id);

@@ -1,7 +1,10 @@
 package com.whr.dms.service;
 
+import java.util.Date;
+
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TVote;
+import com.whr.dms.models.VoteDetails;
 import com.whr.dms.models.VoteResult;
 
 public interface VoteService {
@@ -20,17 +23,6 @@ public interface VoteService {
 	 */
 	public void removeVote(long voteId);
 	
-//	/**
-//	 * 增加选项
-//	 * @param option
-//	 */
-//	public void saveVoteOption(long voteId, TVoteOption option);
-//	
-//	/**
-//	 * 删除选项
-//	 */
-//	public void removeVoteOption(long optionId);
-	
 	/**
 	 * 投票
 	 * @param voteId
@@ -38,7 +30,7 @@ public interface VoteService {
 	 * @param userId
 	 * @throws ParameterCheckException 
 	 */
-	public void vote(long voteId, long[] optionId, long userId) throws ParameterCheckException;
+	public void vote(long voteId, long[] optionId, long userId, String userName) throws ParameterCheckException;
 	
 
 	/**
@@ -56,5 +48,19 @@ public interface VoteService {
 	 * @throws ParameterCheckException 
 	 */
 	public VoteResult getVoteResult(long voteId) throws ParameterCheckException;
+	
+	/**
+	 * 获取记名投票的明细信息
+	 * @param voteId
+	 * @throws ParameterCheckException 
+	 */
+	public VoteDetails getVoteDetails(long voteId) throws ParameterCheckException;
+
+	/**
+	 * 是否过期
+	 * @param endDate
+	 * @return
+	 */
+	boolean isExpired(Date endDate);
 
 }

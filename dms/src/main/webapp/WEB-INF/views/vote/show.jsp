@@ -14,6 +14,11 @@ function submitVote(){
 	f.submit();
 }
 
+function showDetails(){
+	var url = "${ctx}vote/${v.id}/details";
+	window.open(url);
+}
+
 dojo.ready(function(){
 	dojo.query("input[name=optSel]").connect('onclick',function(e){
 		
@@ -31,14 +36,18 @@ dojo.ready(function(){
 
 	<div style="color: gray; margin: 10px 0 10px 0; text-align: center;">
 		<span style="color: black;font-weight: bold;font-size: 16px;">${result.title}</span><br>
-		发起人：${v.authorName}&nbsp;&nbsp; 发起时间：
-		<fmt:formatDate value="${v.createTime }" pattern="yyyy-MM-dd" />
-		&nbsp;&nbsp; 截止时间：
-		<fmt:formatDate value="${v.endDate }" pattern="yyyy-MM-dd" />
-		<br> ${v.isOpen?"记名投票":"匿名投票" }&nbsp;&nbsp;
-		${v.isMulti?"多选择":"单选择" }&nbsp;&nbsp;
+		发起人：${v.authorName}&nbsp;&nbsp;
+		发起时间：<fmt:formatDate value="${v.createTime }" pattern="yyyy-MM-dd" />&nbsp;&nbsp;
+		截止时间：<fmt:formatDate value="${v.endDate }" pattern="yyyy-MM-dd" /><br>
+		[${v.isOpen?"记名投票":"匿名投票" }]&nbsp;&nbsp;
+		[${v.isMulti?"多选择":"单选择"}]
 		<c:if test="${v.isMulti}">
 			（最多可选${v.maxVotes}项）
+		</c:if>
+		<br>
+		总投票数：${result.total}&nbsp;&nbsp;&nbsp;
+		<c:if test="${v.isOpen }">
+			<a href="###" onclick="showDetails()" style="font-size: 12px">查看明细</a>
 		</c:if>
 	</div>
 	<form id="voteForm" action="${ctx }vote/${v.id}/doVote" method="post">
@@ -52,7 +61,7 @@ dojo.ready(function(){
 							value="${c.optionId }">
 						<label for="optSel_${c.optionId}">${c.optionTitle }</label>
 					</td>
-					<td style="width: 200px;padding:1px 8px 1px 2px;">
+					<td style="width:200px;padding:1px 8px 1px 2px;">
 						<dms:voteBar index="${s.index }" percent="${c.percent}" />
 					</td>
 					<td>
@@ -63,7 +72,13 @@ dojo.ready(function(){
 			</c:forEach>
 			<tr>
 				<td colspan="3" align="center">
-					<button class="btn-normal" type="button" onclick="submitVote()">投票</button><br>
+					<c:if test="${!isExpired }">
+						<button class="btn-normal" type="button" onclick="submitVote()">投票</button>
+					</c:if>
+					<c:if test="${isExpired }">
+						<span class="error">[本次投票已经截止]</span>
+					</c:if>
+					<br>
 					<span class="error">${err }</span>
 				</td>
 			</tr>

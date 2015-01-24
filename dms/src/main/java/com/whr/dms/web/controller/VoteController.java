@@ -1,7 +1,7 @@
 package com.whr.dms.web.controller;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -50,10 +50,7 @@ public class VoteController {
 		v.setMaxVotes(2);
 		v.setAuthorId(u.getId());
 		v.setAuthorName(u.getUsername());
-		
-		Calendar c = Calendar.getInstance();
-		c.add(Calendar.MONTH, 1);
-		v.setEndDate(c.getTime());
+		v.setEndDate(new Date());
 		
 		m.addAttribute("vote", v);
 		m.addAttribute("suggId", suggId);
@@ -82,6 +79,10 @@ public class VoteController {
 		
 		if(vote.getIsMulti() && vote.getMaxVotes()< 2) {
 			bind.rejectValue("maxVotes", null,"必须大于2并且不超过选项总数");
+		}
+		
+		if(vs.isExpired(vote.getEndDate())) {
+			bind.rejectValue("endDate", null,"投票截止日期必须大于当前日期");
 		}
 		
 		if (bind.hasErrors()) {
@@ -174,6 +175,7 @@ public class VoteController {
 		
 		m.addAttribute("v", v);
 		m.addAttribute("result", vr);
+		m.addAttribute("isExpired", vs.isExpired(v.getEndDate()));
 		return "vote/show";
 	}
 	
@@ -191,11 +193,26 @@ public class VoteController {
 
 		try {
 			//投票操作
-			vs.vote(id, optionId, SecurityUtil.getUserId());
+			TUser u = SecurityUtil.getCurrentUser();
+			vs.vote(id, optionId, u.getId(), u.getName());
 		} catch (ParameterCheckException e) {
 			//错误信息反馈到跳转后的页面中
 			ra.addFlashAttribute("err", e.getMessage());
 		}
 		return "redirect:/vote/{id}";
 	}
+	
+	/**
+	 * 获取记名投票的投票明细信息
+	 * @param id
+	 * @param m
+	 * @return
+	 * @throws ParameterCheckException
+	 */
+	@RequestMapping(value = "/{id}/details", method = RequestMethod.GET)
+	public String showDetails(@PathVariable long id,Model m) throws ParameterCheckException {
+		m.addAttribute("result", vs.getVoteDetails(id));
+		return "vote/details";
+	}
+
 }

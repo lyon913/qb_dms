@@ -27,15 +27,8 @@ public class TVoteOption extends BaseAuditEntity {
 	 * 投票项目名
 	 */
 	@NotNull
-	@Size(max = 50)
+	@Size(max = 20)
 	private String title;
-	
-	/**
-	 * 描述
-	 */
-	@Size(max = 200)
-	private String description;
-	
 	
 	@NotNull
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -50,16 +43,6 @@ public class TVoteOption extends BaseAuditEntity {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-
-	public String getDescription() {
-		return description;
-	}
-
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 

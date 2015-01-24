@@ -6,10 +6,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,21 +34,18 @@ public class TVote extends BaseAuditEntity {
 	 * 投票主题
 	 */
 	@NotNull
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 30)
 	private String title;
 
-	/**
-	 * 描述
-	 */
-	@Size(max = 500)
-	private String description;
-	
 	/**
 	 * 投票发起人id
 	 */
 	@NotNull
 	private Long authorId;
 	
+	/**
+	 * 发起人名字
+	 */
 	@NotEmpty
 	@Size(max = 20)
 	private String authorName;
@@ -79,7 +76,6 @@ public class TVote extends BaseAuditEntity {
 	 */
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Future(message = "投票结束日期必须大于当前日期")
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
@@ -88,6 +84,7 @@ public class TVote extends BaseAuditEntity {
 	 * 投票选项
 	 */
 	@OneToMany(mappedBy = "vote", cascade = CascadeType.PERSIST)
+	@OrderBy(value = "id asc")
 	private List<TVoteOption> options;
 
 	
@@ -97,14 +94,6 @@ public class TVote extends BaseAuditEntity {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public Long getAuthorId() {

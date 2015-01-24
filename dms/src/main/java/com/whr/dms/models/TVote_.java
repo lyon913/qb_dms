@@ -6,11 +6,10 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-01-22T10:22:06.830+0800")
+@Generated(value="Dali", date="2015-01-24T21:56:38.897+0800")
 @StaticMetamodel(TVote.class)
 public class TVote_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TVote, String> title;
-	public static volatile SingularAttribute<TVote, String> description;
 	public static volatile SingularAttribute<TVote, Long> authorId;
 	public static volatile SingularAttribute<TVote, String> authorName;
 	public static volatile SingularAttribute<TVote, Boolean> isMulti;

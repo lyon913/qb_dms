@@ -2,6 +2,7 @@ package com.whr.dms.models;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 投票记录
@@ -23,16 +24,22 @@ public class TVoteRecord extends BaseAuditEntity {
 	private Long voteId;
 	
 	/**
-	 * 投票选项ID
+	 * 选择的项ID
 	 */
 	@NotNull
 	private Long optionId;
 	
 	/**
-	 * 投票用户ID
+	 * 投票者ID
 	 */
 	@NotNull
 	private Long userId;
+	
+	/**
+	 * 投票者姓名
+	 */
+	@Size(max = 20)
+	private String userName;
 
 	
 	public Long getVoteId() {
@@ -57,5 +64,13 @@ public class TVoteRecord extends BaseAuditEntity {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

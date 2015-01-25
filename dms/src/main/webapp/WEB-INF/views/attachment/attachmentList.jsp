@@ -12,7 +12,24 @@ styleTable("tb");
 </script>
 <div class="panel"  style="height: 100%;overflow: scroll;">
 	<div class="title">
-		<span>公共附件</span>
+		
+			<form id="upload_form" action="<c:url value="/attachment/${foreignId}/${attachmentType}/addAttachment"/>"
+		enctype="multipart/form-data" method="POST">
+	<table width="100%" >
+	<tr>
+				<td >
+				<span>公共附件</span>
+					<input type="file" name="uploadedfile" >
+					<input type="hidden" name="attachmentType" value="${attachmentType }">
+					<input class="btn-normal" type="submit" value="上传">
+				</td>
+				<td >
+					
+				</td>
+				</tr>
+	</table>
+	
+	</form>
 	</div>
 
 	<table width="100%" class="table" id="tb">
@@ -43,20 +60,6 @@ styleTable("tb");
 
 	</table>
 	
-	<form id="upload_form" action="<c:url value="/attachment/${foreignId}/${attachmentType}/addAttachment"/>"
-		enctype="multipart/form-data" method="POST">
-	<table width="100%" >
-	<tr>
-				<td align="right">
-					<input type="file" name="uploadedfile" >
-					<input type="hidden" name="attachmentType" value="${attachmentType }">
-				</td>
-				<td >
-					<input class="btn-normal" type="submit" value="上传">
-				</td>
-				</tr>
-	</table>
-	
-	</form>
+
 
 </div>

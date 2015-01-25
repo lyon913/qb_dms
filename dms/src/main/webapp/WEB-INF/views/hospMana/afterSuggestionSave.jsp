@@ -60,5 +60,5 @@ var url = _ctx + "hospMana/list/public";
 		</table>
 	
 	<c:url var="attachmentUrl" value="/attachment/${suggestion.id }/TSuggestion/attachmentList" />
-<iframe src="${attachmentUrl }" style="width:100%;height:300px;border:0;overflow:auto;" border="0" scrolling="auto"></iframe>
+<iframe src="${attachmentUrl }" style="width:100%;height:300px;border:0;overflow:auto;" frameBorder="0"  border="0" scrolling="auto"></iframe>
 </div>

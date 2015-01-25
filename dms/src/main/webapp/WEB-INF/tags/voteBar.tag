@@ -1,3 +1,4 @@
+<%@ tag language="java" pageEncoding="UTF-8"%> 
 <%@tag import="com.whr.dms.utils.Utils"%>
 <%@ attribute name="percent" required="true" rtexprvalue="true" type="java.lang.Long"%>
 <%@ attribute name="index" required="true" rtexprvalue="true"  type="java.lang.Integer"%>

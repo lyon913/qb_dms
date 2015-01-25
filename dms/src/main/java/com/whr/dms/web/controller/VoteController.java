@@ -214,5 +214,11 @@ public class VoteController {
 		m.addAttribute("result", vs.getVoteDetails(id));
 		return "vote/details";
 	}
+	
+	@RequestMapping("/addVotePage")
+	public String addVotePage(@RequestParam long suggId, Model m) {
+		m.addAttribute("suggId", suggId);
+		return "vote/addVotePage";
+	}
 
 }

@@ -1,3 +1,4 @@
+<%@ tag language="java" pageEncoding="UTF-8"%> 
 <%@tag import="com.whr.dms.utils.Utils"%>
 <%@ attribute name="value" required="true" rtexprvalue="true"%>
 

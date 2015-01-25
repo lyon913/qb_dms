@@ -75,7 +75,11 @@
 	});
 </script>
 <style>
+html,body{
+	height: auto;
+	width:auto;
 
+}
 .radioDiv{
 	display: inline-block;
 	width: 100px;

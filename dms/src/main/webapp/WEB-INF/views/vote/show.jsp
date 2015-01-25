@@ -6,7 +6,7 @@
 <script type="text/javascript">
 function submitVote(){
 	var selected = dojo.query("input[name=optSel]:checked");
-	if(selected < 1){
+	if(selected.length < 1){
 		alert("请至少选择一个选项");
 		return;
 	}
@@ -33,7 +33,14 @@ dojo.ready(function(){
 	});
 });
 </script>
+<style>
+html,body{
+	height: auto;
+	width:auto;
 
+}
+</style>
+<div >
 	<div style="color: gray; margin: 10px 0 10px 0; text-align: center;">
 		<span style="color: black;font-weight: bold;font-size: 16px;">${result.title}</span><br>
 		发起人：${v.authorName}&nbsp;&nbsp;
@@ -84,4 +91,4 @@ dojo.ready(function(){
 			</tr>
 		</table>
 	</form>
-
+</div>

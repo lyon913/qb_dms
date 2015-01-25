@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:url var="delUrl" value="/suggestion/reply/"/>
 <c:url var="readUrl" value="/suggestion/${suggestion.id }"/>
-
+<%@ taglib tagdir="/WEB-INF/tags" prefix="dms"%>
 <script type="text/javascript">
 function deleteReply(id){
 	if(confirm("是否确定要删除此回复？")){
@@ -33,22 +33,27 @@ function submitReply(){
 	form.submit();
 }
 </script>
+
 <div class="panel">
 	<div class="title">
 		<span>帖子标题：${suggestion.suggestionTitle}</span>
+		<div style="float: right; font-style: italic">
+					发帖时间：${suggestion.suggestionDate}</div>
 	</div>
 	<table class="formTable">
 		<tr>
 
 			<td colspan="2">
-				<div
-					style="line-height: 24px; padding-right: 1em; padding-left: 1em">
-					${suggestion.suggestionContent }</div> <br />
-				<div style="float: right; font-style: italic">
-					最后一次更新时间：${suggestion.suggestionDate}</div>
+				<div style="line-height: 24px; padding-right: 1em; padding-left: 1em">
+					${suggestion.suggestionContent }
+				</div>
+				
 			</td>
 		</tr>
 	</table>
+	<div>
+		<dms:voteInclude suggId="${suggestion.id}" suggState="${suggestion.state }" voteId="${suggestion.voteId}"/>
+	</div>
 	<div class="title">
 		<span>回复内容</span>
 	</div>
@@ -80,11 +85,19 @@ function submitReply(){
 			<tr>
 				<td align="center" colspan="2">
 					<button class="btn-normal" type="button" onclick="submitReply();">
-						<span class="dijitIconSave"></span> <span>保存</span>
+						<span class="dijitIconSave"></span> <span>回复</span>
 					</button>
-					<button class="btn-normal" type="button" onclick="parent.closeFrameDialog();">
-						<span class="dijitEditorIcon dijitEditorIconUndo"></span> <span>返回</span>
-					</button>
+					<c:if test="${afterSave}">
+						<a class="btn-normal" href="${ctx }suggestion/list/my">
+							<span class="dijitEditorIcon dijitEditorIconUndo"></span> <span>返回</span>
+						</a>
+					</c:if>
+					<c:if test="${afterSave == null || !afterSave}">
+						<button class="btn-normal" type="button" onclick="parent.closeFrameDialog();">
+							<span class="dijitEditorIcon dijitEditorIconUndo"></span> <span>返回</span>
+						</button>
+					</c:if>
+					
 				</td>
 			</tr>
 		</table>

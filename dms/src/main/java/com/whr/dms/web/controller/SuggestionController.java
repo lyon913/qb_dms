@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.SuggestionState;
@@ -74,14 +75,16 @@ public class SuggestionController {
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s,
-			BindingResult bind, SessionStatus status) {
+			BindingResult bind, SessionStatus status, RedirectAttributes ra) {
 		if (bind.hasErrors()) {
 			return "suggestion/createOrUpdate";
 		}
 
 		suggServ.saveSuggestion(s);
 		status.setComplete();
-		return "redirect:/suggestion/list/my";
+		//return "redirect:/suggestion/list/my";
+		ra.addFlashAttribute("afterSave", true);
+		return "redirect:/suggestion/"+s.getId();
 	}
 
 	/**

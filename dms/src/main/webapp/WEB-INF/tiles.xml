@@ -12,6 +12,7 @@
 	
 	<!-- ajax load page -->
 	<definition name="files/chooseFolder" template="/WEB-INF/views/files/chooseFolder.jsp"></definition>
+	<definition name="vote/*/showAjax" template="/WEB-INF/views/vote/showAjax.jsp"></definition>
 	
 	<definition name="*/*" extends="base.definition">
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />

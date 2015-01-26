@@ -179,6 +179,24 @@ public class VoteController {
 		return "vote/show";
 	}
 	
+	/**
+	 * ajax投票模块
+	 * @param id
+	 * @param m
+	 * @return
+	 * @throws ParameterCheckException
+	 */
+	@RequestMapping(value = "/{id}/ajaxModel")
+	public String showAjax(@PathVariable long id, Model m) throws ParameterCheckException {
+		TVote v = vs.findById(id);
+		VoteResult vr = vs.getVoteResult(id);
+		
+		m.addAttribute("v", v);
+		m.addAttribute("result", vr);
+		m.addAttribute("isExpired", vs.isExpired(v.getEndDate()));
+		return "vote/showAjax";
+	}
+	
 
 	/**
 	 * 进行投票操作

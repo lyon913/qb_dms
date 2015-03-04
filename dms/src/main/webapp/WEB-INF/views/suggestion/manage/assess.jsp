@@ -27,6 +27,9 @@
 			</td>
 		</tr>
 	</table>
+	<div>
+		<dms:voteInclude suggId="${suggestion.id}" suggState="${suggestion.state }" voteId="${suggestion.voteId}"/>
+	</div>
 	<div class="title">
 		<span>回复内容</span>
 	</div>

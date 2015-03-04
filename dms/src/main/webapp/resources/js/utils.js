@@ -72,6 +72,6 @@ function resizeIframe(obj) {
 	var bHeight = obj.contentDocument.body.scrollHeight;
 	var dHeight = obj.contentWindow.document.body.scrollHeight;
 	var height = Math.max(bHeight, dHeight);
-	alert(height);
+
     obj.style.height = height + 'px';
   }

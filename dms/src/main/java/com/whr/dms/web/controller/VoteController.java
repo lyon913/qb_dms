@@ -101,7 +101,8 @@ public class VoteController {
 		vote.setOptions(optList);
 		vs.addVote(vote, suggId);
 		status.setComplete();
-		return "redirect:/vote/" + vote.getId();
+		//return  "redirect:/vote/" + vote.getId();
+		return "redirect:/suggestion/"+suggId;
 	}
 
 	/**

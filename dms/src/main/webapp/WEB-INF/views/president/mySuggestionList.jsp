@@ -46,9 +46,9 @@ styleTable("tb");
 					<td width="10%">
 					
 						<a href="###" onclick="readSuggestion(${s.id})" >查看</a>
-						<!--<c:url var="editUrl" value='/president/${s.id }/edit'/>
+						<c:url var="editUrl" value='/president/${s.id }/edit'/>
 						<a href="${editUrl }">编辑</a>
-						-->
+						
 						<a href="###" onclick="deleteSuggestion('${s.id}',1)">删除</a>
 					</td>
 				</tr>

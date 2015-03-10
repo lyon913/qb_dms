@@ -6,7 +6,7 @@
 <div>
 	<div style="color: gray; margin: 10px 0 10px 0; text-align: center;">
 		<span style="color: black; font-weight: bold; font-size: 16px;">${result.title}</span><br>
-		发起人：${v.authorName}&nbsp;&nbsp; 发起时间：
+		<!-- 发起人：${v.authorName}&nbsp;&nbsp; 应客户要求不要发起人（注释）20150310 -->发起时间：
 		<fmt:formatDate value="${v.createTime }" pattern="yyyy-MM-dd" />
 		&nbsp;&nbsp; 截止时间：
 		<fmt:formatDate value="${v.endDate }" pattern="yyyy-MM-dd" />

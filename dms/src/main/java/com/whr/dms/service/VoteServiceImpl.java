@@ -54,29 +54,29 @@ public class VoteServiceImpl implements VoteService {
 	public void vote(long voteId, long[] optionId, long userId, String userName) throws ParameterCheckException {
 		TVote v = vDao.findOne(voteId);
 		if(v == null) {
-			throw new ParameterCheckException("未找到投票信息");
+			throw new ParameterCheckException("未找到投票信息！");
 		}
 		//选项为空
 		if(optionId == null || optionId.length == 0) {
-			throw new ParameterCheckException("投票选项为空");
+			throw new ParameterCheckException("投票选项为空！");
 		}
 		//多选时判断选项是否超出最大值
 		if(v.getIsMulti() && optionId.length > v.getMaxVotes()) {
-			throw new ParameterCheckException("选择的投票项目超出最大值");
+			throw new ParameterCheckException("选择的投票项目超出最大值！");
 		}
 		
 		//单选时判断选项是否大于1
 		if(!v.getIsMulti() && optionId.length >1) {
-			throw new ParameterCheckException("选择的投票项目超出最大值");
+			throw new ParameterCheckException("选择的投票项目超出最大值！");
 		}
 		
 		//判断用户是否已经投票
 		if(rDao.countByUserId(voteId,userId)>0) {
-			throw new ParameterCheckException("你已经过投票，请勿重复投票");
+			throw new ParameterCheckException("您已经投过票，请勿重复投票！");
 		}
 
 		if(isExpired(v.getEndDate())) {
-			throw new ParameterCheckException("投票已经截止，不能计入结果");
+			throw new ParameterCheckException("投票已经截止，不能计入结果！");
 		}
 		for(long oId : optionId) {
 			TVoteRecord r = new TVoteRecord();
@@ -100,7 +100,7 @@ public class VoteServiceImpl implements VoteService {
 	public VoteResult getVoteResult(long voteId) throws ParameterCheckException {
 		TVote vote = vDao.findOne(voteId);
 		if(vote == null) {
-			throw new ParameterCheckException("未找到投票ID");
+			throw new ParameterCheckException("未找到投票ID！");
 		}
 		VoteResult result = new VoteResult();
 		result.setVoteId(voteId);
@@ -132,11 +132,11 @@ public class VoteServiceImpl implements VoteService {
 	public VoteDetails getVoteDetails(long voteId) throws ParameterCheckException {
 		TVote v = vDao.findOne(voteId);
 		if(v == null) {
-			throw new ParameterCheckException("未找到投票信息");
+			throw new ParameterCheckException("未找到投票信息！");
 		}
 		
 		if(!v.getIsOpen()) {
-			throw new ParameterCheckException("匿名投票无法查看投票明细");
+			throw new ParameterCheckException("匿名投票无法查看投票明细！");
 		}
 		
 		VoteDetails result = new VoteDetails();

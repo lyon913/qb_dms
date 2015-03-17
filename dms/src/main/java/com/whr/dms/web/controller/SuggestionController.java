@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -104,11 +103,11 @@ public class SuggestionController {
 		}
 
 		if (!SecurityUtil.isMe(s.getAuthorId())) {
-			throw new AccessDeniedException("只有作者本人才能修改");
+			throw new ParameterCheckException("只允许意见作者本人修改。");
 		}
 
 		if (!SuggestionState.Private.equals(s.getState())) {
-			throw new AccessDeniedException("意见已经过审核，不能修改。");
+			throw new ParameterCheckException("该意见已经过审核，不允许修改。");
 		}
 		m.addAttribute("s", s);
 		return "suggestion/createOrUpdate";
@@ -162,16 +161,16 @@ public class SuggestionController {
 			throws ParameterCheckException {
 		TSuggestion s = suggServ.findById(id);
 		if (s == null) {
-			throw new ParameterCheckException("未找到此记录");
+			throw new ParameterCheckException("未找到该条记录");
 		}
 
 		if (!SecurityUtil.isMe(s.getAuthorId())
 				&& !SecurityUtil.hasRole(RoleType.ROLE_SUGGESTION_MANAGER)) {
-			throw new AccessDeniedException("只有作者本人或者有权限的用户才能删除");
+			throw new ParameterCheckException("只有作者本人或者有权限的用户才能删除");
 		}
 
 		if (SuggestionState.Deleted.equals(s.getState())) {
-			throw new AccessDeniedException("意见已经删除！");
+			throw new ParameterCheckException("该意见已被删除，本次删除操作无效。");
 		}
 		suggServ.deleteSuggestion(id);
 

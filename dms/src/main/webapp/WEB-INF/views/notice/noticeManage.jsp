@@ -25,19 +25,20 @@ dojo.ready(function(){
 	var objStore =  new dojo.data.ObjectStore({objectStore:store});
     /*set up layout*/
     var layout = [[
-      {name: '#', field: '', width:"10%", formatter:rowIndexFormatter},
+      {name: '#', field: '', width:"3%", formatter:rowIndexFormatter},
       {name: '标题', field: 'title', width:"40%"},
       {name: '作者', field: 'author', width:"10%"},
-      {name: '发布状态', field: 'published', width:"10%", formatter:publishStateFormatter},
+      {name: '发布状态', field: 'published', width:"5%", formatter:publishStateFormatter},
       {name: '最后修改', field: 'publishDate', width:"10%", formatter:dateFormatter},
-      {name: '操作', field: 'id', width:"20%", formatter:optionFormatter}
+      {name: '紧急状态', field: 'emergencyState', width:"5%", formatter:emergencyStateFormatter},
+      {name: '操作', field: 'id', width:"27%", formatter:optionFormatter}
     ]];
 
     /*create a new grid:*/
     var grid = new dojox.grid.EnhancedGrid({
         id: 'gridDiv',
         store:objStore,
-        sortInfo:"-5",
+        sortInfo:"-6",
         structure: layout,
         rowSelector: '20px',
         canSort:function(colIndex){
@@ -66,11 +67,16 @@ dojo.ready(function(){
 function optionFormatter(id){
 	return "<a href='<%=request.getContextPath() %>/notice/edit/" + id + "'>【编辑】</a> &nbsp;"
 		 + "<a href='#' onclick='switchState(" + id + ")'>【发布/取消】</a>&nbsp;"
+		 + "<a href='#' onclick='switchEmergencyState(" + id + ")'>【紧急/取消】</a>&nbsp;"
 		 + "<a href='#' onclick='delNotice(" + id + ")'>【删除】</a>&nbsp;";
 }
 
 function publishStateFormatter(state){
 	return state?"<font color='#33CC00'>已发布</font>":"<font color='#FF0000'>未发布</font>";
+}
+
+function emergencyStateFormatter(state){
+	return state?"<font color='#FF0000'>紧急</font>":"<font color='#33CC00'>正常</font>";
 }
 
 function goCreateNotice(){
@@ -80,6 +86,21 @@ function goCreateNotice(){
 function switchState(id){
 	var xhrArgs = {
 		  	url: "<c:url value='/notice/switchState/'/>" + id,
+		  	handleAs: "json",
+		  	load: function(data){
+	  			//刷新grid
+	  			window.location.href = "<c:url value='/notice/manage/1'/>";
+		  	},
+		  	error: function(error){
+		  		showMessage("错误",error);
+		  	}
+	};
+	dojo.xhrPost(xhrArgs);
+}
+
+function switchEmergencyState(id){
+	var xhrArgs = {
+		  	url: "<c:url value='/notice/switchEmergencyState/'/>" + id,
 		  	handleAs: "json",
 		  	load: function(data){
 	  			//刷新grid

@@ -237,6 +237,7 @@ public class NoticeController {
 			n.setNoticeDate(notice.getNoticeDate());
 			n.setPublished(notice.isPublished());
 			n.setTitle(notice.getTitle());
+			n.setEmergencyState(notice.isEmergencyState());
 			ns.saveNotice(n,departIds);
 			return new JsonResponse(true, null, n.getId());
 		} catch(Exception e){
@@ -465,6 +466,20 @@ public class NoticeController {
 	public @ResponseBody JsonResponse deleteAttachment(@PathVariable long attachmentId){
 		try{
 			ns.deleteAttachment(attachmentId);
+			return new JsonResponse(true, null, null);
+		}catch(Exception e){
+			return new JsonResponse(false, e.getMessage(), null);
+		}
+	}
+	
+	/**
+	 * 切换通知紧急状态
+	 * @return
+	 */
+	@RequestMapping("/notice/switchEmergencyState/{id}")
+	public @ResponseBody JsonResponse switchEmergencyState(@PathVariable long id){
+		try{
+			ns.setEmergencyState(id, !ns.getById(id).isEmergencyState());
 			return new JsonResponse(true, null, null);
 		}catch(Exception e){
 			return new JsonResponse(false, e.getMessage(), null);

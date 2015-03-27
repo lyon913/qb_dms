@@ -43,6 +43,8 @@ public class TNotice extends BaseAuditEntity {
 	private Long parentNoticeTypeId;
 
 	private boolean state;
+
+	private boolean emergencyState;
 	
 	public Long getNoticetypeId() {
 		return noticetypeId;
@@ -130,4 +132,11 @@ public class TNotice extends BaseAuditEntity {
 		this.state = state;
 	}
 
+	public boolean isEmergencyState() {
+		return emergencyState;
+	}
+
+	public void setEmergencyState(boolean emergencyState) {
+		this.emergencyState = emergencyState;
+	}
 }

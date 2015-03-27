@@ -155,4 +155,6 @@ public interface NoticeService {
 	public TNoticeAttachment downLoadNoticeAttachment(long noticeattachmentId);
 	
 	public void deleteAttachment(long noticeAttachmentId);
+	
+	public void setEmergencyState(long noticeId, boolean emergencyState);
 }

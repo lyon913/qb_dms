@@ -1,6 +1,10 @@
 package com.whr.dms.service;
 
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.whr.dms.models.TFile;
 import com.whr.dms.models.TNotice;
@@ -50,4 +54,13 @@ public interface PortletService {
 	 * @return
 	 */
 	public List<TSoftware> getLatestSoftware(int num);
+	
+	/**
+	 * 获取紧急通知
+	 * @param departmentId
+	 * @param d
+	 * @param pageable
+	 * @return
+	 */
+	public Page<TNotice> getEmergencyNotices(long departmentId,Date d,Pageable pageable); 
 }

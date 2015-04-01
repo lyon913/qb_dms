@@ -333,4 +333,6 @@ public class NoticeServiceImpl implements NoticeService {
 		n.setEmergencyState(emergencyState);
 		nDao.save(n);
 	}
+
+
 }

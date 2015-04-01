@@ -1,5 +1,6 @@
 package com.whr.dms.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -79,6 +80,10 @@ public class PortletServiceImpl implements PortletService {
 		return result.getContent();
 	}
 
-	
+	@Override
+	public Page<TNotice> getEmergencyNotices(long departmentId,Date d,Pageable pageable) {
+		// TODO Auto-generated method stub
+		return nDao.getNoticeListByEmergencyState(departmentId,d, pageable);
+	}
 	
 }

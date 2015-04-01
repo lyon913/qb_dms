@@ -38,11 +38,11 @@ dojo.ready(function(){
     var grid = new dojox.grid.EnhancedGrid({
         id: 'gridDiv',
         store:objStore,
-        sortInfo:"-6",
+        sortInfo:"-5",
         structure: layout,
         rowSelector: '20px',
         canSort:function(colIndex){
-        	if(colIndex == 1|| colIndex == 6){
+        	if(colIndex == 1|| colIndex == 7){
         		return false;
         	}
         	return true;

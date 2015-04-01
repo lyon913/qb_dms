@@ -78,4 +78,6 @@ public interface TNoticeDao extends JpaRepository<TNotice, Long> {
 	@Query("from TNotice n where n.title like :namekey and n.parentNoticeTypeId=:parentNoticeTypeId and n.state=true and (n.published = :publishedLeft or n.published = :publishedRight) and (n.publishDate >= :startDate and n.publishDate <= :endDate)")
 	public Page<TNotice> getNoticeListBySearch(@Param("namekey")String nameKey,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("publishedLeft")Boolean publishedLeft,@Param("publishedRight")Boolean publishedRight,@Param("parentNoticeTypeId")Long parentNoticeTypeId, Pageable pageable);
 	
+	@Query("from TNotice n where n.state=true and n.published=true and n.emergencyState=true and n.publishDate>=:endDate and n.id in(select nd.noticeId from TNotice_TDepartment nd where nd.departmentId=:departmentId)")
+	public Page<TNotice> getNoticeListByEmergencyState(@Param("departmentId")Long departmentId,@Param("endDate") Date endDate,Pageable pageable);
 }

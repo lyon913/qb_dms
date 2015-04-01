@@ -1,11 +1,21 @@
 package com.whr.dms.web.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.annotation.Resource;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.whr.dms.models.TFile;
 import com.whr.dms.models.TUser;
 import com.whr.dms.security.SecurityUtil;
 import com.whr.dms.service.AuditService;
@@ -46,6 +56,22 @@ public class HomeController {
 		mv.addObject("totalCounts",as.getLoginCounts());
 		mv.addObject("curDayCounts", as.getLoginCountsCurDay());
 		mv.setViewName("home/home");
+		return mv;
+	}
+	
+	@RequestMapping("/emergency")
+	public ModelAndView emergencyPage(ModelAndView mv){
+		TUser u = getUser();
+		long departmentId = u.getDepartment().getId();
+		Date d = new Date();
+		Calendar c = new GregorianCalendar();
+		c.setTime(d);
+		c.add(Calendar.DATE, -3); //往前推三天。
+		d = c.getTime();
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		Pageable page = new PageRequest(0, 10, sort);
+		mv.addObject("emergencyNotices",ps.getEmergencyNotices(departmentId, d, page));	
+		mv.setViewName("notice/emergencyNoticeList");
 		return mv;
 	}
 	

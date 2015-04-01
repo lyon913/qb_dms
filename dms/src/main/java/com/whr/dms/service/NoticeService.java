@@ -157,4 +157,5 @@ public interface NoticeService {
 	public void deleteAttachment(long noticeAttachmentId);
 	
 	public void setEmergencyState(long noticeId, boolean emergencyState);
+	
 }

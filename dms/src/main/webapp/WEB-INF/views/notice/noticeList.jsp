@@ -25,11 +25,12 @@ dojo.ready(function(){
 	var objStore =  new dojo.data.ObjectStore({objectStore:store});
     /*set up layout*/
     var layout = [[
-      {name: '#', field: '', width:"10%", formatter:rowIndexFormatter},
+      {name: '#', field: '', width:"5%", formatter:rowIndexFormatter},
       {name: '标题', field: 'title', width:"40%"},
       {name: '作者', field: 'author', width:"10%"},
       {name: '通知时间', field: 'noticeDate', width:"10%"},
       {name: '最后更新时间', field: 'publishDate', width:"10%", formatter:dateFormatter},
+      {name: '紧急状态', field: 'emergencyState', width:"5%", formatter:emergencyStateFormatter},
       {name: '操作', field: 'id', width:"20%", formatter:optionFormatter}
     ]];
 
@@ -37,11 +38,11 @@ dojo.ready(function(){
     var grid = new dojox.grid.EnhancedGrid({
         id: 'gridDiv',
         store:objStore,
-        sortInfo:"-4",
+        sortInfo:"-5",
         structure: layout,
         rowSelector: '20px',
         canSort:function(colIndex){
-        	if(colIndex == 1|| colIndex == 6){
+        	if(colIndex == 1|| colIndex == 7){
         		return false;
         	}
 			
@@ -69,6 +70,10 @@ function optionFormatter(id){
 	return new dijit.form.Button({label:"阅读",  onClick: function() { 
 		readNotice(id);
     } });
+}
+
+function emergencyStateFormatter(state){
+	return state?"<font color='#FF0000'>紧急</font>":"<font color='#33CC00'>正常</font>";
 }
 
 function readNotice(id){

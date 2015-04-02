@@ -9,18 +9,16 @@ dojo.ready(function(){
 styleTable("tb");
 });
 
+function readNotice(id){
+	window.location.href = "<c:url value='/notice/emergencyNotice/'/>" + id;
+}
 </script>
 <div class="panel">
-	<div class="title">
-		<span>紧急通知</span>
-		
-	</div>
 	<table width="100%" class="table" id="tb">
 		<thead>
 			<tr>
 				<th>标题</th>
 				<th>日期</th>
-				<th>状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -29,9 +27,8 @@ styleTable("tb");
 				<tr>
 					<td width="70%">${s.title }</td>
 					<td width="10%">${s.noticeDate }</td>
-					<td width="10%">${s.emergencyState }</td>
 					<td width="10%">
-						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
+						<a href="###" onclick="readNotice(${s.id})">阅读</a>
 					</td>
 				</tr>
 

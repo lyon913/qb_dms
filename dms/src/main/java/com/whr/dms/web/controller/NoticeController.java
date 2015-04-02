@@ -385,6 +385,21 @@ public class NoticeController {
 		return "notice/readNotice";
 	}
 	
+	/**
+	 * 紧急通知查看
+	 * @param id
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/notice/emergencyNotice/{id}")
+	public String emergencyNoticeRead(@PathVariable long id,Model m){
+		TNotice n = ns.getById(id);
+		m.addAttribute("notice", n);
+		Long counts = ccs.saveClickCount(ClickType.TNotice,id);//增加点击次数
+		m.addAttribute("counts",counts);
+		return "notice/readEmergencyNotice";
+	}
+	
 	@RequestMapping("/notice/upload")
 	public @ResponseBody String noticeImageUpload(String filename, MultipartFile uploadedfile, HttpServletRequest request) throws Exception{
 		String uploadPath = request.getSession().getServletContext().getRealPath("/") + "upload\\images\\";

@@ -10,7 +10,18 @@ styleTable("tb");
 });
 
 function readNotice(id){
+	//获取当前时间 
+	var date=new Date(); 
+	var expireDays=1; 
+	//将date设置为10天以后的时间 
+	//date.setTime(date.getTime()+expireDays*24*3600*1000); 
+	date.setTime(date.getTime()+expireDays*24*3600*1000); 
+	var strCookie = document.cookie;
+	alert(strCookie);
+	document.cookie = "notice"+id+"=1;expire="+date.toGMTString(); 
+	strCookie = document.cookie;
 	window.location.href = "<c:url value='/notice/emergencyNotice/'/>" + id;
+	alert(strCookie);
 }
 </script>
 <div class="panel">

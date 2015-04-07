@@ -7,6 +7,8 @@
 <script type="text/javascript">
 dojo.ready(function(){
 styleTable("tb");
+var strCookie = document.cookie;
+alert(strCookie);
 });
 
 function readNotice(id){
@@ -16,12 +18,9 @@ function readNotice(id){
 	//将date设置为10天以后的时间 
 	//date.setTime(date.getTime()+expireDays*24*3600*1000); 
 	date.setTime(date.getTime()+expireDays*24*3600*1000); 
-	var strCookie = document.cookie;
-	alert(strCookie);
-	document.cookie = "notice"+id+"=1;expire="+date.toGMTString(); 
+	document.cookie = "notice"+id+"="+id+";expire="+date.toGMTString(); 
 	strCookie = document.cookie;
 	window.location.href = "<c:url value='/notice/emergencyNotice/'/>" + id;
-	alert(strCookie);
 }
 </script>
 <div class="panel">
@@ -36,7 +35,7 @@ function readNotice(id){
 		<tbody>
 			<c:forEach items="${emergencyNotices.content }" var="s">
 				<tr>
-					<td width="70%">${s.title }</td>
+					<td width="70%">${s.title }<img src="resources/images/new.jpg"/></td>
 					<td width="10%">${s.noticeDate }</td>
 					<td width="10%">
 						<a href="###" onclick="readNotice(${s.id})">阅读</a>

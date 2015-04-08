@@ -63,4 +63,12 @@ public interface PortletService {
 	 * @return
 	 */
 	public Page<TNotice> getEmergencyNotices(long departmentId,Date d,Pageable pageable); 
+	
+	/**
+	 * 获取紧急通知数字
+	 * @param departmentId
+	 * @param d
+	 * @return
+	 */
+	public Long getEmergencyNoticeCount(long departmentId,Date d);
 }

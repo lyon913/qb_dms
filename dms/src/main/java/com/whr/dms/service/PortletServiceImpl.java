@@ -85,5 +85,11 @@ public class PortletServiceImpl implements PortletService {
 		// TODO Auto-generated method stub
 		return nDao.getNoticeListByEmergencyState(departmentId,d, pageable);
 	}
+
+	@Override
+	public Long getEmergencyNoticeCount(long departmentId, Date d) {
+		// TODO Auto-generated method stub
+		return nDao.getEmergencyNoticeCount(departmentId, d);
+	}
 	
 }

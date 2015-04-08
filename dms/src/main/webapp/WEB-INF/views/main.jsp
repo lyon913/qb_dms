@@ -72,11 +72,14 @@
 	}
 	
 	function emergency(){
+		var count = "${emergencyCounts}";
+		if(count>0){
+			var w = parseInt(document.body.clientWidth * 0.9);
+			var h = parseInt(document.body.clientHeight * 0.9);
+			var url =  _ctx +"/emergency";
+			parent.showFrameDialog("紧急通知",url,w,h);		
+		}
 		
-		var w = parseInt(document.body.clientWidth * 0.9);
-		var h = parseInt(document.body.clientHeight * 0.9);
-		var url =  _ctx +"/emergency";
-		parent.showFrameDialog("紧急通知",url,w,h);
 	}
 </script>
 <style type="text/css">

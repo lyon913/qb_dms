@@ -57,6 +57,17 @@ public interface LikeService {
 	 */
 	public List<TLikeOption> findAll();
 	
+	/**
+	 * 保存选项
+	 * @param opt
+	 */
 	public void addLikeOption(TLikeOption opt);
+	
+	/**
+	 * 获取选项
+	 * @param optionId
+	 * @return
+	 */
+	public TLikeOption getOptionById(long optionId);
 
 }

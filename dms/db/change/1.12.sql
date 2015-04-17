@@ -40,6 +40,7 @@ create table TLikeRecord (
 	lastUpdaterName varchar(20),
 	optionId bigint not null, 
 	likeId bigint not null,
+	userId bigint not null,
 	userName varchar(20),
 	primary key (id)
 );

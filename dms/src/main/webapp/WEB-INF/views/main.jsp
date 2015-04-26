@@ -70,6 +70,17 @@
 		}
 		return false;
 	}
+	
+	function emergency(){
+		var count = "${emergencyCounts}";
+		if(count>0){
+			var w = parseInt(document.body.clientWidth * 0.9);
+			var h = parseInt(document.body.clientHeight * 0.9);
+			var url =  _ctx +"/emergency";
+			parent.showFrameDialog("紧急通知",url,w,h);		
+		}
+		
+	}
 </script>
 <style type="text/css">
 html, body {
@@ -103,7 +114,7 @@ html, body {
 }
 </style>
 </head>
-<body class="soria">
+<body class="soria" onload="emergency()">
 
 	<div data-dojo-type="dijit.layout.BorderContainer"
 		data-dojo-props="gutters:true, liveSplitters:false" id="layout_main">

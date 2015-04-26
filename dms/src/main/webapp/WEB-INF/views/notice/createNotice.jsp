@@ -69,6 +69,7 @@
 					  		id:dojo.byId("notice_id").value,
 					  		title:form.get("value").title,
 					  		published:form.get("value").published[0],
+					  		emergencyState:form.get("value").emergencyState[0],
 					  		sharedDepartmentId:checkedId,
 					  		content:content,
 					  		author:dojo.byId("author").value,
@@ -219,10 +220,16 @@
 									invalidMessage:'标题不能包含空格和特殊符号。'"></td>
 			</tr>
 			<tr>
+				<td><font color='#FF0000'>紧急状态：</font></td>
+				<td><input id="notice_emergency" name="emergencyState"
+					type="checkbox" data-dojo-type="dijit.form.CheckBox"   ${notice.emergencyState?"checked":""}> (选中后通知为<font color='#FF0000'>紧急状态</font>。)</td>
+			</tr>
+			<tr>
 				<td>发布：</td>
 				<td><input id="notice_published" name="published"
 					type="checkbox" data-dojo-type="dijit.form.CheckBox"   ${notice.published?"checked":""}> (选中后通知为发布状态，可供查阅。否则为编辑状态。)</td>
 			</tr>
+			
 			<tr>
 			<td>发布科室：</td><td><input type="text" id="author" name="author" value="${user.department.name }"></td>
 			</tr>

@@ -237,6 +237,7 @@ public class NoticeController {
 			n.setNoticeDate(notice.getNoticeDate());
 			n.setPublished(notice.isPublished());
 			n.setTitle(notice.getTitle());
+			n.setEmergencyState(notice.isEmergencyState());
 			ns.saveNotice(n,departIds);
 			return new JsonResponse(true, null, n.getId());
 		} catch(Exception e){
@@ -384,6 +385,21 @@ public class NoticeController {
 		return "notice/readNotice";
 	}
 	
+	/**
+	 * 紧急通知查看
+	 * @param id
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/notice/emergencyNotice/{id}")
+	public String emergencyNoticeRead(@PathVariable long id,Model m){
+		TNotice n = ns.getById(id);
+		m.addAttribute("notice", n);
+		Long counts = ccs.saveClickCount(ClickType.TNotice,id);//增加点击次数
+		m.addAttribute("counts",counts);
+		return "notice/readEmergencyNotice";
+	}
+	
 	@RequestMapping("/notice/upload")
 	public @ResponseBody String noticeImageUpload(String filename, MultipartFile uploadedfile, HttpServletRequest request) throws Exception{
 		String uploadPath = request.getSession().getServletContext().getRealPath("/") + "upload\\images\\";
@@ -465,6 +481,20 @@ public class NoticeController {
 	public @ResponseBody JsonResponse deleteAttachment(@PathVariable long attachmentId){
 		try{
 			ns.deleteAttachment(attachmentId);
+			return new JsonResponse(true, null, null);
+		}catch(Exception e){
+			return new JsonResponse(false, e.getMessage(), null);
+		}
+	}
+	
+	/**
+	 * 切换通知紧急状态
+	 * @return
+	 */
+	@RequestMapping("/notice/switchEmergencyState/{id}")
+	public @ResponseBody JsonResponse switchEmergencyState(@PathVariable long id){
+		try{
+			ns.setEmergencyState(id, !ns.getById(id).isEmergencyState());
 			return new JsonResponse(true, null, null);
 		}catch(Exception e){
 			return new JsonResponse(false, e.getMessage(), null);

@@ -325,4 +325,14 @@ public class NoticeServiceImpl implements NoticeService {
 	public void deleteAttachment(long noticeAttachmentId) {
 		naDao.delete(noticeAttachmentId);
 	}
+	
+	@Override
+	@Transactional
+	public void setEmergencyState(long noticeId, boolean emergencyState) {
+		TNotice n = nDao.findOne(noticeId);
+		n.setEmergencyState(emergencyState);
+		nDao.save(n);
+	}
+
+
 }

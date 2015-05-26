@@ -14,7 +14,7 @@ styleTable("tb");
 	<div class="title">
 		<span>点赞选项管理</span>
 		<span style="float: right;">
-			<c:url var="myUrl" value="/like/create"/>
+			<c:url var="myUrl" value="/like/option/new"/>
 			<a href="${myUrl }">添加点赞选项</a>
 			
 		</span>

@@ -1,5 +1,7 @@
 package com.whr.dms.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import com.whr.dms.exceptions.ParameterCheckException;
@@ -60,8 +62,9 @@ public interface LikeService {
 	/**
 	 * 保存选项
 	 * @param opt
+	 * @throws IOException 
 	 */
-	public void addLikeOption(TLikeOption opt);
+	public void addLikeOption(TLikeOption opt, InputStream pic, String uploadPath) throws IOException;
 	
 	/**
 	 * 获取选项

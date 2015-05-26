@@ -1,10 +1,13 @@
 package com.whr.dms.service;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.whr.dms.dao.TLikeDao;
 import com.whr.dms.dao.TLikeOptionDao;
@@ -14,6 +17,7 @@ import com.whr.dms.models.LikeRecordCount;
 import com.whr.dms.models.TLike;
 import com.whr.dms.models.TLikeOption;
 import com.whr.dms.models.TLikeRecord;
+import com.whr.dms.utils.UploadUtils;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -98,9 +102,13 @@ public class LikeServiceImpl implements LikeService {
 		return olist;
 	}
 
+	@Transactional
 	@Override
-	public void addLikeOption(TLikeOption opt) {
-		// TODO Auto-generated method stub
+	public void addLikeOption(TLikeOption opt, InputStream pic, String uploadFolder) throws IOException {
+		String path = UploadUtils.saveUploadFile(pic, uploadFolder);
+		
+		opt.setPicture(path);
+		oDao.save(opt);
 		
 	}
 

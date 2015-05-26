@@ -46,7 +46,7 @@ create table TLikeRecord (
 );
 
 ALTER TABLE `dms`.`tsuggestion` 
-	ADD COLUMN `likeId` BIGINT(20) NULL AFTER `emergencyState`;
+	ADD COLUMN `likeId` BIGINT(20) NULL;
 
 insert into TDatabaseChange(majorVersion,minorVersion,fixVersion,fileName,opdate) 
 	values(1,12,0,'1.12.sql',now());

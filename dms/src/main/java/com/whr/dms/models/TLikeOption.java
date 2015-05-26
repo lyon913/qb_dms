@@ -1,12 +1,9 @@
 package com.whr.dms.models;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 点赞选项
@@ -27,13 +24,12 @@ public class TLikeOption extends BaseAuditEntity {
 	/**
 	 * 点赞项目名
 	 */
-	@NotNull
+	@NotEmpty
 	@Size(max = 20)
 	private String title;
 	/**
 	 * 项目对应的图片
 	 */
-	@NotNull
 	@Size(max=200)
 	private String picture;
 

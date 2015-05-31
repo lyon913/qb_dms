@@ -204,6 +204,9 @@ html, body {
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
 						onClick:function(){ go("admin/user/list");  }'>用户管理</div>
+					<div data-dojo-type="dijit.MenuItem"
+						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
+						onClick:function(){ go("like/manage/optList");  }'>点赞选项管理</div>
 				</div>
 			</div>
 		</div>

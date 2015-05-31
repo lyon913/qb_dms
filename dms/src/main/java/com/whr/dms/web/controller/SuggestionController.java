@@ -241,6 +241,24 @@ public class SuggestionController {
 	}
 
 	/**
+	 * 审核不通过列表
+	 * 
+	 * @param p
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping("/manage/list/rejected")
+	public String rejectedList(
+			@PageableDefault(page = 0, size = 20, sort = { "suggestionDate" }, direction = Direction.DESC) Pageable p,
+			@RequestParam(required = false) String key, Model m) {
+		Page<TSuggestion> result = suggServ.findSuggestion(key,
+				SuggestionType.Suggestion, SuggestionState.Rejected, p);
+		m.addAttribute("result", result);
+		m.addAttribute("key", key);
+		return "suggestion/manage/rejectedList";
+	}
+	
+	/**
 	 * 初始化意见簿管理表单 即：初始化意见簿审核、回复的页面
 	 * 
 	 * @param p

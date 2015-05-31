@@ -55,7 +55,7 @@
 			<tr>
 				<th style="width: 150px">审核：</th>
 				<td><form:radiobutton path="checked" value="true" label="审核通过" />
-					<form:radiobutton path="checked" value="false" label="待审核" /></td>
+					<form:radiobutton path="checked" value="false" label="审核不通过" /></td>
 			</tr>
 			<tr>
 

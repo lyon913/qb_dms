@@ -54,6 +54,7 @@ function submitReply(){
 	<div>
 		<dms:voteInclude suggId="${suggestion.id}" suggState="${suggestion.state }" voteId="${suggestion.voteId}"/>
 	</div>
+	<iframe src="${ctx }like/show/suggestion/${suggestion.id}" style="width:100%;border:0;"></iframe>
 	<div class="title">
 		<span>回复内容</span>
 	</div>

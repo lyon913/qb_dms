@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
-<script type="text/javascript" src="${ctx }resources/js/suggestion.js"></script>
+
 <script type="text/javascript">
 dojo.ready(function(){
 styleTable("tb");
@@ -31,9 +31,10 @@ styleTable("tb");
 			<c:forEach items="${opt }" var="s">
 				<tr>
 					<td width="70%">${s.title }</td>
-					<td width="10%">${s.picture }</td>
+					<td width="10%"><img src="${ctx}upload/images/like/${s.picture }"  width="41" height="41"/></td>
 					<td width="10%">
-						<a href="###" onclick="readSuggestion(${s.id})">修改</a>
+						<a href="${ctx}like/option/${s.id}/edit">修改</a>
+						<a href="${ctx}like/option/${s.id}/delete">删除</a>
 					</td>
 				</tr>
 

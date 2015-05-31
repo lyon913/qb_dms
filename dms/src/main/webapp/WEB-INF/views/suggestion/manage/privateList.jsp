@@ -16,6 +16,9 @@ styleTable("tb");
 		<span style="float: right;">
 		<c:url var="allUrl" value="/suggestion/manage/list/all"/>
 			<a href="${allUrl }">全部意见</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;	
+		<c:url var="rejectedUrl" value="/suggestion/manage/list/rejected"/>
+		<a href="${rejectedUrl }">审核不通过意见</a>
 			
 		
 		</span>

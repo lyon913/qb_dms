@@ -67,10 +67,6 @@ public class TSuggestion extends BaseAuditEntity {
 	 */
 	private Long voteId;
 	
-	/**
-	 * 关联的点赞主表ID;
-	 */
-	private Long likeId;
 
 	public String getAuthor() {
 		return author;

@@ -3,6 +3,7 @@ package com.whr.dms.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -18,4 +19,8 @@ public interface TLikeRecordDao extends JpaRepository<TLikeRecord, Long> {
 	
 	@Query("from TLikeRecord r where r.likeId = :likeId")
 	public List<TLikeRecord> findBylikeId(@Param("likeId") Long likeId);
+	
+	@Modifying
+	@Query("delete from TLikeRecord r where r.optionId = :optionId")
+	public void deleteByOptionId(@Param("optionId") long optionId);
 }

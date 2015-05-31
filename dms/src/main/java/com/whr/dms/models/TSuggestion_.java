@@ -5,7 +5,7 @@ import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2015-04-16T17:08:47.853+0800")
+@Generated(value="Dali", date="2015-05-31T11:02:27.063+0800")
 @StaticMetamodel(TSuggestion.class)
 public class TSuggestion_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TSuggestion, String> suggestionTitle;
@@ -16,5 +16,4 @@ public class TSuggestion_ extends BaseAuditEntity_ {
 	public static volatile SingularAttribute<TSuggestion, SuggestionType> type;
 	public static volatile SingularAttribute<TSuggestion, SuggestionState> state;
 	public static volatile SingularAttribute<TSuggestion, Long> voteId;
-	public static volatile SingularAttribute<TSuggestion, Long> likeId;
 }

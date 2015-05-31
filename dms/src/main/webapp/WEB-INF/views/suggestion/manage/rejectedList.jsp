@@ -10,15 +10,16 @@ styleTable("tb");
 });
 
 </script>
-<div class="panel"  style="height: 100%;overflow: scroll;">
+<div class="panel">
 	<div class="title">
-		<span>全部意见</span>
+		<span>审核不通过列表</span>
 		<span style="float: right;">
+		<c:url var="allUrl" value="/suggestion/manage/list/all"/>
+			<a href="${allUrl }">全部意见</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;	
 		<c:url var="privateUrl" value="/suggestion/manage/list/private"/>
 			<a href="${privateUrl }">待审核意见</a>
-				&nbsp;&nbsp;&nbsp;&nbsp;	
-		<c:url var="rejectedUrl" value="/suggestion/manage/list/rejected"/>
-		<a href="${rejectedUrl }">审核不通过意见</a>
+		
 			
 		
 		</span>
@@ -47,10 +48,9 @@ styleTable("tb");
 					<td width="10%">${s.state.displayName }</td>
 					<td width="10%">
 						<a href="###" onclick="readSuggestion(${s.id})">查看</a>
-						<a href="###" onclick="deleteSuggestion('${s.id}',2)">删除</a>
+						<a href="###" onclick="deleteSuggestion('${s.id}',3)">删除</a>
 						<c:url var="assessUrl" value="/suggestion/manage/assess/${s.id }"/>
-						<a href="${assessUrl }" onclick="">审核管理</a>
-						
+						<a href="${assessUrl }" onclick="">审核</a>
 					</td>
 				</tr>
 
@@ -59,5 +59,6 @@ styleTable("tb");
 		</tbody>
 
 	</table>
-<dms:pagination page="${result}" formId="searchForm" />
+	<dms:pagination page="${result}"
+						formId="searchForm" />
 </div>

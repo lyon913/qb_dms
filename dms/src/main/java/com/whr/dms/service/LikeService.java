@@ -5,52 +5,24 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.whr.dms.exceptions.ParameterCheckException;
-import com.whr.dms.models.LikeRecordCount;
-import com.whr.dms.models.TLike;
+import com.whr.dms.models.LikeResult;
 import com.whr.dms.models.TLikeOption;
 
 public interface LikeService {
 	
-	/**
-	 * 新增点赞主表记录
-	 * @param like
-	 * @param suggId
-	 */
-	public void addLike(TLike like, long suggId);
-	
 	
 	/**
 	 * 点赞
-	 * @param likeId
-	 * @param optionId
-	 * @param userId
-	 * @throws ParameterCheckException 
 	 */
-	public void like(long likeId, long[] optionId, long userId, String userName) throws ParameterCheckException;
+	public void like(String type, long fk ,long optionId) throws ParameterCheckException;
 	
 
-	/**
-	 * 根据id查找TLike
-	 * @param likeId
-	 * @return
-	 */
-	public TLike findById(long id);
-	
 	
 	/**
 	 * 获取点赞各项结果统计
-	 * @param likeId
-	 * @return
-	 * @throws ParameterCheckException 
 	 */
-	public List<LikeRecordCount> getLikeCount(long likeId) throws ParameterCheckException;
+	public LikeResult getLikeCount(String type, long fk) throws ParameterCheckException;
 	
-	/**
-	 * 获取点赞的明细信息
-	 * @param likeId
-	 * @throws ParameterCheckException 
-	 */
-//	public LikeDetails getLikeDetails(long likeId) throws ParameterCheckException;
 
 	/**
 	 * 找到TLikeOption
@@ -64,13 +36,27 @@ public interface LikeService {
 	 * @param opt
 	 * @throws IOException 
 	 */
-	public void addLikeOption(TLikeOption opt, InputStream pic, String uploadPath) throws IOException;
+	public void saveLikeOption(TLikeOption opt, InputStream pic, String uploadPath) throws IOException;
 	
 	/**
 	 * 获取选项
 	 * @param optionId
 	 * @return
 	 */
-	public TLikeOption getOptionById(long optionId);
+	public TLikeOption findOptionById(long optionId);
+
+
+	/**
+	 * 保存option，不包含图片上传
+	 * @param opt
+	 */
+	void saveLikeOptionWithoutPicture(TLikeOption opt);
+
+
+	/**
+	 * 级联删除option和option所关联的投票
+	 * @param optionId
+	 */
+	void deleteOptionCascade(long optionId);
 
 }

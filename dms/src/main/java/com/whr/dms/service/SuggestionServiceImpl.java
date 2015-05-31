@@ -184,7 +184,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 		if (checked) {
 			s.setState(SuggestionState.Public);
 		}else {
-			s.setState(SuggestionState.Private);
+			s.setState(SuggestionState.Rejected);
 		}
 		sdao.save(s);
 		

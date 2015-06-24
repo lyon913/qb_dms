@@ -5,7 +5,7 @@
 <%@ taglib prefix="dms" tagdir="/WEB-INF/tags"%>
 <div class="panel">
 	<div class="title">医院管理——发帖</div>
-	<form:form modelAttribute="s" method="post" enctype="multipart/form-data">
+	<form:form modelAttribute="s" method="post">
 
 		<table class="formTable">
 			<tr>

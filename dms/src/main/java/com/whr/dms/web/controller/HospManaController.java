@@ -3,7 +3,6 @@ package com.whr.dms.web.controller;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +71,8 @@ public class HospManaController {
 	 * @return
 	 */
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
-	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s, 
-			HttpSession session, BindingResult bind, SessionStatus status) {
+	public String processCreateForm(@ModelAttribute("s") @Valid TSuggestion s, BindingResult bind, SessionStatus status) {
+		System.out.println("sdfasf");
 		if (bind.hasErrors()) {
 			return "hospMana/createOrUpdate";
 		}

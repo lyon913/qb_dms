@@ -77,6 +77,12 @@ public class TUser extends BaseAuditEntity implements UserDetails {
 	 */
 	@Transient
 	private String loginIpAddress;
+	
+	/**
+	 * 用户可以阅读的科室范围 
+	*/
+	@OneToMany(fetch = FetchType.EAGER,mappedBy = "user",cascade = CascadeType.ALL)
+	private List<TUser_TDepartment> udepartments;
 
 	public String getLoginName() {
 		return loginName;
@@ -155,6 +161,14 @@ public class TUser extends BaseAuditEntity implements UserDetails {
 
 	public void setLoginIpAddress(String loginIpAddress) {
 		this.loginIpAddress = loginIpAddress;
+	}
+
+	public List<TUser_TDepartment> getUdepartments() {
+		return udepartments;
+	}
+
+	public void setUdepartments(List<TUser_TDepartment> udepartments) {
+		this.udepartments = udepartments;
 	}
 
 }

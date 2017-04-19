@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TUser;
+import com.whr.dms.models.TUser_TDepartment;
 
 public interface UserManager {
 	/**
@@ -51,5 +52,12 @@ public interface UserManager {
 	 * @param userId
 	 */
 	public void resetPwd(long userId);
+	
+	/**
+	 * 获得用户可以阅读哪几个部门的文件
+	 * @param userId
+	 * @return
+	 */
+	public List<TUser_TDepartment> getReadDeparments(long userId);
 
 }

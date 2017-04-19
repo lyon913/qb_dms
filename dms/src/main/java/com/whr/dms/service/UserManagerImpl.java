@@ -10,10 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.whr.dms.dao.TDepartmentDao;
 import com.whr.dms.dao.TUserDao;
 import com.whr.dms.dao.TUserRoleDao;
+import com.whr.dms.dao.TUser_TDepartmentDao;
 import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TDepartment;
 import com.whr.dms.models.TUser;
 import com.whr.dms.models.TUserRole;
+import com.whr.dms.models.TUser_TDepartment;
 
 @Service
 public class UserManagerImpl implements UserManager {
@@ -25,6 +27,9 @@ public class UserManagerImpl implements UserManager {
 
 	@Autowired
 	TDepartmentDao dDao;
+	
+	@Autowired
+	TUser_TDepartmentDao udDao;
 
 	@Override
 	public List<TUser> findUserList() {
@@ -62,6 +67,9 @@ public class UserManagerImpl implements UserManager {
 				//修改已存在的用户
 				//删除之前关联的角色
 				urDao.deleteByUserId(u.getId());
+				
+				//删除之前关联的阅读范围
+				udDao.deleteByUserId(u.getId());
 			}
 
 			// 设置新保存的角色关联关系
@@ -71,6 +79,15 @@ public class UserManagerImpl implements UserManager {
 				}
 			}
 			
+			//设置新的阅读范围
+			if(u.getUdepartments()!=null&&u.getUdepartments().size()>0){
+				for(TUser_TDepartment ud : u.getUdepartments()){
+					ud.setUser(u);
+				}
+			}
+			
+			
+
 			//级联保存用户和角色
 			uDao.save(u);
 		}
@@ -97,6 +114,13 @@ public class UserManagerImpl implements UserManager {
 		TUser u = uDao.findOne(userId);
 		u.setPassword("1234");
 		uDao.save(u);	
+	}
+
+	@Override
+	public List<TUser_TDepartment> getReadDeparments(long userId) {
+		List<TUser_TDepartment> udList = udDao.findByUserId(userId);
+		
+		return udList;
 	}
 
 }

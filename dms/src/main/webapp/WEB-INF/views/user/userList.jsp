@@ -41,7 +41,13 @@ styleTable("tb");
 				</a> <c:url var="delUrl" value="/admin/user/${u.id }/delete" /> <a
 					href="${delUrl }" class="btn-normal"> <span
 						class="dijitIconDelete"></span>删除
-				</a></td>
+				</a>
+				
+				<c:url var="setUrl" value="/admin/user/${u.id }/setReadDepartments" />
+				<a href="${setUrl }" class="btn-normal">
+				设置用户阅读范围
+				</a>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -6,7 +6,7 @@ function readSuggestion(id){
 	var w = parseInt(document.body.clientWidth);
 	var h = parseInt(document.body.clientHeight);
 	var url = _ctx + "hospMana/" + id;
-	parent.showFrameDialog("医院管理——查看帖子内容",url,w,h);
+	parent.showFrameDialog("交流区——查看帖子内容",url,w,h);
 }
 
 /**

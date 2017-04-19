@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ page import="com.whr.dms.models.TUser"%>
 <%@ page
 	import="org.springframework.security.core.context.SecurityContextHolder"%>
@@ -176,7 +176,7 @@ html, body {
 					 
 					<div data-dojo-type="dijit.MenuItem"
 						data-dojo-props='iconClass:"dijitEditorIcon dijitEditorIconPaste",
-						onClick:function(){ go("hospMana/list/public"); }'>医院管理</div>
+						onClick:function(){ go("hospMana/list/public"); }'>交流区</div>
 					 
 				</div>
 			</div>

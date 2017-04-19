@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -12,11 +12,11 @@ styleTable("tb");
 </script>
 <div class="panel">
 	<div class="title">
-		<span>医院管理——我的帖子</span>
+		<span>交流区——我的帖子</span>
 		<div style="float: right;margin: 0;padding: 0">
 		
 			<c:url var="publicUrl" value="/hospMana/list/public"/>
-			<a href="${publicUrl }" >返回医院管理</a>
+			<a href="${publicUrl }" >返回交流区</a>
 			<c:url var="newUrl" value="/hospMana/new"/>
 			<a href="${newUrl }">发帖</a>
 		</div>

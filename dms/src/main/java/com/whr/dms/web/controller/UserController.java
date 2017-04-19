@@ -22,6 +22,7 @@ import com.whr.dms.exceptions.ParameterCheckException;
 import com.whr.dms.models.TDepartment;
 import com.whr.dms.models.TUser;
 import com.whr.dms.models.TUserRole;
+import com.whr.dms.models.TUser_TDepartment;
 import com.whr.dms.security.RoleType;
 import com.whr.dms.service.DepartmentManager;
 import com.whr.dms.service.RoleManager;
@@ -158,4 +159,10 @@ public class UserController {
 		return "success";
 	}
 
+	@RequestMapping(value="/{id}/setReadDepartments",method=RequestMethod.GET)
+	public String initSetReadDepartments(@PathVariable long id,Model m){
+		List<TUser_TDepartment> udList = um.getReadDeparments(id);
+		m.addAttribute("udList", udList);
+		return "user/setReadDepartments";
+	}
 }

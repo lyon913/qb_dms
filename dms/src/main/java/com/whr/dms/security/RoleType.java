@@ -17,7 +17,7 @@ public enum RoleType {
 	
 	ROLE_PRESIDENT_MANAGER("ROLE_PRESIDENT_MANAGER","院长信箱管理","院长信箱的回复、公开、删除等管理"),
 	
-	ROLE_HOSPITAL_MANAGER("ROLE_HOSPITAL_MANAGER","医院管理层","医院管理栏目的发表、回复等操作");
+	ROLE_HOSPITAL_MANAGER("ROLE_HOSPITAL_MANAGER","交流区管理","交流区栏目的发表、回复等操作");
 	
 	private String name;
 	private String displayName;
